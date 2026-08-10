@@ -1,0 +1,102 @@
+.modal {
+    width: 600px;
+    height: 700px;
+    border: 0;
+    border-radius: 18px;
+    margin: auto;
+    padding: 64px;
+    color: var(--mist);
+    background: var(--void);
+    box-shadow: 0 24px 80px var(--black-28);
+    overflow: auto;
+    transition: .5s;
+}
+
+.login__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-labels {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login__label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login__btn,
+.login__btn span {
+    font-family: var(--font-sans);
+}
+
+.login__btn {
+    background-color: var(--dusk);
+}
+
+.login__input {
+    padding: 20px;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background-color: var(--dusk);
+    color: var(--mist)
+}
+
+.login__input.input__error {
+    border-color: var(--ember);
+}
+
+.login-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-logo {
+    width: 70px;
+}
+
+.login-title {
+    font-size: 3rem;
+}
+
+.login-subtitle {
+    font-size: 1.5rem;
+    font-weight: 200;
+    font-family: var(--font-sans);
+}
+
+.modal::backdrop {
+    background: var(--night-68);
+    backdrop-filter: blur(4px);
+}
+
+.modal__close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    color: var(--mist);
+    background: var(--transparent);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal__close:hover {
+    background: var(--mist-08);
+}

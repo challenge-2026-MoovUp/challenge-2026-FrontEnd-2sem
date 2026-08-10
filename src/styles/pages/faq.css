@@ -1,0 +1,267 @@
+/* =========================================================================== */
+                                /* Estrutura */
+/* =========================================================================== */
+.page__faq main {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 50%;
+}
+
+/* Hero */
+.page__faq .container__hero {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10rem;
+    width: 100%;
+}
+
+.page__faq .hero__content {
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+    font-size: 4.5rem;
+    max-width: 50%;
+}
+
+.page__faq .faq__title {
+    align-items: flex-start;
+    color: var(--mist);
+    display: flex;
+    flex-direction: column;
+    font-weight: 100;
+    text-align: left;
+}
+
+.page__faq .faq__title span {
+    background: var(--gradiente-aurora);
+    background-clip: text;
+    display: block;
+    font-style: italic;
+    margin-top: 0.25rem;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--transparent);
+}
+
+/* Busca */
+.page__faq .faq__search {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page__faq .faq__label {
+    display: block;
+    position: relative;
+    width: fit-content;
+}
+
+.page__faq .faq__label i {
+    color: var(--border-mid);
+    font-size: 1rem;
+    left: 1rem;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.page__faq .faq__input {
+    background-color: var(--dusk);
+    border: 1px solid var(--border-mid);
+    border-radius: 30px;
+    color: var(--mist);
+    font-family: var(--font-sans);
+    padding: .9rem 8rem .9rem 2.75rem;
+    width: auto;
+}
+
+.page__faq .faq__input:focus {
+    background: var(--violet-glow-08);
+    border-color: var(--violet-glow-50);
+    box-shadow:
+        0 0 20px var(--violet-glow-08),
+        inset 0 0 20px var(--violet-glow-03);
+    outline: none;
+}
+
+.page__faq .faq__input::-webkit-search-cancel-button {
+    display: none;
+}
+
+.page__faq .faq__counter {
+    color: var(--mist-dim);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+}
+/* =========================================================================== */
+                                /* Corpo e sidebar */
+/* =========================================================================== */
+.page__faq .faq__body {
+    margin-top: 4rem;
+    width: 100%;
+}
+
+.page__faq .faq-sidebar {
+    align-self: start;
+    position: sticky;
+    top: 90px;
+}
+
+.page__faq .faq-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.page__faq .faq-sidebar__link {
+    align-items: center;
+    border-radius: 10px;
+    color: var(--dust);
+    display: flex;
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    gap: 8px;
+    padding: 1rem;
+    transition: var(--transition);
+}
+
+.page__faq .faq-sidebar__link:hover {
+    color: var(--aurora);
+}
+
+.page__faq .faq-sidebar__link.is-active {
+    background: var(--aurora-glow);
+    color: var(--aurora-soft);
+}
+
+.page__faq .faq-sidebar__link.is-active::before {
+    align-items: center;
+    content: "•";
+    display: inline-flex;
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+/* =========================================================================== */
+                                /* Secoes da FAQ */
+/* =========================================================================== */
+.page__faq .faq-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    width: 100%;
+}
+
+.page__faq .faq-section {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scroll-margin-top: 120px;
+    width: 100%;
+}
+
+.page__faq .faq-section__header {
+    align-items: flex-end;
+    display: flex;
+    gap: 16px;
+}
+
+.page__faq .faq-section__icon {
+    align-items: center;
+    background: var(--dusk);
+    border: 1px solid var(--aurora-glow);
+    border-radius: 12px;
+    color: var(--mist);
+    display: flex;
+    flex-shrink: 0;
+    font-size: 2rem;
+    height: 40px;
+    justify-content: center;
+    width: 40px;
+}
+
+.page__faq .faq-section__title {
+    align-self: flex-start;
+    color: var(--mist);
+    font-size: 2.5rem;
+    font-weight: 100;
+    margin: 40px 0 0;
+    text-align: start;
+    width: min(800px, 100%);
+}
+
+.page__faq .faq-section__count {
+    color: var(--mist-dim);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+}
+
+.page__faq .accordion a {
+    font-weight: 900;
+}
+
+/* =========================================================================== */
+                                    /* Suporte */
+/* =========================================================================== */
+.page__faq .faq-support {
+    margin-top: 10rem;
+}
+
+.page__faq .faq-support__card {
+    align-items: flex-end;
+    background-color: var(--dusk);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    box-sizing: border-box;
+    color: var(--mist);
+    display: flex;
+    justify-content: space-between;
+    padding: 3rem;
+}
+
+.page__faq .faq-support__eyebrow {
+    color: var(--aurora-soft);
+    font-family: var(--font-sans);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.page__faq .faq-support__title {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    width: 70%;
+}
+
+.page__faq .faq-support__title span {
+    color: var(--ember-soft);
+    font-style: italic;
+    font-weight: 300;
+    -webkit-text-fill-color: var(--ember-soft);
+}
+
+.page__faq .faq-support__subtitle {
+    color: var(--dust);
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.page__faq .faq-support__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+
+/* =========================================================================== */
+                                    /* Rodape */
+/* =========================================================================== */
+.page__faq .footer {
+    margin-top: 5rem;
+}

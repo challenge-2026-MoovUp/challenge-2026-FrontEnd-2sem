@@ -1,0 +1,81 @@
+/* Home */
+
+.feat__grid {
+    align-items: stretch;
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+}
+
+.feature-large {
+    grid-column: span 2;
+}
+
+.steps__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* FAQ */
+
+.faq__body {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 180px 1fr;
+}
+
+/* Sobre */
+
+.page__sobre .container__hero-bottom {
+    align-items: center;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(320px, 2fr) repeat(3, minmax(120px, 1fr));
+}
+
+.page__sobre .contact__card {
+    align-items: center;
+    column-gap: 22px;
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 96px;
+}
+
+.page__sobre .benefits-flex {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page__sobre .grid-4,
+.page__sobre .partner-modals__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page__sobre .grid-4 {
+    gap: 12px;
+}
+
+.page__sobre .partner-modals__grid {
+    gap: 10px;
+}
+
+.page__sobre .partner-modals__card--wide {
+    grid-column: 1 / -1;
+}
+
+/* Quem somos */
+
+.page__info .team__cards {
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.page__info .foot__flex {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: center;
+}

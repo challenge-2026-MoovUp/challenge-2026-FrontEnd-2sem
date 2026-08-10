@@ -1,0 +1,91 @@
+/* Variaveis globais */
+
+:root {
+    /* Tipografia */
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Jost', system-ui, sans-serif;
+
+    /* Cores neutras */
+    --void: #0E0C14;
+    --dusk: #1A1626;
+    --dusk-mid: #231E33;
+    --dusk-light: #2E2845;
+    --mist: #EDE8DF;
+    --mist-dim: #C8C0B4;
+    --dust: #C8C0B4;
+    --white: #FFFFFF;
+    --gray-muted: #727272;
+    --gray-strong: #666666;
+    --gray-olive: #6F6F6E;
+    --transparent: transparent;
+
+    /* Cores de destaque */
+    --aurora: #A67FB5;
+    --aurora-soft: #C9AED8;
+    --aurora-glow: rgba(166, 127, 181, 0.12);
+    --violet-deep: #6B3D8A;
+    --ember: #C97B5A;
+    --ember-soft: #E0A080;
+    --ambar: #F5B842;
+    --gold: #D4A96A;
+    --roxo-mais-opaco: rgba(131, 124, 224, 0.251);
+    --roxo-opaco: rgba(108, 98, 240, 0.5);
+    --sage: #7A9E8A;
+
+    /* Bordas */
+    --border: rgba(237, 232, 223, 0.06);
+    --border-mid: rgba(237, 232, 223, 0.11);
+
+    /* Transparencias neutras */
+    --void-20: rgba(14, 12, 20, 0.2);
+    --void-28: rgba(14, 12, 20, 0.28);
+    --void-34: rgba(14, 12, 20, 0.34);
+    --void-42: rgba(14, 12, 20, 0.42);
+    --void-45: rgba(14, 12, 20, 0.45);
+    --void-78: rgba(14, 12, 20, 0.78);
+    --void-86: rgba(14, 12, 20, 0.86);
+    --dusk-72: rgba(26, 22, 38, 0.72);
+    --dusk-74: rgba(26, 22, 38, 0.74);
+    --dusk-mid-80: rgba(35, 30, 51, 0.8);
+    --dusk-mid-88: rgba(35, 30, 51, 0.88);
+    --mist-08: rgba(237, 232, 223, 0.08);
+    --mist-12: rgba(237, 232, 223, 0.12);
+    --mist-22: rgba(237, 232, 223, 0.22);
+    --mist-30: rgba(237, 232, 223, 0.3);
+    --night-68: rgba(9, 12, 20, 0.68);
+    --black-22: rgba(0, 0, 0, 0.22);
+    --black-26: rgba(0, 0, 0, 0.26);
+    --black-28: rgba(0, 0, 0, 0.28);
+    --black-42: rgba(0, 0, 0, 0.42);
+
+    /* Transparencias de destaque */
+    --aurora-13: rgba(166, 127, 181, 0.13);
+    --aurora-14: rgba(166, 127, 181, 0.14);
+    --aurora-18: rgba(166, 127, 181, 0.18);
+    --aurora-26: rgba(166, 127, 181, 0.26);
+    --aurora-28: rgba(166, 127, 181, 0.28);
+    --aurora-30: rgba(166, 127, 181, 0.3);
+    --aurora-35: rgba(166, 127, 181, 0.35);
+    --aurora-42: rgba(166, 127, 181, 0.42);
+    --aurora-soft-10: rgba(201, 174, 216, 0.1);
+    --aurora-soft-24: rgba(201, 174, 216, 0.24);
+    --aurora-soft-28: rgba(201, 174, 216, 0.28);
+    --aurora-soft-35: rgba(201, 174, 216, 0.35);
+    --violet-glow-03: rgba(180, 130, 255, 0.03);
+    --violet-glow-08: rgba(180, 130, 255, 0.08);
+    --violet-glow-50: rgba(180, 130, 255, 0.5);
+    --indigo-glow-13: rgba(75, 63, 228, 0.13);
+    --ember-16: rgba(201, 123, 90, 0.16);
+    --ember-soft-18: rgba(224, 160, 128, 0.18);
+    --gold-18: rgba(212, 169, 106, 0.18);
+    --sage-18: rgba(122, 158, 138, 0.18);
+    --sage-45: rgba(122, 158, 138, 0.45);
+    --teal-muted-22: rgba(40, 61, 69, 0.22);
+
+    /* Gradientes */
+    --gradiente-aurora: linear-gradient(135deg, var(--aurora), var(--ember));
+    --gradiente-mist: linear-gradient(to right, var(--mist), var(--aurora));
+
+    /* Transicoes */
+    --transition: all .5s ease;
+}

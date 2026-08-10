@@ -1,0 +1,300 @@
+/* Header */
+/* Header: reduz fonte da navegacao e do botao */
+@media (max-width: 665px) {
+    .header .nav { font-size: 1rem; }
+    .header .btn { font-size: .8rem; }
+}
+
+/* Header: compacta barra, logo, navegacao e rodape */
+@media (max-width: 562px) {
+    .header__content { gap: 12px; padding: 14px 16px; }
+    .logo { width: 8rem; }
+    .nav { flex: 1; font-size: 10px; gap: 10px; width: auto; }
+    .header .btn__primary { font-size: 10px; letter-spacing: 0.02em; padding: 6px 10px; }
+    .footer { flex: 1; font-size: 10px; gap: 10px; width: auto; }
+}
+
+/* Modal */
+/* Modal: ajusta largura e textos em tablets */
+@media (max-width: 900px) {
+    .modal { max-width: 90%; padding: 52px 36px 42px; width: 600px; }
+}
+
+/* Modal: compacta janela e botao de fechar no mobile */
+@media (max-width: 560px) {
+    .modal { border-radius: 14px; max-height: 88vh; padding: 56px 22px 34px; width: 92%; }
+    .modal__close { height: 40px; right: 10px; top: 10px; width: 40px; }
+}
+
+/* Home */
+/* Home: organiza recursos em duas colunas */
+@media (max-width: 900px) {
+    .page__home .feat__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Home: centraliza container de estatisticas no desktop */
+@media (min-width: 900px) {
+    .page__home .container__stats { margin: 0 auto; width: 80%; }
+}
+
+/* Home: ajusta espacamentos gerais em telas medias */
+@media (min-width: 480px) {
+    .page__home .container__hero { margin: 6rem 0; }
+    .page__home .feat__grid { gap: 10px; }
+    .page__home .feat__container { text-align: center; width: 90%; }
+    .page__home .feat__container .title { margin: 0 auto; width: 100%; }
+    .page__home .feat__grid .feature-large2 { grid-column: span 2; }
+    .page__home .start__card { padding: 30px 10px; }
+}
+
+/* Home: reduz estatisticas e reorganiza passos */
+@media (max-width: 800px) {
+    .page__home .stat__card .numero { font-size: 4rem; }
+    .page__home .stat__card .descricao { font-size: 2rem; }
+    .page__home .steps__grid { grid-template-columns: repeat(2, 1fr); }
+    .page__home .step__card { border-bottom: none; border-left: none; border-radius: 0; }
+    .page__home .step__card:nth-child(even) { border-left: 1px solid var(--border); }
+    .page__home .step__card:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .page__home .step__card:first-child { border-radius: 30px 0 0 0; }
+    .page__home .step__card:nth-child(2) { border-radius: 0 30px 0 0; }
+    .page__home .step__card:nth-child(3) { border-radius: 0 0 0 30px; }
+    .page__home .step__card:last-child { border-radius: 0 0 30px 0; }
+}
+
+/* FAQ */
+/* FAQ: reduz largura principal em telas intermediarias */
+@media (max-width: 1271px) {
+    .page__faq main { width: 80%; }
+}
+
+/* FAQ: empilha conteudo, sidebar e suporte */
+@media (max-width: 900px) {
+    .page__faq main { width: min(90%, 760px); }
+    .page__faq .faq__body { grid-template-columns: 1fr; }
+    .page__faq .faq-sidebar { position: static; }
+    .page__faq .faq-sidebar__nav { flex-direction: row; flex-wrap: wrap; }
+    .page__faq .faq-support__card { align-items: flex-start; flex-direction: column; }
+    .page__faq .faq-support__title { width: 100%; }
+    .page__faq .faq-support__actions { justify-content: flex-start; padding: 2rem 0 0; }
+}
+
+/* FAQ: empilha hero e reduz titulo */
+@media (max-width: 697px) {
+    .page__faq .container__hero { align-items: flex-start; flex-direction: column; }
+    .page__faq .faq__label { margin-top: 30px; }
+    .page__faq .faq__title { font-size: 8rem; }
+}
+
+/* Contato */
+/* Contato: transforma formulario e informacoes em uma coluna */
+@media (max-width: 1000px) {
+    .page__contato .contact__content { grid-template-columns: 1fr; }
+    .page__contato .contact__info,
+    .page__contato .contact__card,
+    .page__contato .form__item { max-width: none; }
+    .page__contato .form__item { width: 100%; }
+    .page__contato .contact__form { padding: 40px; width: 100%; }
+    .page__contato .contact__info-cards { display: grid; grid-template-columns: 1fr; width: 100%; }
+}
+
+/* Contato: empilha hero e status */
+@media (max-width: 900px) {
+    .page__contato .container__hero { align-items: flex-start; flex-direction: column; gap: 3rem; width: 82%; }
+    .page__contato .hero__content { width: 100%; }
+    .page__contato .contact__status { align-self: flex-start; margin-bottom: 0; }
+}
+
+/* Contato: ajusta cards e titulo no mobile */
+@media (max-width: 697px) {
+    .page__contato .contact__info-cards { grid-template-columns: 1fr; }
+    .page__contato .hero__content .title { font-size: 5.6rem; }
+}
+
+/* Quem Somos */
+/* Quem Somos: expande layout para telas muito largas */
+@media (max-width: 1956px) {
+    .page__info .hero__content .title { font-size: 7rem; }
+}
+@media (min-width: 1920px) {
+    .page__info .hero__content { width: 1000px; }
+    .page__info .hero__content .title { font-size: 11rem; width: 1100px; }
+    .page__info .hero__content .subtitle { font-size: 3rem; min-width: 1000px; padding-top: 60px; }
+    .page__info .team__cards,
+    .page__info .container__solution,
+    .page__info .container__foot { max-width: 1520px; }
+    .page__info .team__cards .stat__card { min-height: 480px; padding: 5rem 3.2rem; }
+    .page__info .solution__blocks { flex-basis: 720px; max-width: 720px; padding: 42px; }
+    .page__info .feature { min-height: 280px; padding: 4rem; }
+}
+
+/* Quem Somos: reduz hero, imagem e blocos da solucao */
+@media (max-width: 1110px) {
+    .page__info .container__hero { gap: 4rem; justify-content: center; margin: 5rem auto; padding: 0 3rem; width: min(100%, 980px); }
+    .page__info .hero__content { max-width: 560px; }
+    .page__info .title { font-size: 4rem; }
+    .page__info .hero__image { flex-basis: min(420px, 38vw); }
+    .page__info .hero__image .hero__logo { max-width: 78px; }
+    .page__info .container__foot { margin: 10rem auto; padding: 0 3rem; }
+    .page__info .container__solution { gap: 20px; padding: 0 2.4rem; }
+    .page__info .solution__blocks { border-radius: 32px; padding: 26px; }
+}
+
+/* Quem Somos: reorganiza equipe, hero, rodape e solucao */
+@media (max-width: 980px) {
+    .page__info .team__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .page__info .team__cards .stat__card:nth-child(odd) { border-left: none; }
+    .page__info .container__hero { align-items: start; flex-direction: row; gap: 4rem; margin: 3rem 0; padding: 0; width: min(100%, 760px); }
+    .page__info .hero__content { max-width: 760px; }
+    .page__info .title { font-size: 4.4rem; }
+    .page__info .hero__image { flex: 0 0 auto; max-width: 320px; width: 100%; }
+    .page__info .hero__image .hero__logo { max-width: 72px; }
+    .page__info .stat__card { border-bottom: 1px solid var(--border); }
+    .page__info .foot__flex { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .page__info .container__solution { align-items: stretch; flex-direction: column; max-width: 760px; }
+    .page__info .solution__blocks { max-width: none; }
+    .page__info .solution__blocks .title { font-size: 3rem; }
+}
+
+/* Quem Somos: empilha hero e centraliza imagem */
+@media (max-width: 784px) {
+    .page__info .container__hero { align-items: center; flex-direction: column; margin: 0 auto; }
+    .page__info .hero__content { width: 80%; }
+    .page__info .title { font-size: 3.5rem; }
+    .page__info .hero__image { align-self: center; flex: 0 0 auto; max-height: 300px; max-width: 820px; width: 100%; }
+}
+
+/* Quem Somos: empilha rodape e passos da solucao */
+@media (max-width: 720px) {
+    .page__info .hero__image { max-width: none; width: 100%; }
+    .page__info .container__foot { margin: 7rem auto; padding: 0 2rem; }
+    .page__info .container__foot .title { font-size: 3.5rem; }
+    .page__info .foot__flex { grid-template-columns: 1fr; }
+    .page__info .foot__flex .foot__topic { padding-bottom: 18px; }
+    .page__info .container__solution { padding: 0 2rem; }
+    .page__info .solution__bottom { flex-direction: column; gap: 18px; }
+    .page__info .solution__step { align-items: flex-start; display: grid; gap: 0 14px; grid-template-columns: 50px 1fr; text-align: left; width: 100%; }
+    .page__info .solution__step .icon { grid-row: span 3; margin-bottom: 0; }
+    .page__info .solution__step .step__title { min-height: 0; }
+    .page__info .solution__blocks .btn__cta { align-self: stretch; text-align: center; }
+}
+
+/* Quem Somos: compacta secoes, cards e textos no mobile */
+@media (max-width: 560px) {
+    .page__info .container__hero { gap: 3rem; margin: 3rem auto; padding: 0 1.6rem; }
+    .page__info .title { font-size: 3.2rem; }
+    .page__info .hero__image { border-radius: 22px; max-width: none; padding: 3rem 2rem; width: 100%; }
+    .page__info .hero__image .hero__logo { max-width: 58px; }
+    .page__info .hero__image .hero__title { font-size: 3rem; }
+    .page__info .container__foot { margin: 5rem auto; padding: 0 1.6rem; }
+    .page__info .container__foot .title { font-size: 3.2rem; }
+    .page__info .foot__flex .foot__topic { font-size: 2rem; }
+    .page__info .foot__flex .foot__subtitle { font-size: 1.4rem; }
+    .page__info .container__solution { padding: 0 1.6rem; }
+    .page__info .solution { margin-bottom: 5rem; }
+    .page__info .solution__blocks { border-radius: 24px; padding: 22px; }
+    .page__info .solution__blocks .title { font-size: 2.7rem; }
+    .page__info .solution__blocks .subtitle { font-size: 1.25rem; }
+    .page__info .solution__card { border-radius: 18px; gap: 14px; padding: 16px; }
+    .page__info .solution__card .icon { height: 40px; width: 40px; }
+    .page__info .team__cards { width: 100%; }
+    .page__info .team__card-box { width: 100%; }
+    .page__info .stat__card .team__card-about { width: 80%; }
+    .page__info .team__cards .stat__card { border-left: none; border-right: none; border-top: 1px solid var(--border); padding: 30px 0; width: 100%; }
+    .page__info .team__cards .stat__card:first-child,
+    .page__info .team__cards .stat__card:nth-child(2) { border-top: none; }
+    .page__info .team__cards .stat__card:nth-child(even) { border-left: 1px solid var(--border); }
+}
+
+/* Sobre */
+/* Sobre: ajusta largura dos primeiros blocos */
+@media (max-width: 1164px) {
+    .page__sobre .container__main-1 { margin: 0 auto; width: 90%; }
+    .page__sobre .container__main-2 { margin: 0 auto; width: 80%; }
+}
+
+/* Sobre: reduz largura do terceiro bloco */
+@media (max-width: 1153px) {
+    .page__sobre .container__main-3 { margin: 0 auto; width: 80%; }
+}
+
+/* Sobre: amplia terceiro bloco em telas menores */
+@media (max-width: 1033px) {
+    .page__sobre .container__main-3 { margin: 0 auto; width: 90%; }
+}
+
+/* Sobre: empilha bloco principal ativo */
+@media (max-width: 980px) {
+    .page__sobre .container__main-1.active { flex-direction: column; gap: 28px; }
+    .page__sobre .container__main-1-left,
+    .page__sobre .container__main-1-right { width: 100%; }
+    .page__sobre .container__main-1 .main__title { max-width: 680px; }
+    .page__sobre .container__main-1 .main__subtitle { max-width: 760px; }
+}
+
+/* Sobre: reorganiza metricas do hero */
+@media (max-width: 900px) {
+    .page__sobre .container__hero-bottom { align-items: stretch; gap: 1.6rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .page__sobre .container__hero-bottom .subtitle { grid-column: 1 / -1; max-width: 680px; }
+    .page__sobre .hero__about { background-color: var(--aurora-glow); border: 1px solid var(--border); border-radius: 16px; justify-content: center; min-height: 110px; padding: 1.6rem 1.2rem; }
+    .page__sobre .about__num { font-size: 3.4rem; }
+}
+
+/* Sobre: centraliza conteudo e empilha beneficios */
+@media (max-width: 718px) {
+    .page__sobre .container__main-1 .main__head { align-items: center; margin-bottom: 40px; text-align: center; }
+    .page__sobre .container__main-1-left .section-tag { align-self: center; }
+    .page__sobre .journey__content { margin-bottom: 30px; padding-left: 26px; }
+    .page__sobre .grid-4 { gap: 10px; }
+    .page__sobre .grid-card,
+    .page__sobre .card-block-large { padding: 20px; }
+    .page__sobre .container__main-2 { width: 90%; }
+    .page__sobre .container__main-2-content { align-items: center; margin: 0 auto; text-align: center; width: min(100%, 520px); }
+    .page__sobre .container__main-2-content .section-tag { align-self: center; }
+    .page__sobre .benefits-flex { display: flex; flex-direction: column; }
+}
+
+/* Sobre: empilha grids e compacta cards do hero */
+@media (max-width: 560px) {
+    .page__sobre .hero { padding-inline: 1.6rem; }
+    .page__sobre .container__hero-bottom,
+    .page__sobre .grid-4,
+    .page__sobre .partner-modals__grid { grid-template-columns: 1fr; }
+    .page__sobre .container__hero-bottom .subtitle { max-width: none; text-align: center; }
+    .page__sobre .hero__about { min-height: 92px; padding: 1.4rem; }
+    .page__sobre .about__description { font-size: 1.1rem; }
+}
+
+/* Sobre: reduz titulos e espacamentos finais */
+@media (max-width: 520px) {
+    .page__sobre .container__main-1 { width: 92%; }
+    .page__sobre .container__main-1 .main__title { font-size: 3.2rem; }
+    .page__sobre .journey__top { gap: 14px; }
+    .page__sobre .journey__content { margin-left: 14px; padding-left: 20px; }
+    .page__sobre .journey__content-title { font-size: 1.8rem; }
+    .page__sobre .journey__content-subtitle,
+    .page__sobre .block-subtitle { font-size: 1.3rem; }
+    .page__sobre .grid-card-num { font-size: 3.2rem; }
+}
+
+/* Solucao: empilha hero, mapa e cards */
+@media (max-width: 900px) {
+    .page__solucao .solution__hero { grid-template-columns: 1fr; }
+    .page__solucao .hero__content,
+    .page__solucao .solution__text { grid-column: auto; grid-row: auto; }
+    .page__solucao .solution__visual { grid-column: auto; grid-row: auto; max-height: 520px; }
+    .page__solucao .solution__pitch { grid-template-columns: 1fr; }
+    .page__solucao .solution__cards { grid-template-columns: 1fr; }
+    .page__solucao .solution__card { min-height: 0; }
+}
+
+/* Solucao: reduz espacamentos e textos no mobile */
+@media (max-width: 560px) {
+    .page__solucao .solution__overview { margin-bottom: 5rem; padding: 0 1.6rem; }
+    .page__solucao .section-tag { font-size: 0.95rem; letter-spacing: 0.22em; margin-bottom: 1.6rem; }
+    .page__solucao .solution__title { font-size: clamp(3.2rem, 14vw, 5rem); }
+    .page__solucao .solution__pitch,
+    .page__solucao .solution__highlight { padding: 22px; }
+    .page__solucao .solution__text p,
+    .page__solucao .solution__highlight-text,
+    .page__solucao .solution__card p { font-size: 1.3rem; }
+}
