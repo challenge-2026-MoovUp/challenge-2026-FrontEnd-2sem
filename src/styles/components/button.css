@@ -7,6 +7,16 @@
     text-align: center;
     text-wrap: nowrap;
     font-family: 'Jost', sans-serif;
+    background: transparent;
+    border: none;
+}
+
+.btn span {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
 }
 
 .btn__primary {
@@ -20,6 +30,7 @@
     border: 1px solid var(--aurora-30);
     border-radius: 999px;
     transition: all 0.2s;
+    background: transparent;
 }
 
 .btn__primary:hover {
@@ -28,6 +39,7 @@
     box-shadow: 
     0 0 20px var(--violet-glow-08),
     inset 0 0 20px var(--violet-glow-03);
+    cursor: pointer;
 }
 
 /* Botao reutilizavel para chamadas de acao */
@@ -49,6 +61,7 @@
 .btn__cta--primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 36px var(--aurora-35);
+    cursor: pointer;
 }
 
 .btn__cta--outline {
