@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import Logo from '../../assets/moov-up-icon.png'
 import Button from '../common/Button.tsx'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 interface HeaderProps {
     onOpenModal: () => void
@@ -36,7 +38,7 @@ export default function Header({ onOpenModal, userEmail }: HeaderProps) {
                 </nav>
                 {userEmail ? (
                     <Button variant="primary" onClick={onOpenModal}>
-                        <span>{userEmail}</span>
+                        <span> <FontAwesomeIcon icon={faUser} /> {userId}</span>
                     </Button>
                 ) : (
                     <Button variant="primary" onClick={onOpenModal}>
