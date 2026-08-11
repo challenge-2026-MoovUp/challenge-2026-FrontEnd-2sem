@@ -17,6 +17,7 @@
     flex-direction: row;
     justify-content: center;
     margin: 10rem 0;
+    height: 600px;
 }
 
 .page__home .hero__content {
@@ -49,7 +50,7 @@
 .page__home .title {
     color: var(--mist);
     font-weight: 200;
-    margin-bottom: 30px;
+    margin-bottom: 3rem
 }
 
 .page__home .title span {
