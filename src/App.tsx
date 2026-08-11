@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from './components/layout/Layout.tsx';
-// import Home from './pages/Home.tsx';
+import Home from './pages/Home.tsx';
 // import Sobre from './pages/Sobre.tsx';
 // import Solucao from './pages/Solucao.tsx';
 // import QuemSomos from './pages/QuemSomos.tsx';
@@ -11,8 +11,9 @@ function App() {
     return (
         <Routes>
             <Route element={<Layout />}>
-                {/* <Route index element={<Home />} />
-                <Route path="quem-somos" element={<QuemSomos />} />
+                <Route path="/" element={<Home />} /> 
+                <Route path="/home" element={<Home />} /> 
+                {/* <Route path="quem-somos" element={<QuemSomos />} />
                 <Route path="sobre" element={<Sobre />} />
                 <Route path="solucao" element={<Solucao />} />
                 <Route path="faq" element={<Faq />} />
