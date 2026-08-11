@@ -4,11 +4,12 @@ import Button from '../components/common/Button'
 interface HomeContext {
     onOpenModal: () => void
     userEmail: string | null
+    userId: string | null
 }
 
 export default function Home() {
-    const { onOpenModal, userEmail } = useOutletContext<HomeContext>()
-    
+    const { onOpenModal, userEmail, userId } = useOutletContext<HomeContext>()
+
     return (
         <div className="page__home">
             <div className="ambient" aria-hidden="true">
@@ -20,7 +21,7 @@ export default function Home() {
                 <div className="container__hero">
                     <div className="hero__content">
                         {userEmail ? (
-                            <p className="section-tag">Bem vindo, {userEmail}</p>
+                            <p className="section-tag">Bem vindo, {userId}</p>
                         ) : (
                             <p className="section-tag">Suas interações valem pontos</p>
                         )}
@@ -30,7 +31,7 @@ export default function Home() {
                             {userEmail ? null : (
                                 <Button variant="cta-primary" onClick={onOpenModal}>Criar Conta Grátis</Button>
                             )}
-                            <Button variant="cta-outline">VER COMO FUNCIONA</Button>
+                            <Button variant="cta-outline" onClick={() => document.getElementById('steps-goto')?.scrollIntoView({ behavior: 'smooth' })}>VER COMO FUNCIONA</Button>
                         </div>
                     </div>
                 </div>
@@ -74,9 +75,10 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
-            <section className="steps__section" id="steps-goto">
+        <div id="steps-goto"></div>
+            <section className="steps__section" >
                 <div className="steps">
                     <p className="section-tag">Como Funciona</p>
                     <h2 className="title">Em <span>4 passos </span>simples</h2>
