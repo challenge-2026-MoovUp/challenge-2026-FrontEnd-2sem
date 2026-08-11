@@ -9,19 +9,24 @@ function Layout(){
     const [userEmail, setUserEmail] = useState<string | null >(() => 
         localStorage.getItem('userEmail')
     )
+    const [userId, setUserId] = useState<string | null> (() =>
+        localStorage.getItem('userId')
+    )
 
-    function handleLogin(email: string) {
+    function handleLogin(email: string, user: string) {
+        setUserId(user)
         setUserEmail(email)
         localStorage.setItem('userEmail', email)
+        localStorage.setItem('userId', user)
         setIsModalOpen(false)
     }
 
     return(
         <>
-            <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} />
+            <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userId={userId} />
             <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin}/>
             <main>
-                <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail }}/>
+                <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userId }}/>
             </main>
         </>
     )

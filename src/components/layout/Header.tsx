@@ -7,6 +7,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 interface HeaderProps {
     onOpenModal: () => void
     userEmail: string | null
+    userId: string | null
 }
 
 const navItems = [
@@ -16,7 +17,7 @@ const navItems = [
     { path: '/faq', label: 'FAQ' },
     { path: '/contato', label: 'Contato' },
 ]
-export default function Header({ onOpenModal, userEmail }: HeaderProps) {
+export default function Header({ onOpenModal, userEmail, userId }: HeaderProps) {
     return (
         <header className="header">
             <div className="header__content">
@@ -36,7 +37,7 @@ export default function Header({ onOpenModal, userEmail }: HeaderProps) {
                         </NavLink>
                     ))}
                 </nav>
-                {userEmail ? (
+                {userId ? (
                     <Button variant="primary" onClick={onOpenModal}>
                         <span> <FontAwesomeIcon icon={faUser} /> {userId}</span>
                     </Button>

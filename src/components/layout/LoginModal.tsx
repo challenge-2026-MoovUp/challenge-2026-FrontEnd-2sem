@@ -5,11 +5,12 @@ import Button from '../common/Button.tsx'
 interface LoginModalProps {
     isOpen: boolean
     onClose: () => void
-    onLogin: (email: string) => void
+    onLogin: (user: string , email: string) => void
 }
 
 export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null)
+    const [user, setUser] = useState('')
     const [email, setEmail] = useState('')
 
     useEffect(() => {
@@ -22,7 +23,8 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
 
     function handleSubmit(){
         if (!email) return
-        onLogin(email)
+        onLogin(email, user)
+        setUser('')
         setEmail('')
     }
 
@@ -37,7 +39,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                 {'‹ voltar'}
             </button>
 
-            <form className="login__content" id="msg">
+            <form className="login__content" id="msg" autoComplete='off'>
                 <div className="login-head">
                     <img src={LogoMoovup} alt="logo moovUp" className="login-logo" />
                 </div>
@@ -49,17 +51,29 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                 <div className="login-labels">
                     <label className="login__label">
                         <input
+                            className="login__input login-user"
+                            id="user"
+                            type="text"
+                            placeholder="usuario"
+                            value={user}
+                            onChange={(u) => setUser(u.target.value)}
+                        />
+                    </label>
+
+                    <label className="login__label">
+                        <input
                             className="login__input login-email"
                             id="email"
                             type="email"
                             placeholder="seu@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            autoComplete='new-password'
                         />
                     </label>
 
                     <label className="login__label">
-                        <input className="login__input login-senha" id="senha"type="password" placeholder="senha"/>
+                        <input className="login__input login-senha" id="senha"type="password" placeholder="senha" autoComplete='off'/>
                     </label>
                 </div>
 
