@@ -11,8 +11,7 @@ function App() {
     return (
         <Routes>
             <Route element={<Layout />}>
-                <Route path="/" element={<Home />} /> 
-                <Route path="/home" element={<Home />} /> 
+                <Route index element={<Home />} /> 
                 {/* <Route path="quem-somos" element={<QuemSomos />} />
                 <Route path="sobre" element={<Sobre />} />
                 <Route path="solucao" element={<Solucao />} />
