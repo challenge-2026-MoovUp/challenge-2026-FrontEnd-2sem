@@ -21,7 +21,7 @@ function Layout(){
             <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} />
             <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin}/>
             <main>
-                <Outlet />
+                <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail }}/>
             </main>
         </>
     )
