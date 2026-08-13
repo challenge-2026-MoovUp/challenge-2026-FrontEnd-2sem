@@ -155,8 +155,10 @@
     border: 2px solid var(--border);
     border-radius: 30px;
     display: flex;
+    width: 120rem;
+
     flex-direction: column;
-    margin: 6rem 0;
+    margin: 15rem auto;
     overflow: hidden;
     padding: 6rem;
     position: relative;
