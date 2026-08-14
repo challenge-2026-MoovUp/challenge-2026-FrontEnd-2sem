@@ -178,6 +178,10 @@
 /* =========================================================================== */
                                 /* Containers navegaveis */
 /* =========================================================================== */
+.page__sobre .section__main {
+    padding: 2rem 2.4rem 8rem;
+}
+
 .page__sobre .container__main {
     margin: 0 auto;
     max-width: 1120px;
