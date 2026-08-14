@@ -159,6 +159,7 @@
 
 .page__info .info__details {
     margin: 10rem 15rem 5rem;
+    scroll-margin-top: 120px;
 }
 
 .page__info .info__team .info__details {

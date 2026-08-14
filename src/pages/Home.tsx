@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 import Button from '../components/common/Button'
+import Foot from '../components/common/Foot'
 
 interface HomeContext {
     onOpenModal: () => void
@@ -107,23 +108,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="foot">
-                <div className="container__foot">
-                    <div className="start__card">
-                        <p className="section-tag">Comece hoje</p>
-                        <h2 className="title">Pronto para começar a <span>ganhar?</span></h2>
-                        <p className="subtitle">Mais de 2 milhões de pessoas já transformam interações em benefícios reais.</p>
-                        <div className="hero__actions">
-                            {userEmail ? (
-                                null
-                            ) : (
-                                <Button variant="cta-primary" onClick={onOpenModal}>Criar Conta Grátis</Button>
-                            )}
-                            <Button variant="cta-outline">SAIBA MAIS</Button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <Foot ctaTo="/Sobre" btnStr='SAIBA MAIS'/>
         </div>
     )
 }

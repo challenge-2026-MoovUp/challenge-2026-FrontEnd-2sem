@@ -54,7 +54,6 @@ export default function QuemSomos() {
                     </div>
                 </div>
             </section>
-
             <div className="info__details" id="creators-goto">
                 <p className="section-tag">NOSSOS CRIADORES</p>
             </div>
@@ -80,7 +79,7 @@ export default function QuemSomos() {
                             <h3 className="team__card-label">{creator.name}</h3>
                             <p className="team__card-rm">{creator.class}</p>
                             <div className="team__card-about">
-                                <p>{creator.bio[0].slice(0,140)}...</p>
+                                <p>{creator.bio[0].slice(0, 140)}...</p>
                             </div>
                             <div className="team__links">
                                 <a href={creator.github} target="_blank" rel="noopener noreferrer">
@@ -195,6 +194,6 @@ export default function QuemSomos() {
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     )
 }
