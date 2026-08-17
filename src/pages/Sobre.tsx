@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { solutionTabs } from "../data/solutionTabs"
 import SolutionOverview from "../components/sobre/SolutionOverview"
+import SolutionPassType from "../components/sobre/SolutionPassType"
+import SolutionInfo from "../components/sobre/SolutionInfo"
 import Foot from "../components/common/Foot"
 
 export default function Sobre() {
@@ -61,6 +63,8 @@ export default function Sobre() {
             <section className="section__main">
                 <div className="container__main">
                     <SolutionOverview isActive={activeTab === 'container-1'} />
+                    <SolutionPassType isActive={activeTab === 'container-2'} />
+                    <SolutionInfo isActive={activeTab === 'container-3'} />
                 </div>
             </section>
 
