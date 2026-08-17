@@ -121,7 +121,7 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                 <div className="video__direction-card">
                     <h3 className="video__card-title">E nós da <span>MoovUp</span>, gostaríamos de apresentar um breve vídeo, resumindo nossa <span>solução</span></h3>
                     <div className="video__direction-buttons">
-                        <Link to="/solucao#solution-pitch-title" className="btn btn__primary card__btn">ir para o vídeo</Link>
+                        <Link to="/solucao#solution-pitch" className="btn btn__primary card__btn">ir para o vídeo</Link>
                         <Link to="/quem-somos#creators-goto" className="btn btn__primary card__btn2">conheça os participantes</Link>
                     </div>
                 </div>

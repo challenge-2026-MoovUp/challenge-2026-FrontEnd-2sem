@@ -14,10 +14,11 @@ const navItems = [
     { path: '/', label: 'Inicio' },
     { path: '/quem-somos', label: 'Quem Somos' },
     { path: '/sobre', label: 'Sobre' },
+    { path: '/solucao', label: 'Solução' },
     { path: '/faq', label: 'FAQ' },
     { path: '/contato', label: 'Contato' },
 ]
-export default function Header({ onOpenModal, userEmail, userId }: HeaderProps) {
+export default function Header({ onOpenModal, userId }: HeaderProps) {
     return (
         <header className="header">
             <div className="header__content">
