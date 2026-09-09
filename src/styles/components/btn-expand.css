@@ -1,4 +1,10 @@
 /* Accordion */
+.accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 .accordion {
     color: var(--mist);
     text-align: left;
