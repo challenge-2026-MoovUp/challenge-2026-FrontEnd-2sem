@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { solutionTabs } from "../data/solutionTabs"
-import SolutionOverview from "../components/sobre/SolutionOverview"
-import SolutionPassType from "../components/sobre/SolutionPassType"
-import SolutionInfo from "../components/sobre/SolutionInfo"
-import Foot from "../components/common/Foot"
+import { solutionTabs } from "../../data/solutionTabs"
+import SolutionOverview from "../../components/sobre/SolutionOverview"
+import SolutionPassType from "../../components/sobre/SolutionPassType"
+import SolutionInfo from "../../components/sobre/SolutionInfo"
+import Foot from "../../components/common/Foot"
 
 export default function Sobre() {
 
