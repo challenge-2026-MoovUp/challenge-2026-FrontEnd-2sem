@@ -138,7 +138,7 @@ Para dúvidas ou sugestões sobre o projeto:
 - **Pedro Amaro** — [LinkedIn](https://www.linkedin.com/in/pedro-amaro-pires) · [GitHub](https://github.com/pedroamarop)
 - **Juan Marques** — [LinkedIn](https://www.linkedin.com/in/juan-marques-297b293b4/) · [GitHub](https://github.com/juansouzamarques)
 - **Lucas Leite** — [LinkedIn](https://www.linkedin.com/in/lucas-leite-carlos-5b72973a9/) · [GitHub](https://github.com/Leite-1309)
-- **Matheus Matsushita** — theus.matsu@gmail.com · [LinkedIn](https://www.linkedin.com/in/matheus-matsushita-de-souza-543269346/)
+- **Matheus Matsushita** — [LinkedIn](https://www.linkedin.com/in/matheus-matsushita-de-souza-543269346/) · [GitHub](https://github.com/Leite-1309)
 
 ---
 
