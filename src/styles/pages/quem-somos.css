@@ -560,14 +560,14 @@
     gap: 14px;
     margin: 20px;
     max-height: 86vh;
-    max-width: 660px;
+    max-width: 460px;
     opacity: 0;
     overflow-y: auto;
-    padding: 34px 42px;
+    padding: 26px 32px;
     position: relative;
     text-align: center;
     transform: translateY(20px);
-    width: min(92vw, 520px);
+    width: min(92vw, 400px);
     z-index: 1;
 }
 
@@ -588,10 +588,10 @@
 }
 
 .page__info .popup__card > .team__icon {
-    height: 200px;
+    height: 140px;
     margin-top: 4px;
     max-width: none;
-    width: 200px;
+    width: 140px;
 }
 
 .page__info .popup__card > .description {
@@ -607,7 +607,7 @@
 
 .page__info .popup__team__card-label {
     color: var(--aurora-soft);
-    font-size: 2.8rem;
+    font-size: 2.2rem;
     font-weight: 300;
     line-height: 1.1;
 }
@@ -615,7 +615,7 @@
 .page__info .popup__team__card-rm {
     color: var(--ember-soft);
     font-family: var(--font-sans);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-top: -10px;
 }
 
@@ -623,11 +623,11 @@
     color: var(--mist);
     display: flex;
     flex-direction: column;
-    font-size: 1.45rem;
+    font-size: 1.2rem;
     font-weight: 100;
-    gap: 12px;
-    line-height: 1.45;
-    max-width: 540px;
+    gap: 10px;
+    line-height: 1.4;
+    max-width: 400px;
     text-align: left;
 }
 
@@ -667,7 +667,7 @@
 .page__info .popup__team__links .team__link {
     position: relative;
     transition: filter 0.25s ease;
-    width: 74px;
+    width: 56px;
     z-index: 1;
 }
 

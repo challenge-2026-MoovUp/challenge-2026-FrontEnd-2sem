@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
-import Button from '../components/common/Button'
-import Foot from '../components/common/Foot'
+import Button from '../../components/common/Button'
+import Foot from '../../components/common/Foot'
 
 interface HomeContext {
     onOpenModal: () => void
