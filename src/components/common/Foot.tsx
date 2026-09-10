@@ -32,9 +32,9 @@ export default function Foot({ ctaTo, btnStr, large }: FootProps) {
                         {userEmail ? (
                             null
                         ) : (
-                            <Button variant="cta-primary" onClick={onOpenModal}>Criar Conta Grátis</Button>
+                            <Button variant="cta-primary" className={largeClass} onClick={onOpenModal}>Criar Conta Grátis</Button>
                         )}
-                        <Button variant="cta-outline" onClick={ctaTo ? () => navigate(ctaTo) : undefined}>{btnStr}</Button>
+                        <Button variant="cta-outline" className={largeOutlineClass} onClick={ctaTo ? () => navigate(ctaTo) : undefined}>{btnStr}</Button>
                     </div>
                 </div>
             </div>

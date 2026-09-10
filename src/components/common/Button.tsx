@@ -5,7 +5,7 @@ interface ButtonProps {
     className?: string
 }
 
-const baseClass = "flex justify-items-center whitespace-nowrap rounded-[20px] border-none bg-transparent text-center text-base font-bold font-sans"
+const baseClass = "flex justify-items-center whitespace-nowrap rounded-[20px] bg-transparent text-center text-base font-bold font-sans"
 
 const variantClasses = {
     'primary': `${baseClass} border border-aurora-30 rounded-full px-[18px] py-2 text-[1.3rem] font-normal uppercase tracking-[0.06em] text-aurora-soft no-underline transition-all duration-200 hover:cursor-pointer hover:border-violet-glow-50 hover:bg-violet-glow-08 hover:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]`,

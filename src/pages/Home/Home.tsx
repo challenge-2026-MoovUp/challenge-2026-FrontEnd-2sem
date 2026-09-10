@@ -54,9 +54,9 @@ export default function Home() {
                         <p className="font-sans text-[2rem] font-thin text-mist-dim">A plataforma que transforma cada curtida, post e comentário em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
                         <div className="flex items-center justify-center gap-4">
                             {userEmail ? null : (
-                                <Button variant="cta-primary" onClick={onOpenModal}>Criar Conta Grátis</Button>
+                                <Button variant="cta-primary" className={heroCtaClass} onClick={onOpenModal}>Criar Conta Grátis</Button>
                             )}
-                            <Button variant="cta-outline" onClick={() => document.getElementById('steps-goto')?.scrollIntoView({ behavior: 'smooth' })}>VER COMO FUNCIONA</Button>
+                            <Button variant="cta-outline" className={heroCtaOutlineClass} onClick={() => document.getElementById('steps-goto')?.scrollIntoView({ behavior: 'smooth' })}>VER COMO FUNCIONA</Button>
                         </div>
                     </div>
                 </div>
