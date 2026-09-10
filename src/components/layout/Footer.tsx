@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom'
 import Logo from '../../assets/moov-up-icon.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons'
