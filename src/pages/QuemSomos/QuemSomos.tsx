@@ -1,5 +1,4 @@
 import HeroImage from '../../assets/hero-image.png'
-import { Navigate, useOutletContext } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { creators } from '../../data/creators'
 import GitHubImg from '../../assets/github.png'

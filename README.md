@@ -84,6 +84,30 @@ moovup/
 
 ---
 
+## 📸 Imagens do Projeto
+
+> Capturas de tela em `docs/screenshots/`. Salve os prints com esses nomes de arquivo (ou ajuste os caminhos abaixo se preferir outros nomes).
+
+### Página Inicial
+![Página Inicial](./docs/screenshots/home.png)
+
+### Quem Somos
+![Quem Somos](./docs/screenshots/quem-somos.png)
+
+### Sobre
+![Sobre](./docs/screenshots/sobre.png)
+
+### Solução
+![Solução](./docs/screenshots/solucao.png)
+
+### FAQ
+![FAQ](./docs/screenshots/faq.png)
+
+### Contato
+![Contato](./docs/screenshots/contato.png)
+
+---
+
 ## 🖥️ Como Executar Localmente
 
 ```bash
