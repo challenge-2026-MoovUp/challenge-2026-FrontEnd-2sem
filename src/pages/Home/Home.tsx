@@ -8,7 +8,7 @@ interface HomeContext {
     userId: string | null
 }
 
-const sectionTagClass = "my-[30px] inline-block rounded-[30px] border border-border bg-ember-soft-18 px-5 py-[5px] font-sans text-[1.5rem] italic text-ember before:mr-2 before:inline-block before:h-[5px] before:w-[5px] before:rounded-full before:bg-ember before:align-middle before:content-[''] before:animate-[breathe_4s_ease-in-out_infinite]"
+const sectionTagClass = "my-[30px] inline-block rounded-[30px] border border-border bg-ember-soft-18 px-[20px] py-[5px] font-sans text-[1.5rem] italic text-ember before:mr-2 before:inline-block before:h-[5px] before:w-[5px] before:rounded-full before:bg-ember before:align-middle before:content-[''] before:animate-[breathe_4s_ease-in-out_infinite]"
 
 // Reproduz o antigo destaque `.page__home .btn__cta` (fonte maior, mais margem, hover mais forte).
 const heroCtaClass = "!my-[50px] !w-fit !text-[1.6rem] !font-extralight hover:!-translate-y-[3px]"
@@ -71,9 +71,9 @@ export default function Home() {
                         {features.map((feature, index) => (
                             <div
                                 key={feature.topic}
-                                className={`group rounded-[10px] border border-border bg-void p-12 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-300 ease-in-out hover:border-aurora-42 hover:bg-aurora-glow hover:shadow-[0_18px_38px_var(--color-void-34)] hover:-translate-y-1.5 ${feature.large ? 'col-span-2' : ''} ${index < 2 ? 'min-h-[250px]' : 'min-h-[150px]'}`}
+                                className={`group rounded-[10px] border border-border bg-void p-12 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-300 ease-in-out hover:border-aurora-42 hover:bg-aurora-glow hover:shadow-[0_18px_38px_var(--color-void-34)] hover:-translate-y-[6px] ${feature.large ? 'col-span-2' : ''} ${index < 2 ? 'min-h-[250px]' : 'min-h-[150px]'}`}
                             >
-                                <p className="mb-[10px] inline-block rounded-[10px] border border-border bg-aurora-glow px-2 py-1 text-[1.8rem] transition-transform duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:scale-[1.08]">{feature.icon}</p>
+                                <p className="mb-[10px] inline-block rounded-[10px] border border-border bg-aurora-glow px-[8px] py-[4px] text-[1.8rem] transition-transform duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:scale-[1.08]">{feature.icon}</p>
                                 <h3 className="text-[2.5rem] font-extralight text-mist">{feature.topic}</h3>
                                 <p className="pt-[10px] font-sans text-[1.3rem] font-thin text-mist-dim">{feature.about}</p>
                             </div>
@@ -91,9 +91,9 @@ export default function Home() {
                         {steps.map((step, index) => (
                             <div
                                 key={step.num}
-                                className={`flex h-auto flex-col border-l border-border px-6 py-10 text-left font-bold text-mist [transition:all_.5s_ease] hover:-translate-y-1.5 hover:bg-dusk-mid hover:shadow-[0_18px_40px_var(--color-aurora-14)] ${index === 0 ? 'border-l-0 rounded-l-[30px]' : ''} ${index === steps.length - 1 ? 'rounded-r-[30px]' : ''}`}
+                                className={`flex h-auto flex-col border-l border-border px-[24px] py-[40px] text-left font-bold text-mist [transition:all_.5s_ease] hover:-translate-y-[4px] hover:bg-dusk-mid hover:shadow-[0_18px_40px_var(--color-aurora-14)] ${index === 0 ? 'border-l-0 rounded-l-[30px]' : ''} ${index === steps.length - 1 ? 'rounded-r-[30px]' : ''}`}
                             >
-                                <p className={`inline-flex h-8 w-8 self-start items-center justify-center rounded-full border border-current font-sans text-[1.7rem] font-light leading-none ${step.numClass}`}>{step.num}</p>
+                                <p className={`inline-flex h-[32px] w-[32px] self-start items-center justify-center rounded-full border border-current font-sans text-[1.7rem] font-light leading-none ${step.numClass}`}>{step.num}</p>
                                 <h3 className="pt-[10px] text-[2rem] font-thin text-mist">{step.topic}</h3>
                                 <p className="font-sans text-[15px] font-normal text-gray-muted">{step.subtitle}</p>
                             </div>

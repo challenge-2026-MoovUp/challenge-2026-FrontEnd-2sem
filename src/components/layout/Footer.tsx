@@ -2,12 +2,12 @@ import Logo from '../../assets/moov-up-icon.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 
-const socialLinkClass = "inline-flex items-center text-5xl text-aurora after:mx-3 after:inline-flex after:items-center after:text-[2.2rem] after:leading-none after:content-['•']"
+const socialLinkClass = "inline-flex items-center text-5xl text-aurora after:mx-[12px] after:inline-flex after:items-center after:text-[2.2rem] after:leading-none after:content-['•']"
 
 export default function Footer(){
     return (
         <footer>
-            <div className="relative grid w-full grid-cols-[1fr_auto_1fr] items-center gap-0 border-t border-dusk-light bg-void-78 p-8 font-sans text-2xl font-normal text-mist-dim backdrop-blur-[16px] before:content-[''] before:pointer-events-none before:absolute before:left-0 before:right-0 before:-top-6 before:h-6 before:bg-gradient-to-t before:from-void-28 before:to-transparent">
+            <div className="relative grid w-full grid-cols-[1fr_auto_1fr] items-center gap-0 border-t border-dusk-light bg-void-78 p-8 font-sans text-2xl font-normal text-mist-dim backdrop-blur-[16px] before:content-[''] before:pointer-events-none before:absolute before:left-0 before:right-0 before:-top-[24px] before:h-[24px] before:bg-gradient-to-t before:from-void-28 before:to-transparent">
                 <div className="flex w-40 justify-self-start">
                     <img src={Logo} className="h-auto w-1/4" />
                     <p className="self-center pl-[15px] font-serif text-2xl text-mist-dim">MoovUp</p>
