@@ -9,12 +9,17 @@ interface HomeContext {
 interface FootProps {
     ctaTo?: string
     btnStr?: string
+    /** Reproduz o antigo destaque `.page__home .btn__cta` (fonte maior, mais margem, hover mais forte). */
+    large?: boolean
 }
 
-export default function Foot({ ctaTo, btnStr }: FootProps) {
+export default function Foot({ ctaTo, btnStr, large }: FootProps) {
 
     const { onOpenModal, userEmail } = useOutletContext<HomeContext>()
     const navigate = useNavigate()
+
+    const largeClass = large ? "!my-[50px] !w-fit !text-[1.6rem] !font-extralight hover:!-translate-y-[3px]" : undefined
+    const largeOutlineClass = large ? `${largeClass} hover:!border-mist-30 hover:!bg-border` : undefined
 
     return (
         <section className="foot">
