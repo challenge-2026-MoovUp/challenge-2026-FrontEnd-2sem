@@ -17,14 +17,6 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-/* FAQ */
-
-.faq__body {
-    display: grid;
-    gap: 32px;
-    grid-template-columns: 180px 1fr;
-}
-
 /* Sobre */
 
 .page__sobre .container__hero-bottom {
