@@ -24,7 +24,7 @@ O site foi construído com **React, TypeScript e Vite**, com roteamento via **Re
 - **FAQ** com perguntas organizadas por categoria, sidebar com scroll-spy e busca em tempo real que filtra as perguntas
 - **Contato** com canais de atendimento e formulário de mensagem
 - **Roteamento client-side** entre todas as páginas com React Router
-- **Design responsivo** construído com CSS modular (variáveis, Grid e Flexbox)
+- **Design responsivo mobile-first** construído com TailwindCSS (breakpoints customizados `tablet:` e `desktop:`)
 
 ---
 
@@ -182,7 +182,7 @@ Para dúvidas ou sugestões sobre o projeto:
 - **Pedro Amaro** — [LinkedIn](https://www.linkedin.com/in/pedro-amaro-pires) · [GitHub](https://github.com/pedroamarop)
 - **Juan Marques** — [LinkedIn](https://www.linkedin.com/in/juan-marques-297b293b4/) · [GitHub](https://github.com/juansouzamarques)
 - **Lucas Leite** — [LinkedIn](https://www.linkedin.com/in/lucas-leite-carlos-5b72973a9/) · [GitHub](https://github.com/Leite-1309)
-- **Matheus Matsushita** — [LinkedIn](https://www.linkedin.com/in/matheus-matsushita-de-souza-543269346/) · [GitHub](https://github.com/Leite-1309)
+- **Matheus Matsushita** — [LinkedIn](https://www.linkedin.com/in/matheus-matsushita-de-souza-543269346/) · [GitHub](https://github.com/Matsushita1907)
 
 ---
 
