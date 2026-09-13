@@ -31,7 +31,6 @@
 @import url('../pages/home.css') layer(legacy);
 @import url('../pages/contato.css') layer(legacy);
 @import url('../pages/sobre.css') layer(legacy);
-@import url('../pages/solucao.css') layer(legacy);
 
 /* Tailwind CSS */
 @import "tailwindcss";
