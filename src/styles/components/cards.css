@@ -148,62 +148,6 @@
     padding-top: 10px;
 }
 
-/* CTA final */
-.start__card {
-    align-items: center;
-    background-color: var(--dusk);
-    border: 2px solid var(--border);
-    border-radius: 30px;
-    display: flex;
-    width: 120rem;
-
-    flex-direction: column;
-    margin: 15rem auto;
-    overflow: hidden;
-    padding: 6rem;
-    position: relative;
-    text-align: center;
-}
-
-.start__card::before {
-    background: var(--violet-deep);
-    border-radius: 50%;
-    content: "";
-    filter: blur(90px);
-    height: 260px;
-    left: -90px;
-    opacity: 0.45;
-    pointer-events: none;
-    position: absolute;
-    top: -90px;
-    width: 260px;
-    z-index: 0;
-}
-
-.start__card > * {
-    position: relative;
-    z-index: 1;
-}
-
-.start__card .title {
-    font-size: 6rem;
-}
-
-.start__card .subtitle {
-    color: var(--dust);
-    font-size: 4rem;
-    margin: 20px 0;
-    width: 80%;
-}
-
-.start__card .btn.btn__cta {
-    font-weight: 500;
-}
-
-.start__card .hero__actions {
-    justify-content: center;
-}
-
 /* Numero do primeiro passo */
 .steps .num1 {
     background-color: var(--teal-muted-22);
