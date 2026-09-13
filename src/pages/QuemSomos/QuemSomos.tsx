@@ -52,10 +52,10 @@ export default function QuemSomos() {
     const navigate = useNavigate()
 
     return (
-        <div className="page__info">
-            <div className="ambient" aria-hidden="true">
-                <span className="orb orb-1" />
-                <span className="orb orb-2" />
+        <>
+            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+                <span className="absolute -right-[180px] top-[120px] h-[620px] w-[520px] animate-[orbFloat_24s_ease-in-out_infinite_alternate] rounded-full opacity-[.38] blur-[110px] [background:radial-gradient(circle,var(--color-sage)_0%,transparent_72%)]" />
+                <span className="absolute -left-[140px] bottom-[26%] h-[180px] w-[520px] animate-[orbFloat_24s_ease-in-out_infinite_alternate] rounded-full opacity-[.38] blur-[110px] [background:radial-gradient(circle,var(--color-ember-soft)_0%,transparent_78%)]" />
             </div>
             <section>
                 <div className="my-4 flex min-h-screen items-center justify-between mx-16 px-6 py-4">
@@ -179,6 +179,6 @@ export default function QuemSomos() {
                     </div>
                 </div>
             </section>
-        </div>
+        </>
     )
 }

@@ -1,7 +1,11 @@
-/* Design tokens do projeto, expostos como tokens do Tailwind (@theme).
-   Migrados 1:1 das variáveis antigas em base/variables.css para que as
-   classes utilitárias (bg-void, text-aurora, font-sans, etc.) gerem
-   exatamente as mesmas cores/fontes usadas no design original. */
+/* Fontes externas */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
+
+@import "tailwindcss";
+
+/* Design tokens do projeto, expostos como tokens do Tailwind (@theme) para que
+   as classes utilitárias (bg-void, text-aurora, font-sans, etc.) gerem as
+   cores/fontes usadas em todo o design. */
 @theme {
     /* Tipografia */
     --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -111,5 +115,83 @@
 
     to {
         transform: translate3d(40px, -30px, 0);
+    }
+}
+
+/* Pontinho animado das etiquetas (section-tag) espalhadas pelo site */
+@keyframes breathe {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
+
+/* Sublinhado que "cresce" da esquerda pra direita nas abas ativas da pagina Sobre */
+@keyframes navBorderGrow {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* Entrada do card de popup da equipe (Quem Somos) */
+@keyframes popupCardEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Base da pagina — o restante da estilização vive nos componentes, via Tailwind */
+html {
+    background-color: var(--color-void);
+    /* 1rem = 10px daqui pra frente: todo valor em rem usado nos componentes
+       (via classes utilitárias arbitrárias, ex: text-[4.5rem]) é relativo a isso. */
+    font-size: 62.5%;
+    height: 100%;
+    min-height: 100%;
+    overscroll-behavior-y: none;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-void);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-serif);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    width: 100%;
+}
+
+body main {
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+@supports (overflow: clip) {
+    html,
+    body {
+        overflow-x: clip;
     }
 }
