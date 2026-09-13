@@ -41,18 +41,18 @@ export default function Home() {
             </div>
 
             <section>
-                <div className="mx-auto my-40 flex h-[600px] flex-row items-center justify-center">
-                    <div className="flex w-4/5 flex-col items-center text-center">
+                <div className="mx-auto my-16 flex h-auto flex-col items-center justify-center py-10 tablet:my-24 tablet:h-[600px] tablet:py-0 desktop:my-40">
+                    <div className="flex w-full max-w-[900px] flex-col items-center px-4 text-center tablet:w-4/5 tablet:px-0">
                         {userEmail ? (
                             <p className={sectionTagClass}>Bem vindo, {userId}</p>
                         ) : (
                             <p className={sectionTagClass}>Suas interações valem pontos</p>
                         )}
-                        <h1 className="mb-12 w-full text-[7rem] font-extralight text-mist">
+                        <h1 className="mb-12 w-full text-[2.6rem] font-extralight text-mist tablet:text-[4.5rem] desktop:text-[7rem]">
                             Interaja, ganhe <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">pontos</span> e resgate <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">benefícios</span> reais
                         </h1>
-                        <p className="font-sans text-[2rem] font-thin text-mist-dim">A plataforma que transforma cada curtida, post e comentário em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
-                        <div className="flex items-center justify-center gap-4">
+                        <p className="font-sans text-[1.3rem] font-thin text-mist-dim tablet:text-[1.6rem] desktop:text-[2rem]">A plataforma que transforma cada curtida, post e comentário em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
+                        <div className="flex flex-col items-center justify-center gap-4 tablet:flex-row">
                             {userEmail ? null : (
                                 <Button variant="cta-primary" className={heroCtaClass} onClick={onOpenModal}>Criar Conta Grátis</Button>
                             )}
@@ -63,18 +63,18 @@ export default function Home() {
             </section>
 
             <section>
-                <div className="m-32">
+                <div className="m-6 tablet:m-16 desktop:m-32">
                     <p className={sectionTagClass}>Recursos</p>
-                    <h2 className="mb-12 w-[60%] text-[6rem] font-extralight text-mist">Tudo que voce precisa para <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">ganhar mais</span></h2>
+                    <h2 className="mb-12 w-full text-[2.4rem] font-extralight text-mist tablet:w-[60%] tablet:text-[4rem] desktop:text-[6rem]">Tudo que voce precisa para <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">ganhar mais</span></h2>
 
-                    <div className="grid grid-cols-3 items-stretch justify-center gap-12">
+                    <div className="grid grid-cols-1 items-stretch justify-center gap-6 tablet:grid-cols-2 tablet:gap-12 desktop:grid-cols-3">
                         {features.map((feature, index) => (
                             <div
                                 key={feature.topic}
-                                className={`group rounded-[10px] border border-border bg-void p-12 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-300 ease-in-out hover:border-aurora-42 hover:bg-aurora-glow hover:shadow-[0_18px_38px_var(--color-void-34)] hover:-translate-y-[6px] ${feature.large ? 'col-span-2' : ''} ${index < 2 ? 'min-h-[250px]' : 'min-h-[150px]'}`}
+                                className={`group rounded-[10px] border border-border bg-void p-6 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-300 ease-in-out hover:border-aurora-42 hover:bg-aurora-glow hover:shadow-[0_18px_38px_var(--color-void-34)] hover:-translate-y-[6px] tablet:p-12 ${feature.large ? 'tablet:col-span-2' : ''} ${index < 2 ? 'min-h-[150px] tablet:min-h-[250px]' : 'min-h-[120px] tablet:min-h-[150px]'}`}
                             >
                                 <p className="mb-[10px] inline-block rounded-[10px] border border-border bg-aurora-glow px-[8px] py-[4px] text-[1.8rem] transition-transform duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:scale-[1.08]">{feature.icon}</p>
-                                <h3 className="text-[2.5rem] font-extralight text-mist">{feature.topic}</h3>
+                                <h3 className="text-[2rem] font-extralight text-mist tablet:text-[2.5rem]">{feature.topic}</h3>
                                 <p className="pt-[10px] font-sans text-[1.3rem] font-thin text-mist-dim">{feature.about}</p>
                             </div>
                         ))}
@@ -83,15 +83,15 @@ export default function Home() {
             </section>
 
             <div id="steps-goto"></div>
-            <section className="mx-[calc(50%_-_50vw)] mt-20 border-t border-border bg-void-45 py-12 backdrop-blur-[16px]">
-                <div className="mx-auto w-[70%]">
+            <section className="mx-[calc(50%_-_50vw)] mt-12 border-t border-border bg-void-45 py-8 backdrop-blur-[16px] tablet:mt-20 tablet:py-12">
+                <div className="mx-auto w-[92%] tablet:w-[80%] desktop:w-[70%]">
                     <p className={`${sectionTagClass} !text-[1.7rem]`}>Como Funciona</p>
-                    <h2 className="mb-12 w-full text-[7rem] font-extralight text-mist">Em <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">4 passos </span>simples</h2>
-                    <div className="grid grid-cols-4">
+                    <h2 className="mb-12 w-full text-[2.6rem] font-extralight text-mist tablet:text-[4.5rem] desktop:text-[7rem]">Em <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">4 passos </span>simples</h2>
+                    <div className="grid grid-cols-1 gap-6 tablet:grid-cols-2 tablet:gap-0 desktop:grid-cols-4">
                         {steps.map((step, index) => (
                             <div
                                 key={step.num}
-                                className={`flex h-auto flex-col border-l border-border px-[24px] py-[40px] text-left font-bold text-mist [transition:all_.5s_ease] hover:-translate-y-[4px] hover:bg-dusk-mid hover:shadow-[0_18px_40px_var(--color-aurora-14)] ${index === 0 ? 'border-l-0 rounded-l-[30px]' : ''} ${index === steps.length - 1 ? 'rounded-r-[30px]' : ''}`}
+                                className={`flex h-auto flex-col rounded-[16px] border-border px-6 py-8 text-left font-bold text-mist [transition:all_.5s_ease] hover:-translate-y-[4px] hover:bg-dusk-mid hover:shadow-[0_18px_40px_var(--color-aurora-14)] tablet:rounded-none tablet:px-[24px] tablet:py-[40px] ${index % 2 === 0 ? '' : 'tablet:border-l'} ${index % 4 === 0 ? '' : 'desktop:border-l'} ${index === 0 ? 'desktop:rounded-l-[30px]' : ''} ${index === steps.length - 1 ? 'desktop:rounded-r-[30px]' : ''}`}
                             >
                                 <p className={`inline-flex h-[32px] w-[32px] self-start items-center justify-center rounded-full border border-current font-sans text-[1.7rem] font-light leading-none ${step.numClass}`}>{step.num}</p>
                                 <h3 className="pt-[10px] text-[2rem] font-thin text-mist">{step.topic}</h3>
