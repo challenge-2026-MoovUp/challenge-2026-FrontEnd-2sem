@@ -6,6 +6,7 @@ import Solucao from '../pages/Solucao/Solucao.tsx';
 import QuemSomos from '../pages/QuemSomos/QuemSomos.tsx';
 import Faq from '../pages/Faq/Faq.tsx';
 import Contato from '../pages/Contato/Contato.tsx';
+import Video from '../pages/Video/Video.tsx';
 
 export default function AppRoutes() {
     return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
                 <Route path="quem-somos" element={<QuemSomos />}/>
                 <Route path="sobre" element={<Sobre />} />
                 <Route path="solucao" element={<Solucao />} />
+                <Route path="solucao/video/:videoId" element={<Video />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="contato" element={<Contato />} />
             </Route>
