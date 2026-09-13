@@ -38,13 +38,17 @@ export default function FaqSidebar({ categories }: FaqSidebarProps) {
   }
 
   return (
-    <aside className="faq-sidebar">
-      <nav className="faq-sidebar__nav" aria-label="Categorias da FAQ">
+    <aside className="sticky top-[90px] self-start">
+      <nav className="flex flex-col gap-[10px]" aria-label="Categorias da FAQ">
         {categories.map(({ id, label }) => (
           <a
             key={id}
             href={`#${id}`}
-            className={`faq-sidebar__link${activeId === id ? ' is-active' : ''}`}
+            className={`flex items-center gap-2 rounded-[10px] p-4 font-sans text-[1.4rem] text-dust [transition:all_.5s_ease]${
+              activeId === id
+                ? ' bg-aurora-glow text-aurora-soft before:inline-flex before:items-center before:text-[1.5rem] before:font-black before:leading-none before:content-["•"]'
+                : ' hover:text-aurora'
+            }`}
             onClick={(e) => handleClick(e, id)}
           >
             {label}

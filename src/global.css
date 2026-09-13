@@ -1,0 +1,197 @@
+/* Fontes externas */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
+
+@import "tailwindcss";
+
+/* Design tokens do projeto, expostos como tokens do Tailwind (@theme) para que
+   as classes utilitárias (bg-void, text-aurora, font-sans, etc.) gerem as
+   cores/fontes usadas em todo o design. */
+@theme {
+    /* Tipografia */
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Jost', system-ui, sans-serif;
+
+    /* Cores neutras */
+    --color-void: #0E0C14;
+    --color-dusk: #1A1626;
+    --color-dusk-mid: #231E33;
+    --color-dusk-light: #2E2845;
+    --color-mist: #EDE8DF;
+    --color-mist-dim: #C8C0B4;
+    --color-dust: #C8C0B4;
+    --color-white: #FFFFFF;
+    --color-gray-muted: #727272;
+    --color-gray-strong: #666666;
+    --color-gray-olive: #6F6F6E;
+
+    /* Cores de destaque */
+    --color-aurora: #A67FB5;
+    --color-aurora-soft: #C9AED8;
+    --color-aurora-glow: rgba(166, 127, 181, 0.12);
+    --color-violet-deep: #6B3D8A;
+    --color-ember: #C97B5A;
+    --color-ember-soft: #E0A080;
+    --color-ambar: #F5B842;
+    --color-gold: #D4A96A;
+    --color-roxo-mais-opaco: rgba(131, 124, 224, 0.251);
+    --color-roxo-opaco: rgba(108, 98, 240, 0.5);
+    --color-sage: #7A9E8A;
+
+    /* Bordas */
+    --color-border: rgba(237, 232, 223, 0.06);
+    --color-border-mid: rgba(237, 232, 223, 0.11);
+
+    /* Transparencias neutras */
+    --color-void-20: rgba(14, 12, 20, 0.2);
+    --color-void-28: rgba(14, 12, 20, 0.28);
+    --color-void-34: rgba(14, 12, 20, 0.34);
+    --color-void-42: rgba(14, 12, 20, 0.42);
+    --color-void-45: rgba(14, 12, 20, 0.45);
+    --color-void-78: rgba(14, 12, 20, 0.78);
+    --color-void-86: rgba(14, 12, 20, 0.86);
+    --color-dusk-72: rgba(26, 22, 38, 0.72);
+    --color-dusk-74: rgba(26, 22, 38, 0.74);
+    --color-dusk-mid-80: rgba(35, 30, 51, 0.8);
+    --color-dusk-mid-88: rgba(35, 30, 51, 0.88);
+    --color-mist-08: rgba(237, 232, 223, 0.08);
+    --color-mist-12: rgba(237, 232, 223, 0.12);
+    --color-mist-22: rgba(237, 232, 223, 0.22);
+    --color-mist-30: rgba(237, 232, 223, 0.3);
+    --color-night-68: rgba(9, 12, 20, 0.68);
+    --color-black-22: rgba(0, 0, 0, 0.22);
+    --color-black-26: rgba(0, 0, 0, 0.26);
+    --color-black-28: rgba(0, 0, 0, 0.28);
+    --color-black-42: rgba(0, 0, 0, 0.42);
+
+    /* Transparencias de destaque */
+    --color-aurora-13: rgba(166, 127, 181, 0.13);
+    --color-aurora-14: rgba(166, 127, 181, 0.14);
+    --color-aurora-18: rgba(166, 127, 181, 0.18);
+    --color-aurora-26: rgba(166, 127, 181, 0.26);
+    --color-aurora-28: rgba(166, 127, 181, 0.28);
+    --color-aurora-30: rgba(166, 127, 181, 0.3);
+    --color-aurora-35: rgba(166, 127, 181, 0.35);
+    --color-aurora-42: rgba(166, 127, 181, 0.42);
+    --color-aurora-soft-10: rgba(201, 174, 216, 0.1);
+    --color-aurora-soft-24: rgba(201, 174, 216, 0.24);
+    --color-aurora-soft-28: rgba(201, 174, 216, 0.28);
+    --color-aurora-soft-35: rgba(201, 174, 216, 0.35);
+    --color-violet-glow-03: rgba(180, 130, 255, 0.03);
+    --color-violet-glow-08: rgba(180, 130, 255, 0.08);
+    --color-violet-glow-50: rgba(180, 130, 255, 0.5);
+    --color-indigo-glow-13: rgba(75, 63, 228, 0.13);
+    --color-ember-16: rgba(201, 123, 90, 0.16);
+    --color-ember-soft-18: rgba(224, 160, 128, 0.18);
+    --color-gold-18: rgba(212, 169, 106, 0.18);
+    --color-sage-18: rgba(122, 158, 138, 0.18);
+    --color-sage-45: rgba(122, 158, 138, 0.45);
+    --color-teal-muted-22: rgba(40, 61, 69, 0.22);
+
+    /* Gradientes (usados via bg-gradiente-aurora / bg-gradiente-mist) */
+    --background-image-gradiente-aurora: linear-gradient(135deg, var(--color-aurora), var(--color-ember));
+    --background-image-gradiente-mist: linear-gradient(to right, var(--color-mist), var(--color-aurora));
+
+    /* Animações */
+    --animate-nav-active-load: navActiveLoad .45s ease forwards;
+    --animate-orb-float: orbFloat 22s ease-in-out infinite alternate;
+}
+
+@keyframes navActiveLoad {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scaleX(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1);
+    }
+}
+
+@keyframes orbFloat {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(40px, -30px, 0);
+    }
+}
+
+/* Pontinho animado das etiquetas (section-tag) espalhadas pelo site */
+@keyframes breathe {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
+
+/* Sublinhado que "cresce" da esquerda pra direita nas abas ativas da pagina Sobre */
+@keyframes navBorderGrow {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* Entrada do card de popup da equipe (Quem Somos) */
+@keyframes popupCardEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Base da pagina — o restante da estilização vive nos componentes, via Tailwind */
+html {
+    background-color: var(--color-void);
+    /* 1rem = 10px daqui pra frente: todo valor em rem usado nos componentes
+       (via classes utilitárias arbitrárias, ex: text-[4.5rem]) é relativo a isso. */
+    font-size: 62.5%;
+    height: 100%;
+    min-height: 100%;
+    overscroll-behavior-y: none;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-void);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-serif);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    width: 100%;
+}
+
+body main {
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+@supports (overflow: clip) {
+    html,
+    body {
+        overflow-x: clip;
+    }
+}
