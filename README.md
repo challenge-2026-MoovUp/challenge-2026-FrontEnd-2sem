@@ -36,7 +36,8 @@ O site foi construído com **React, TypeScript e Vite**, com roteamento via **Re
 | TypeScript | Tipagem estática de componentes, props e dados |
 | Vite | Build tool e servidor de desenvolvimento |
 | React Router DOM 7 | Roteamento entre as páginas da SPA |
-| CSS3 modular | Estilização com variáveis, Grid, Flexbox e clamp() |
+| TailwindCSS 4 | Estilização utilitária de toda a interface, com tokens de tema (cores, fontes, gradientes) via `@theme` |
+| React Hook Form | Validação e gerenciamento dos formulários (Contato e login) |
 | Font Awesome | Ícones de interface e redes sociais |
 | Oxlint | Linting do código |
 | Git + GitHub | Versionamento e colaboração |
@@ -52,8 +53,9 @@ moovup/
 ├── public/                           # Arquivos estáticos servidos diretamente
 │
 └── src/
-    ├── main.tsx                      # Bootstrap da aplicação (React + Router)
+    ├── main.tsx                      # Bootstrap da aplicação (React + Router + global.css)
     ├── App.tsx                       # Componente raiz
+    ├── global.css                    # Import do TailwindCSS + tokens de tema (@theme) + reset base
     │
     ├── routes/
     │   └── AppRoutes.tsx              # Definição de todas as rotas da SPA
@@ -69,17 +71,11 @@ moovup/
     ├── components/
     │   ├── layout/                    # Header, Footer, Layout, Modal de login, ScrollToTop
     │   ├── common/                    # Button, Accordion, TeamPopup, Foot (CTA), FaqSidebar
-    │   └── sobre/                     # Componentes específicos da página Sobre
+    │   └── sobre/                     # Componentes específicos da página Sobre (Overview, PassType, Info)
     │
     ├── data/                          # Dados estáticos (equipe, abas da solução)
-    ├── types/                         # Interfaces e tipos compartilhados
-    ├── assets/                        # Imagens, ícones e fotos da equipe
-    │
-    └── styles/                        # CSS modular
-        ├── base/                      # Variáveis, reset e import centralizador
-        ├── layouts/                   # Header, Footer, Grid, Container
-        ├── components/                # Botões, cards, modal, accordion, orbs
-        └── pages/                     # Estilos específicos de cada página
+    ├── types/                         # Interfaces e tipos compartilhados (equipe, solução, formulários de contato e login)
+    └── assets/                        # Imagens, ícones e fotos da equipe
 ```
 
 ---
@@ -152,6 +148,16 @@ npm run lint      # roda o linter (Oxlint)
 [![GitHub](https://img.shields.io/badge/GitHub-Repositório_Público-181717?style=for-the-badge&logo=github)](https://github.com/challenge-2026-MoovUp/challenge-2026-FrontEnd-2sem)
 
 > **Link direto:** https://github.com/challenge-2026-MoovUp/challenge-2026-FrontEnd-2sem
+
+---
+
+## 🎥 Vídeo de Apresentação
+
+Demonstração em vídeo do projeto MoovUp, com navegação por todas as páginas:
+
+[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/F6HE8IUwCH4)
+
+> **Link direto:** https://youtu.be/F6HE8IUwCH4
 
 ---
 
