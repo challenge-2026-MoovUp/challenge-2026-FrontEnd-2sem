@@ -1,9 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import MapaMoovUp from '../../assets/mapa-moovUp.jpg'
+import Button from '../../components/common/Button'
 
 const cardTitleClass = "bg-gradiente-mist bg-clip-text text-[2.4rem] font-extralight leading-[1.1] text-transparent"
 const paragraphClass = "font-sans text-[1.45rem] font-light leading-[1.7] text-dust"
 
 export default function Solucao() {
+    const navigate = useNavigate()
+
     return (
         <section className="mx-auto mb-16 mt-[clamp(4rem,8vw,8rem)] grid w-full max-w-[1120px] gap-[28px] px-6 tablet:px-[3.2rem] desktop:mb-32" aria-labelledby="solution-title">
             <div className="grid grid-cols-1 gap-8 desktop:grid-cols-[minmax(0,1fr)_minmax(320px,0.78fr)] desktop:items-center desktop:gap-x-[4.4rem] desktop:gap-y-[2.8rem]">
@@ -26,14 +30,15 @@ export default function Solucao() {
                     <h3 id="solution-pitch-title" className={cardTitleClass}>Conheça a proposta em vídeo</h3>
                     <p className={paragraphClass}>Uma apresentação rápida da MoovUp, conectando tecnologia, mobilidade urbana e benefícios reais para quem usa transporte público.</p>
                 </div>
-                <iframe
-                    className="block aspect-video w-full rounded-2xl border border-border-mid bg-void shadow-[0_18px_42px_var(--color-black-28)]"
-                    src="https://www.youtube.com/embed/F6HE8IUwCH4?si=bnXIUm1f9ar7V0w2"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                ></iframe>
+                <div className="flex items-center justify-center">
+                    <Button
+                        variant="cta-primary"
+                        className="!m-0"
+                        onClick={() => navigate('/solucao/video/pitch-moovup')}
+                    >
+                        Assistir vídeo
+                    </Button>
+                </div>
             </section>
 
             <div className="grid gap-[14px] rounded-[20px] border border-border bg-dusk p-5 tablet:p-[30px]">
