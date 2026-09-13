@@ -92,8 +92,7 @@
     width: fit-content;
 }
 
-.page__sobre :is(.container__main-1-left, .container__main-2-content, .section__tag-flex) .section-tag::before,
-.page__sobre .start__card .section-tag::before {
+.page__sobre :is(.container__main-1-left, .container__main-2-content, .section__tag-flex) .section-tag::before {
     content: none;
 }
 
@@ -192,21 +191,13 @@
     display: none;
 }
 
-.page__sobre :is(.container__main-1, .container__main-3).active {
+.page__sobre .container__main-3.active {
     display: flex;
-}
-
-.page__sobre .container__main-1 {
-    gap: 40px;
-    justify-content: flex-start;
+    gap: 20px;
 }
 
 .page__sobre .container__main-2.active {
     display: block;
-}
-
-.page__sobre .container__main-3.active {
-    gap: 20px;
 }
 
 .page__sobre :is(.container__main-1-left, .container__main-1-right) {
@@ -384,158 +375,6 @@
 /* =========================================================================== */
                                 /* Cards informativos */
 /* =========================================================================== */
-.page__sobre :is(.grid-card, .card-block-large) {
-    background-color: var(--dusk);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 25px;
-    width: 100%;
-}
-
-.page__sobre :is(.container-grid-4, .grid-4) {
-    width: 100%;
-}
-
-.page__sobre .grid-card-num {
-    color: var(--mist);
-    font-size: 4rem;
-    font-weight: 100;
-}
-
-.page__sobre :is(.grid-card-about, .block-subtitle, .partner-modals__label, .partner-modals__subtitle) {
-    color: var(--dust);
-    font-family: var(--font-sans);
-}
-
-.page__sobre .grid-card-about {
-    font-size: 1.2rem;
-}
-
-.page__sobre .block-title {
-    color: var(--mist);
-    font-size: 2rem;
-    font-weight: 300;
-    margin-bottom: 20px;
-}
-
-.page__sobre .block-subtitle {
-    font-size: 1.5rem;
-    font-weight: 300;
-}
-
-/* =========================================================================== */
-                                /* Modais parceiros */
-/* =========================================================================== */
-.page__sobre .partner-modals {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.page__sobre .partner-modals__label {
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.28em;
-}
-
-.page__sobre .partner-modals__card {
-    align-items: center;
-    background-color: var(--dusk);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    display: flex;
-    gap: 14px;
-    min-height: 68px;
-    padding: 14px 18px;
-    transition: border-color .65s ease, transform .65s ease, background-color .65s ease, box-shadow .65s ease;
-}
-
-.page__sobre .partner-modals__card:hover {
-    background-color: var(--dusk-mid);
-    border-color: var(--aurora-soft);
-    box-shadow: 0 18px 42px var(--aurora-18);
-    transform: translateY(-3px);
-}
-
-.page__sobre .partner-modals__icon {
-    font-size: 2rem;
-    line-height: 1;
-}
-
-.page__sobre .partner-modals__title {
-    color: var(--mist);
-    font-size: 1.7rem;
-    font-weight: 300;
-    line-height: 1.1;
-}
-
-.page__sobre .partner-modals__subtitle {
-    font-size: 1.2rem;
-    font-weight: 300;
-    margin-top: 4px;
-}
-
-/* =========================================================================== */
-                                /* Chamada para video */
-/* =========================================================================== */
-.page__sobre .video__direction-card {
-    border: 2px solid var(--border);
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-    justify-content: space-between;
-    padding: 30px;
-    transition: .5s;
-}
-
-.page__sobre .video__direction-card:hover {
-    background-color: var(--dusk);
-    transform: scale(1.01);
-}
-
-.page__sobre .video__card-title {
-    color: var(--mist);
-    font-size: 2.5rem;
-    font-weight: 200;
-    text-align: center;
-}
-
-.page__sobre .video__card-title span {
-    font-size: 2.8rem;
-    font-style: italic;
-    font-weight: 500;
-}
-
-.page__sobre .video__direction-buttons {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.page__sobre .video__direction-buttons .btn {
-    align-items: center;
-    height: 50px;
-    justify-content: center;
-    text-align: center;
-    width: 300px;
-}
-
-.page__sobre .video__direction-buttons .card__btn2 {
-    background: var(--gradiente-aurora);
-    border-color: var(--border-mid);
-    color: var(--mist);
-    transition: border-color .25s ease, box-shadow .25s ease, filter .25s ease, transform .25s ease;
-}
-
-.page__sobre .video__direction-buttons .card__btn2:hover {
-    border-color: var(--border);
-    box-shadow: 0 12px 28px var(--aurora-glow), 0 0 18px var(--ember-16);
-    filter: saturate(1.12) brightness(1.04);
-    transform: translateY(-3px);
-}
-
 /* =========================================================================== */
                                 /* Beneficios */
 /* =========================================================================== */
@@ -613,57 +452,3 @@
     line-height: 1.5;
 }
 
-/* =========================================================================== */
-                                /* CTA final */
-/* =========================================================================== */
-.page__sobre .container__foot {
-    margin: 8rem auto 10rem;
-    max-width: 1120px;
-    padding: 0;
-    width: 100%;
-}
-
-.page__sobre .start__card {
-    margin: 0;
-    padding: 4.8rem 4rem;
-}
-
-.page__sobre .start__card::before {
-    height: 220px;
-    left: -80px;
-    top: -80px;
-    width: 220px;
-}
-
-.page__sobre .start__card .section-tag {
-    color: var(--aurora-soft);
-    margin: 0 0 1.8rem;
-}
-
-.page__sobre .start__card .title {
-    font-size: clamp(3.6rem, 5vw, 5.6rem);
-    line-height: 1;
-    max-width: 760px;
-}
-
-.page__sobre .start__card .subtitle {
-    font-family: var(--font-sans);
-    font-size: 1.55rem;
-    font-weight: 200;
-    line-height: 1.7;
-    margin: 2rem 0 0;
-    max-width: 620px;
-    width: 100%;
-}
-
-.page__sobre .start__card .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    justify-content: center;
-    padding-top: 3rem;
-}
-
-.page__sobre .start__card .btn__cta {
-    margin: 0;
-}
