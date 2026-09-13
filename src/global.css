@@ -7,6 +7,12 @@
    as classes utilitárias (bg-void, text-aurora, font-sans, etc.) gerem as
    cores/fontes usadas em todo o design. */
 @theme {
+    /* Breakpoints (mobile-first): classes sem prefixo = mobile (0–767px,
+       cobre o "até 480px" pedido no enunciado); tablet: = 768px+;
+       desktop: = 992px+. Ver README para o mapeamento completo. */
+    --breakpoint-tablet: 48rem;
+    --breakpoint-desktop: 62rem;
+
     /* Tipografia */
     --font-serif: 'Cormorant Garamond', Georgia, serif;
     --font-sans: 'Jost', system-ui, sans-serif;
