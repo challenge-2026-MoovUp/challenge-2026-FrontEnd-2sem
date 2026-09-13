@@ -23,12 +23,12 @@ export default function Foot({ ctaTo, btnStr, large }: FootProps) {
 
     return (
         <section>
-            <div className={large ? undefined : "mx-auto mb-40 mt-32 w-full max-w-[1120px]"}>
+            <div className={large ? undefined : "mx-auto mb-16 mt-16 w-full max-w-[1120px] tablet:mb-24 tablet:mt-24 desktop:mb-40 desktop:mt-32"}>
                 <div
-                    className={`relative mx-auto flex w-[120rem] flex-col items-center overflow-hidden rounded-[30px] border-2 border-border bg-dusk text-center before:pointer-events-none before:absolute before:rounded-full before:bg-violet-deep before:opacity-45 before:blur-[90px] before:content-[''] ${
+                    className={`relative mx-auto flex w-full max-w-[1200px] flex-col items-center overflow-hidden rounded-[30px] border-2 border-border bg-dusk text-center before:pointer-events-none before:absolute before:rounded-full before:bg-violet-deep before:opacity-45 before:blur-[90px] before:content-[''] ${
                         large
-                            ? 'my-60 p-24 transition-[border-color,box-shadow,transform] duration-300 ease-in-out hover:-translate-y-1 hover:border-aurora-42 hover:shadow-[0_24px_60px_var(--color-void-42)] before:-left-[90px] before:-top-[90px] before:h-[260px] before:w-[260px]'
-                            : 'm-0 px-16 py-[4.8rem] before:-left-20 before:-top-20 before:h-[220px] before:w-[220px]'
+                            ? 'my-16 p-6 transition-[border-color,box-shadow,transform] duration-300 ease-in-out hover:-translate-y-1 hover:border-aurora-42 hover:shadow-[0_24px_60px_var(--color-void-42)] before:-left-[90px] before:-top-[90px] before:h-[260px] before:w-[260px] tablet:my-32 tablet:p-16 desktop:my-60 desktop:p-24'
+                            : 'm-0 px-6 py-10 before:-left-20 before:-top-20 before:h-[220px] before:w-[220px] tablet:px-16 tablet:py-[4.8rem]'
                     }`}
                 >
                     {large ? (
@@ -42,7 +42,7 @@ export default function Foot({ ctaTo, btnStr, large }: FootProps) {
                     )}
 
                     {large ? (
-                        <h2 className="relative z-[1] mb-12 w-full text-[6rem] font-extralight text-mist">
+                        <h2 className="relative z-[1] mb-12 w-full text-[2.4rem] font-extralight text-mist tablet:text-[4rem] desktop:text-[6rem]">
                             Pronto para começar a <span className="bg-gradiente-aurora bg-clip-text italic font-thin text-transparent">ganhar?</span>
                         </h2>
                     ) : (
@@ -52,12 +52,12 @@ export default function Foot({ ctaTo, btnStr, large }: FootProps) {
                     )}
 
                     {large ? (
-                        <p className="relative z-[1] my-5 w-4/5 font-sans text-[2rem] font-thin text-mist-dim">Mais de 2 milhões de pessoas já transformam interações em benefícios reais.</p>
+                        <p className="relative z-[1] my-5 w-full font-sans text-[1.3rem] font-thin text-mist-dim tablet:w-4/5 tablet:text-[1.6rem] desktop:text-[2rem]">Mais de 2 milhões de pessoas já transformam interações em benefícios reais.</p>
                     ) : (
                         <p className="relative z-[1] mt-8 w-full max-w-[620px] font-sans text-[1.55rem] font-extralight leading-[1.7] text-dust">Mais de 2 milhões de pessoas já transformam interações em benefícios reais.</p>
                     )}
 
-                    <div className={`relative z-[1] flex justify-center ${large ? 'items-center gap-4' : 'flex-wrap gap-[1.2rem] pt-12'}`}>
+                    <div className={`relative z-[1] flex justify-center ${large ? 'flex-col items-center gap-4 tablet:flex-row' : 'flex-wrap gap-[1.2rem] pt-12'}`}>
                         {userEmail ? (
                             null
                         ) : (

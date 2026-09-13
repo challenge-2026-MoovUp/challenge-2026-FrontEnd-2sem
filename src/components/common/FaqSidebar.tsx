@@ -38,8 +38,8 @@ export default function FaqSidebar({ categories }: FaqSidebarProps) {
   }
 
   return (
-    <aside className="sticky top-[90px] self-start">
-      <nav className="flex flex-col gap-[10px]" aria-label="Categorias da FAQ">
+    <aside className="static self-start desktop:sticky desktop:top-[90px]">
+      <nav className="flex flex-wrap gap-[10px] desktop:flex-col" aria-label="Categorias da FAQ">
         {categories.map(({ id, label }) => (
           <a
             key={id}

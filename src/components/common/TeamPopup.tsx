@@ -34,12 +34,12 @@ export default function TeamPopup({ creator, onClose }: TeamPopupProps) {
             />
 
             <div
-                className="relative z-[1] m-[20px] flex h-[calc(100vh-120px)] w-[min(92vw,560px)] max-w-[640px] flex-col items-center gap-4 overflow-y-auto rounded-[30px] border border-mist-12 px-10 py-10 text-center shadow-[0_28px_90px_var(--color-black-42),0_0_70px_var(--color-aurora-13)] animate-[popupCardEnter_.45s_cubic-bezier(0.22,1,0.36,1)_both]"
+                className="relative z-[1] m-[20px] flex h-[calc(100vh-120px)] w-[min(92vw,560px)] max-w-[640px] flex-col items-center gap-4 overflow-y-auto rounded-[30px] border border-mist-12 px-5 py-6 text-center shadow-[0_28px_90px_var(--color-black-42),0_0_70px_var(--color-aurora-13)] animate-[popupCardEnter_.45s_cubic-bezier(0.22,1,0.36,1)_both] tablet:px-10 tablet:py-10"
                 style={{ background: "linear-gradient(145deg, var(--color-dusk-mid-88), var(--color-dusk-72)), var(--color-dusk-74)" }}
                 data-creator-popup={creator.id}
             >
                 <button className="absolute right-[28px] top-[24px] border-none bg-transparent text-[40px] leading-none text-mist" onClick={onClose}>&times;</button>
-                <img src={creator.photo} alt={`Foto de ${creator.name}`} className="mt-[4px] h-[260px] w-[260px] max-w-none rounded-[16px] border-2 border-border object-cover p-[8px]" />
+                <img src={creator.photo} alt={`Foto de ${creator.name}`} className="mt-[4px] h-[180px] w-[180px] max-w-none rounded-[16px] border-2 border-border object-cover p-[8px] tablet:h-[260px] tablet:w-[260px]" />
                 <p className="-mt-[4px] font-sans text-[1.3rem] font-extralight text-aurora">{creator.rm}</p>
 
                 <div className="flex flex-1 flex-col items-center justify-center gap-4">

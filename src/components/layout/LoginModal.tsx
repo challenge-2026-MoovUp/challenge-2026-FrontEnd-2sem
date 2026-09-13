@@ -37,7 +37,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
     }
 
     function inputClass(hasError?: boolean) {
-        return `h-12 w-[400px] appearance-none rounded-[10px] border ${hasError ? 'border-ember' : 'border-border-mid'} bg-void px-4 py-[13px] text-[1.5rem] font-light tracking-[0.01em] text-mist outline-none [caret-color:var(--color-aurora-soft)] [color-scheme:dark] [transition:all_.5s_ease] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 hover:bg-dusk-mid-80 focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]`
+        return `h-12 w-full appearance-none rounded-[10px] border ${hasError ? 'border-ember' : 'border-border-mid'} bg-void px-4 py-[13px] text-[1.5rem] font-light tracking-[0.01em] text-mist outline-none [caret-color:var(--color-aurora-soft)] [color-scheme:dark] [transition:all_.5s_ease] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 hover:bg-dusk-mid-80 focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]`
     }
 
     const errorTextClass = "font-sans text-[1.2rem] text-ember"
@@ -45,7 +45,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
     return (
         <dialog
             ref={dialogRef}
-            className="m-0 h-screen max-h-full w-screen max-w-full overflow-auto border-0 bg-[rgba(4,8,20,0.88)] p-12 font-sans text-mist [transition:.35s] backdrop:backdrop-blur-[6px] backdrop:bg-night-68"
+            className="m-0 h-screen max-h-full w-screen max-w-full overflow-auto border-0 bg-[rgba(4,8,20,0.88)] p-6 font-sans text-mist [transition:.35s] backdrop:backdrop-blur-[6px] backdrop:bg-night-68 tablet:p-12"
             id="ModalEmBreve"
             aria-labelledby="modalEmBreveTitle"
         >
@@ -65,7 +65,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
             </button>
 
             <form
-                className="relative z-[1] mx-auto my-16 flex w-[400px] flex-col items-center justify-center gap-5 border-b border-border-mid pb-[34px] font-sans"
+                className="relative z-[1] mx-auto my-16 flex w-full max-w-[400px] flex-col items-center justify-center gap-5 border-b border-border-mid pb-[34px] font-sans"
                 id="msg"
                 autoComplete='off'
                 onSubmit={handleSubmit(onSubmit)}
@@ -114,12 +114,12 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                     </label>
                 </div>
 
-                <Button variant="primary" className="!flex h-14 w-[400px] items-center justify-center rounded-2xl bg-dusk">
+                <Button variant="primary" className="!flex h-14 w-full items-center justify-center rounded-2xl bg-dusk">
                     <span>Conectar-se</span>
                 </Button>
             </form>
 
-            <p className="relative z-[1] mx-auto w-[400px] text-center font-sans text-[1.2rem] text-dust">
+            <p className="relative z-[1] mx-auto w-full max-w-[400px] text-center font-sans text-[1.2rem] text-dust">
                 Ao continuar, você concorda com os nossos{' '}
                 <a href="https://www.soulup.io/terms-and-privacy-soul.pdf" target="_blank" rel="noopener noreferrer" className="font-sans text-aurora">
                     Termos de Serviço
