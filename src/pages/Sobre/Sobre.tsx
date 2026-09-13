@@ -15,33 +15,33 @@ export default function Sobre() {
                 <span className="absolute -left-[180px] top-[120px] h-[620px] w-[520px] animate-[orbFloat_24s_ease-in-out_infinite_alternate] rounded-full opacity-[.34] blur-[110px] [background:radial-gradient(circle,var(--color-aurora)_0%,transparent_72%)]" />
                 <span className="absolute -right-[160px] bottom-[10%] h-[220px] w-[540px] animate-[orbFloat_24s_ease-in-out_infinite_alternate] rounded-full opacity-[.34] blur-[110px] [background:radial-gradient(circle,var(--color-ember)_0%,transparent_76%)]" />
             </div>
-            <section className="pt-32 px-[2.4rem]">
-                <div className="mx-auto flex w-full max-w-[1120px] flex-col gap-12 text-mist">
-                    <div className="border-b-2 border-border pb-16">
-                        <p className="inline-flex items-center font-sans text-[1.6rem] font-normal not-italic text-ember before:mr-2 before:inline-block before:h-[6px] before:w-[6px] before:animate-[breathe_3s_ease-in-out_infinite] before:rounded-full before:bg-ember before:align-middle before:content-['']">NOSSA SOLUÇÃO</p>
-                        <h1 className="w-full max-w-[780px] bg-gradiente-mist bg-clip-text text-[clamp(5rem,8vw,9rem)] font-light leading-[0.95] text-transparent">Pontos que viram <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">passagens</span></h1>
+            <section className="px-6 pt-16 tablet:px-[2.4rem] tablet:pt-24 desktop:pt-32">
+                <div className="mx-auto flex w-full max-w-[1120px] flex-col gap-8 text-mist tablet:gap-12">
+                    <div className="border-b-2 border-border pb-8 tablet:pb-16">
+                        <p className="inline-flex items-center font-sans text-[1.3rem] font-normal not-italic text-ember before:mr-2 before:inline-block before:h-[6px] before:w-[6px] before:animate-[breathe_3s_ease-in-out_infinite] before:rounded-full before:bg-ember before:align-middle before:content-[''] tablet:text-[1.6rem]">NOSSA SOLUÇÃO</p>
+                        <h1 className="w-full max-w-[780px] bg-gradiente-mist bg-clip-text text-[2.8rem] font-light leading-[0.95] text-transparent tablet:text-[4.5rem] desktop:text-[clamp(5rem,8vw,9rem)]">Pontos que viram <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">passagens</span></h1>
                     </div>
-                    <div className="grid grid-cols-[minmax(320px,2fr)_repeat(3,minmax(120px,1fr))] items-center gap-8 pb-[30px]">
-                        <p className="w-full max-w-[520px] font-sans text-[1.5rem] leading-[1.7] text-dust">Transformamos cada curtida, post e comentário em pontos que se convertem diretamente em passagens de metrô, trem e ônibus. Mobilidade urbana acessível a partir das suas interações digitais.</p>
+                    <div className="grid grid-cols-1 items-center gap-6 pb-6 tablet:grid-cols-2 tablet:gap-8 tablet:pb-[30px] desktop:grid-cols-[minmax(320px,2fr)_repeat(3,minmax(120px,1fr))]">
+                        <p className="w-full max-w-[520px] font-sans text-[1.3rem] leading-[1.7] text-dust tablet:col-span-2 tablet:text-[1.5rem] desktop:col-span-1">Transformamos cada curtida, post e comentário em pontos que se convertem diretamente em passagens de metrô, trem e ônibus. Mobilidade urbana acessível a partir das suas interações digitais.</p>
                         <div className="flex flex-col items-center text-center">
-                            <h2 className="bg-gradiente-mist bg-clip-text text-[4rem] font-extralight text-transparent">400+</h2>
+                            <h2 className="bg-gradiente-mist bg-clip-text text-[3rem] font-extralight text-transparent tablet:text-[4rem]">400+</h2>
                             <p className="font-sans text-dust">PTS P/ EMBARCAR</p>
                         </div>
                         <div className="flex flex-col items-center text-center">
-                            <h2 className="bg-gradiente-mist bg-clip-text text-[4rem] font-extralight text-transparent">3</h2>
+                            <h2 className="bg-gradiente-mist bg-clip-text text-[3rem] font-extralight text-transparent tablet:text-[4rem]">3</h2>
                             <p className="font-sans text-dust">MODAIS PARCEIROS</p>
                         </div>
                         <div className="flex flex-col items-center text-center">
-                            <h2 className="bg-gradiente-mist bg-clip-text text-[4rem] font-extralight text-transparent">24H</h2>
+                            <h2 className="bg-gradiente-mist bg-clip-text text-[3rem] font-extralight text-transparent tablet:text-[4rem]">24H</h2>
                             <p className="font-sans text-dust">PARA CREDITAR</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="pb-32 pt-8 px-[2.4rem]">
+            <section className="px-6 pb-16 pt-6 tablet:px-[2.4rem] tablet:pb-24 tablet:pt-8 desktop:pb-32">
                 <div className="relative mx-auto w-full max-w-[1120px] border-b-2 border-border pb-5">
-                    <nav className="flex w-fit flex-wrap gap-8">
+                    <nav className="flex w-fit flex-wrap gap-4 tablet:gap-8">
                         {solutionTabs.map((tab) => {
                             const isActive = activeTab === tab.id
                             return (
@@ -67,7 +67,7 @@ export default function Sobre() {
                 </div>
             </section>
 
-            <section className="pb-32 pt-8 px-[2.4rem]">
+            <section className="px-6 pb-16 pt-6 tablet:px-[2.4rem] tablet:pb-24 tablet:pt-8 desktop:pb-32">
                 <div className="mx-auto w-full max-w-[1120px]">
                     <SolutionOverview isActive={activeTab === 'container-1'} />
                     <SolutionPassType isActive={activeTab === 'container-2'} />
