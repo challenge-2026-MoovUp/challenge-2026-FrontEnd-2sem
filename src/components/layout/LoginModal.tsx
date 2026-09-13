@@ -1,34 +1,46 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 import LogoMoovup from '../../assets/moov-up-icon.png'
 import Button from '../common/Button.tsx'
+import type { LoginFormData } from '../../types/login'
 
 interface LoginModalProps {
     isOpen: boolean
     onClose: () => void
-    onLogin: (user: string , email: string) => void
+    onLogin: (email: string, user: string) => void
 }
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null)
-    const [user, setUser] = useState('')
-    const [email, setEmail] = useState('')
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<LoginFormData>()
 
     useEffect(() => {
         if (isOpen) {
             dialogRef.current?.showModal()
         } else {
             dialogRef.current?.close()
+            reset()
         }
-    }, [isOpen])
+    }, [isOpen, reset])
 
-    function handleSubmit(){
-        if (!email) return
-        onLogin(email, user)
-        setUser('')
-        setEmail('')
+    function onSubmit(data: LoginFormData) {
+        onLogin(data.email, data.user)
+        reset()
     }
 
-    const inputClass = "h-12 w-[400px] appearance-none rounded-[10px] border border-border-mid bg-void px-4 py-[13px] text-[1.5rem] font-light tracking-[0.01em] text-mist outline-none [caret-color:var(--color-aurora-soft)] [color-scheme:dark] [transition:all_.5s_ease] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 hover:bg-dusk-mid-80 focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]"
+    function inputClass(hasError?: boolean) {
+        return `h-12 w-[400px] appearance-none rounded-[10px] border ${hasError ? 'border-ember' : 'border-border-mid'} bg-void px-4 py-[13px] text-[1.5rem] font-light tracking-[0.01em] text-mist outline-none [caret-color:var(--color-aurora-soft)] [color-scheme:dark] [transition:all_.5s_ease] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 hover:bg-dusk-mid-80 focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]`
+    }
+
+    const errorTextClass = "font-sans text-[1.2rem] text-ember"
 
     return (
         <dialog
@@ -52,7 +64,13 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                 {'‹ voltar'}
             </button>
 
-            <form className="relative z-[1] mx-auto my-16 flex w-[400px] flex-col items-center justify-center gap-5 border-b border-border-mid pb-[34px] font-sans" id="msg" autoComplete='off'>
+            <form
+                className="relative z-[1] mx-auto my-16 flex w-[400px] flex-col items-center justify-center gap-5 border-b border-border-mid pb-[34px] font-sans"
+                id="msg"
+                autoComplete='off'
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+            >
                 <div className="flex items-center justify-center gap-5">
                     <img src={LogoMoovup} alt="logo moovUp" className="w-[100px]" />
                 </div>
@@ -61,36 +79,42 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                     Conecte-se e veja o seu engajamento valer benefícios
                 </p>
 
-                <div className="mt-[30px] flex flex-col gap-5">
+                <div className="mt-[30px] flex w-full flex-col gap-5">
                     <label className="flex flex-col gap-[10px]">
                         <input
-                            className={inputClass}
-                            id="user"
+                            className={inputClass(!!errors.user)}
                             type="text"
                             placeholder="usuario"
-                            value={user}
-                            onChange={(u) => setUser(u.target.value)}
+                            {...register('user', {
+                                required: 'Informe seu usuário',
+                            })}
                         />
+                        {errors.user && <p className={errorTextClass}>{errors.user.message}</p>}
                     </label>
 
                     <label className="flex flex-col gap-[10px]">
                         <input
-                            className={inputClass}
-                            id="email"
+                            className={inputClass(!!errors.email)}
                             type="email"
                             placeholder="seu@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
                             autoComplete='new-password'
+                            {...register('email', {
+                                required: 'Informe seu e-mail',
+                                pattern: {
+                                    value: EMAIL_PATTERN,
+                                    message: 'Informe um e-mail válido',
+                                },
+                            })}
                         />
+                        {errors.email && <p className={errorTextClass}>{errors.email.message}</p>}
                     </label>
 
                     <label className="flex flex-col gap-[10px]">
-                        <input className={inputClass} id="senha" type="password" placeholder="senha" autoComplete='off'/>
+                        <input className={inputClass()} id="senha" type="password" placeholder="senha" autoComplete='off'/>
                     </label>
                 </div>
 
-                <Button variant="primary" className="!flex h-14 w-[400px] items-center justify-center rounded-2xl bg-dusk" onClick={handleSubmit}>
+                <Button variant="primary" className="!flex h-14 w-[400px] items-center justify-center rounded-2xl bg-dusk">
                     <span>Conectar-se</span>
                 </Button>
             </form>
