@@ -7,16 +7,16 @@ interface SolutionOverviewProps {
 const sectionTagClass = "inline-flex w-fit items-center self-start rounded-[30px] border border-border bg-aurora-glow px-[10px] py-[3px] font-sans font-medium uppercase tracking-[0.15em] text-aurora-soft"
 const journeyTitleClass = "bg-gradiente-mist bg-clip-text text-[2rem] font-light text-transparent"
 const journeySubtitleClass = "font-sans text-[1.5rem] font-thin text-dust"
-const gridCardClass = "w-full rounded-[20px] border border-border bg-dusk p-[25px]"
-const btnBaseClass = "flex h-[50px] w-[300px] items-center justify-center whitespace-nowrap rounded-full border text-center font-sans text-[1.3rem] font-normal uppercase tracking-[0.06em] no-underline"
+const gridCardClass = "w-full rounded-[20px] border border-border bg-dusk p-4 tablet:p-[25px]"
+const btnBaseClass = "flex h-[50px] w-full max-w-[300px] items-center justify-center whitespace-nowrap rounded-full border text-center font-sans text-[1.3rem] font-normal uppercase tracking-[0.06em] no-underline"
 
 export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
     return (
-        <div className={isActive ? "flex justify-start gap-10" : "hidden"} id="container-1">
+        <div className={isActive ? "flex flex-col gap-8 desktop:flex-row desktop:gap-10" : "hidden"} id="container-1">
             <div className="flex min-w-0 flex-1 flex-col justify-start">
-                <div className="mb-[60px] flex flex-col gap-5">
+                <div className="mb-10 flex flex-col gap-5 desktop:mb-[60px]">
                     <p className={`${sectionTagClass} text-[1.3rem]`}>O DESAFIO</p>
-                    <h2 className="max-w-[400px] bg-gradiente-mist bg-clip-text text-[4rem] font-light text-transparent">De interação digital <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">a mobilidade real</span></h2>
+                    <h2 className="max-w-[400px] bg-gradiente-mist bg-clip-text text-[2.4rem] font-light text-transparent tablet:text-[3.2rem] desktop:text-[4rem]">De interação digital <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">a mobilidade real</span></h2>
                     <p className="font-sans text-[1.3rem] font-thin tracking-[0.1em] text-dust">Milhões de brasileiros gastam uma fatia significativa do salário em transporte público. A MoovUp propõe uma troca justa: seu tempo e engajamento online valem passagens de verdade.</p>
                 </div>
                 <article>
@@ -69,19 +69,19 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                 <div className="w-full">
                     <div className="grid w-full grid-cols-2 gap-3">
                         <div className={gridCardClass}>
-                            <h3 className="text-[4rem] font-thin text-mist">850M</h3>
+                            <h3 className="text-[2.2rem] font-thin text-mist tablet:text-[3rem] desktop:text-[4rem]">850M</h3>
                             <p className="font-sans text-[1.2rem] text-dust">Pontos distribuídos até hoje</p>
                         </div>
                         <div className={gridCardClass}>
-                            <h3 className="text-[4rem] font-thin text-mist">R$4.2M</h3>
+                            <h3 className="text-[2.2rem] font-thin text-mist tablet:text-[3rem] desktop:text-[4rem]">R$4.2M</h3>
                             <p className="font-sans text-[1.2rem] text-dust">Em passagens resgatadas</p>
                         </div>
                         <div className={gridCardClass}>
-                            <h3 className="text-[4rem] font-thin text-mist">2M+</h3>
+                            <h3 className="text-[2.2rem] font-thin text-mist tablet:text-[3rem] desktop:text-[4rem]">2M+</h3>
                             <p className="font-sans text-[1.2rem] text-dust">Usuários ativos na plataforma</p>
                         </div>
                         <div className={gridCardClass}>
-                            <h3 className="text-[4rem] font-thin text-mist">98%</h3>
+                            <h3 className="text-[2.2rem] font-thin text-mist tablet:text-[3rem] desktop:text-[4rem]">98%</h3>
                             <p className="font-sans text-[1.2rem] text-dust">Satisfação dos usuários</p>
                         </div>
                     </div>
@@ -124,8 +124,8 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                 </div>
 
                 {/* Card de direcionamento para pitch e participantes */}
-                <div className="flex h-[300px] flex-col justify-between rounded-[30px] border-2 border-border p-[30px] [transition:all_.5s] hover:scale-[1.01] hover:bg-dusk">
-                    <h3 className="text-center text-[2.5rem] font-extralight text-mist">E nós da <span className="text-[2.8rem] italic font-medium">MoovUp</span>, gostaríamos de apresentar um breve vídeo, resumindo nossa <span className="text-[2.8rem] italic font-medium">solução</span></h3>
+                <div className="flex h-auto min-h-[220px] flex-col justify-between gap-6 rounded-[30px] border-2 border-border p-6 [transition:all_.5s] hover:scale-[1.01] hover:bg-dusk tablet:h-[300px] tablet:gap-0 tablet:p-[30px]">
+                    <h3 className="text-center text-[1.6rem] font-extralight text-mist tablet:text-[2.2rem] desktop:text-[2.5rem]">E nós da <span className="text-[1.8rem] italic font-medium tablet:text-[2.4rem] desktop:text-[2.8rem]">MoovUp</span>, gostaríamos de apresentar um breve vídeo, resumindo nossa <span className="text-[1.8rem] italic font-medium tablet:text-[2.4rem] desktop:text-[2.8rem]">solução</span></h3>
                     <div className="flex flex-col items-center gap-5">
                         <Link to="/solucao#solution-pitch-title" className={`${btnBaseClass} border-aurora-30 bg-transparent text-aurora-soft transition-all duration-200 hover:cursor-pointer hover:border-violet-glow-50 hover:bg-violet-glow-08 hover:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]`}>ir para o vídeo</Link>
                         <Link to="/quem-somos#creators-goto" className={`${btnBaseClass} border-border-mid bg-gradiente-aurora text-mist [transition:border-color_.25s_ease,box-shadow_.25s_ease,filter_.25s_ease,transform_.25s_ease] hover:cursor-pointer hover:-translate-y-[3px] hover:border-border hover:bg-violet-glow-08 hover:shadow-[0_12px_28px_var(--color-aurora-glow),0_0_18px_var(--color-ember-16)] hover:[filter:saturate(1.12)_brightness(1.04)]`}>conheça os participantes</Link>

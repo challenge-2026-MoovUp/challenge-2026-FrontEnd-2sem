@@ -9,11 +9,11 @@ const markerClass = "relative flex h-[22px] w-[22px] flex-shrink-0 items-center 
 
 export default function SolutionInfo({ isActive } : solutionInfoProps) {
     return(
-        <div className={isActive ? "flex justify-start gap-5" : "hidden"} id="container-3">
+        <div className={isActive ? "flex flex-col gap-8 desktop:flex-row desktop:gap-5" : "hidden"} id="container-3">
             <div className="flex min-w-0 flex-1 flex-col justify-start">
-                <div className="mb-[60px] flex flex-col gap-5">
+                <div className="mb-10 flex flex-col gap-5 desktop:mb-[60px]">
                     <p className={`${sectionTagClass} text-[1.3rem]`}>Passo a passo</p>
-                    <h2 className="max-w-[400px] bg-gradiente-mist bg-clip-text text-[4rem] font-light text-transparent">Do primeiro post <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">ao embarque</span></h2>
+                    <h2 className="max-w-[400px] bg-gradiente-mist bg-clip-text text-[2.4rem] font-light text-transparent tablet:text-[3.2rem] desktop:text-[4rem]">Do primeiro post <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">ao embarque</span></h2>
                     <p className="font-sans text-[1.3rem] font-thin tracking-[0.1em] text-dust">O caminho completo, desde criar sua conta até usar a passagem na catraca.</p>
                 </div>
                 <article>

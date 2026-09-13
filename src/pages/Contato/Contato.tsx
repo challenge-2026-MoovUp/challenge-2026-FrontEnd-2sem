@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { ContatoFormData } from '../../types/contato'
 
-const cardClass = "group relative flex min-h-[100px] max-w-[400px] items-center gap-[18px] overflow-hidden rounded-[20px] border border-border-mid bg-dusk px-5 py-6 transition-[background-color,border-color,transform] duration-300 ease-in-out hover:translate-x-1 hover:border-aurora-30 hover:bg-dusk-mid-80 before:absolute before:inset-y-0 before:left-0 before:w-[2px] before:bg-gradiente-aurora before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100"
+const cardClass = "group relative flex min-h-[100px] w-full max-w-full tablet:max-w-[400px] items-center gap-[18px] overflow-hidden rounded-[20px] border border-border-mid bg-dusk px-5 py-6 transition-[background-color,border-color,transform] duration-300 ease-in-out hover:translate-x-1 hover:border-aurora-30 hover:bg-dusk-mid-80 before:absolute before:inset-y-0 before:left-0 before:w-[2px] before:bg-gradiente-aurora before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100"
 const errorTextClass = "font-sans text-[1.2rem] text-ember"
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -28,14 +28,14 @@ export default function Contato() {
 
     return (
         <>
-            <section className="relative mx-auto flex w-full min-h-[52vh] items-center justify-center overflow-hidden">
-                <div className="mx-auto flex w-[78%] min-h-[360px] max-w-[1020px] items-center justify-between">
-                    <div className="flex w-[58%] max-w-[560px] flex-col items-start text-left">
-                        <p className="mb-[3.2rem] inline-flex items-center font-sans text-[1.1rem] font-bold not-italic uppercase tracking-[0.26em] text-ember-soft">Fale conosco</p>
-                        <h1 className="m-0 text-[7.6rem] font-extralight leading-[0.95] text-mist">Estamos aqui <span className="block bg-gradiente-aurora bg-clip-text italic font-thin text-transparent">para ajudar</span></h1>
-                        <p className="mt-[1.8rem] max-w-[500px] font-sans text-[1.4rem] font-light leading-[1.8] text-dust">Tem alguma dúvida, sugestão ou problema? Nossa equipe responde em até 24 horas.</p>
+            <section className="relative mx-auto flex w-full min-h-0 tablet:min-h-[52vh] items-center justify-center overflow-hidden py-16 tablet:py-0">
+                <div className="mx-auto flex w-[92%] max-w-[1020px] flex-col items-start gap-8 tablet:min-h-[360px] tablet:w-[78%] tablet:flex-row tablet:items-center tablet:justify-between tablet:gap-0">
+                    <div className="flex w-full max-w-[560px] flex-col items-start text-left tablet:w-[58%]">
+                        <p className="mb-6 inline-flex items-center font-sans text-[1.1rem] font-bold not-italic uppercase tracking-[0.26em] text-ember-soft tablet:mb-[3.2rem]">Fale conosco</p>
+                        <h1 className="m-0 text-[3.2rem] font-extralight leading-[0.95] text-mist tablet:text-[5.2rem] desktop:text-[7.6rem]">Estamos aqui <span className="block bg-gradiente-aurora bg-clip-text italic font-thin text-transparent">para ajudar</span></h1>
+                        <p className="mt-6 max-w-[500px] font-sans text-[1.2rem] font-light leading-[1.8] text-dust tablet:mt-[1.8rem] tablet:text-[1.4rem]">Tem alguma dúvida, sugestão ou problema? Nossa equipe responde em até 24 horas.</p>
                     </div>
-                    <div className="mb-[6.8rem] flex w-[174px] items-center gap-3 self-end rounded-[14px] border border-aurora-26 bg-dusk-72 px-[18px] py-4 text-mist">
+                    <div className="flex w-full max-w-[174px] items-center gap-3 self-start rounded-[14px] border border-aurora-26 bg-dusk-72 px-[18px] py-4 text-mist tablet:mb-[6.8rem] tablet:w-[174px] tablet:self-end">
                         <span className="h-2 w-2 flex-none rounded-full bg-sage opacity-75 shadow-[0_0_14px_var(--color-sage-45)]"></span>
                         <div>
                             <strong className="block font-sans text-[1.1rem] leading-[1.2]">Equipe online</strong>
@@ -45,8 +45,8 @@ export default function Contato() {
                 </div>
             </section>
 
-            <section className="mx-auto grid max-w-[1120px] grid-cols-[minmax(0,390px)_minmax(0,600px)] items-start justify-center gap-[70px] px-[60px] pb-[100px]">
-                <div className="max-w-[390px]">
+            <section className="mx-auto grid max-w-[1120px] grid-cols-1 items-start justify-center gap-8 px-6 pb-16 tablet:grid-cols-[minmax(0,320px)_1fr] tablet:gap-10 tablet:px-10 desktop:grid-cols-[minmax(0,390px)_minmax(0,600px)] desktop:gap-[70px] desktop:px-[60px] desktop:pb-[100px]">
+                <div className="w-full tablet:max-w-[320px] desktop:max-w-[390px]">
                     <h2 className="mb-[30px] font-sans font-light text-mist-dim">CANAIS DE ATENDIMENTO</h2>
                     <div className="grid grid-cols-1 gap-[10px]">
                         <div className={cardClass}>
@@ -80,12 +80,12 @@ export default function Contato() {
                     </div>
                 </div>
 
-                <div className="min-h-[620px] max-w-[600px] rounded-[20px] border border-border-mid bg-dusk transition-all duration-200">
-                    <form className="m-0 flex w-full max-w-none flex-col gap-5 p-[30px]" autoComplete="off" onSubmit={handleSubmit(onSubmit)} noValidate>
-                        <h2 className="text-[4rem] font-light text-mist">Envie uma mensagem</h2>
-                        <p className="my-5 font-sans text-[1.5rem] font-light text-dust">Preencha o formulário abaixo e nossa equipe responde em breve.</p>
+                <div className="min-h-0 w-full max-w-full rounded-[20px] border border-border-mid bg-dusk transition-all duration-200 tablet:min-h-[620px] desktop:max-w-[600px]">
+                    <form className="m-0 flex w-full max-w-none flex-col gap-5 p-6 desktop:p-[30px]" autoComplete="off" onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <h2 className="text-[2.4rem] font-light text-mist tablet:text-[3rem] desktop:text-[4rem]">Envie uma mensagem</h2>
+                        <p className="my-5 font-sans text-[1.3rem] font-light text-dust desktop:text-[1.5rem]">Preencha o formulário abaixo e nossa equipe responde em breve.</p>
 
-                        <div className="flex gap-5">
+                        <div className="flex flex-col gap-5 tablet:flex-row">
                             <label className="flex flex-1 flex-col gap-[6px]">
                                 <span className="font-sans text-base font-normal text-dust">NOME</span>
                                 <input

@@ -44,6 +44,20 @@ O site foi construído com **React, TypeScript e Vite**, com roteamento via **Re
 
 ---
 
+## 📱 Responsividade
+
+O layout é **mobile-first**: as classes do Tailwind sem prefixo já são o estilo de mobile, e dois breakpoints customizados (definidos em `@theme`, dentro de `src/global.css`) escalam o layout para telas maiores.
+
+| Prefixo Tailwind | Breakpoint | Faixa de tela |
+|---|---|---|
+| _(sem prefixo)_ | — | Mobile, até 767px (cobre o "até 480px" do enunciado) |
+| `tablet:` | `48rem` (768px) | Tablet, 768px+ |
+| `desktop:` | `62rem` (992px) | Desktop, 992px+ |
+
+Exemplo: `grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4` empilha os cards no celular, exibe 2 colunas no tablet e 4 no desktop.
+
+---
+
 ## 📁 Estrutura de Pastas
 
 ```

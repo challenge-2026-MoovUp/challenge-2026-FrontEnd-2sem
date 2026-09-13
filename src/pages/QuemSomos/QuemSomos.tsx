@@ -58,14 +58,14 @@ export default function QuemSomos() {
                 <span className="absolute -left-[140px] bottom-[26%] h-[180px] w-[520px] animate-[orbFloat_24s_ease-in-out_infinite_alternate] rounded-full opacity-[.38] blur-[110px] [background:radial-gradient(circle,var(--color-ember-soft)_0%,transparent_78%)]" />
             </div>
             <section>
-                <div className="my-4 flex min-h-screen items-center justify-between mx-16 px-6 py-4">
+                <div className="my-4 flex min-h-0 flex-col items-center justify-between gap-10 mx-6 px-4 py-8 tablet:mx-16 tablet:flex-row tablet:gap-0 tablet:px-6 tablet:py-4 desktop:min-h-screen">
                     <div className="flex w-full max-w-[900px] flex-col items-center px-4 text-center">
                         <p className={sectionTagClass}>Nossa História</p>
-                        <h1 className="mb-[8px] w-4/5 text-[6rem] font-light leading-[1.08] text-mist">Somos movidos por ideias que <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">transformam</span> o digital em <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">impacto real.</span></h1>
-                        <p className="mt-[6px] max-w-[720px] font-sans text-[1.5rem] font-light text-mist-dim">A MoovUp nasceu de uma paixão em comum: usar a tecnologia e a criatividade para gerar benefícios reais para pessoas e para o planeta.</p>
-                        <p className="mt-[6px] max-w-[720px] font-sans text-[1.5rem] font-light text-mist-dim">Conheça os 4 criadores que estão por trás dessa jornada.</p>
+                        <h1 className="mb-[8px] w-full text-[2.6rem] font-light leading-[1.08] text-mist tablet:w-4/5 tablet:text-[4rem] desktop:text-[6rem]">Somos movidos por ideias que <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">transformam</span> o digital em <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">impacto real.</span></h1>
+                        <p className="mt-[6px] max-w-[720px] font-sans text-[1.3rem] font-light text-mist-dim tablet:text-[1.5rem]">A MoovUp nasceu de uma paixão em comum: usar a tecnologia e a criatividade para gerar benefícios reais para pessoas e para o planeta.</p>
+                        <p className="mt-[6px] max-w-[720px] font-sans text-[1.3rem] font-light text-mist-dim tablet:text-[1.5rem]">Conheça os 4 criadores que estão por trás dessa jornada.</p>
                     </div>
-                    <div className="relative z-[1] flex flex-[0_0_min(520px,42vw)] flex-col items-center justify-center overflow-visible rounded-[30px] border border-border-mid px-16 py-24 text-center shadow-[0_24px_70px_var(--color-black-22)]">
+                    <div className="relative z-[1] flex w-full flex-col items-center justify-center overflow-visible rounded-[30px] border border-border-mid px-6 py-10 text-center shadow-[0_24px_70px_var(--color-black-22)] tablet:flex-[0_0_min(520px,42vw)] tablet:px-16 tablet:py-24">
                         <img src={HeroImage} alt="Imagem de fundo pro Hero" className="absolute inset-0 z-0 h-full w-full rounded-[30px] object-cover opacity-95" />
                         <img src={Logo} alt="Icone MoovUp" className="relative z-[1] w-full max-w-[180px]" />
                         <h2 className="relative z-[1] mt-6 text-[3.7rem] font-light leading-none text-mist">MoovUp</h2>
@@ -73,15 +73,15 @@ export default function QuemSomos() {
                     </div>
                 </div>
             </section>
-            <div className="mx-60 mb-20 mt-40 scroll-mt-[120px]" id="creators-goto">
+            <div className="mx-6 mb-10 mt-16 scroll-mt-[120px] tablet:mx-20 tablet:mb-20 tablet:mt-24 desktop:mx-60 desktop:mt-40" id="creators-goto">
                 <p className={sectionTagClass}>NOSSOS CRIADORES</p>
             </div>
 
-            <div className="mx-auto mb-40 grid w-full max-w-[1100px] grid-cols-4 gap-0 overflow-hidden rounded-[30px] border border-border bg-dusk">
+            <div className="mx-auto mb-16 grid w-full max-w-[1100px] grid-cols-1 gap-0 overflow-hidden rounded-[30px] border border-border bg-dusk tablet:mb-24 tablet:grid-cols-2 desktop:mb-40 desktop:grid-cols-4">
                 {creators.map((creator, index) => (
                     <div
                         key={creator.id}
-                        className={`box-border flex min-h-[420px] w-full flex-col items-center justify-start border-border px-8 py-16 hover:cursor-pointer hover:border-l-transparent ${index === 0 ? 'border-l-0' : 'border-l'}`}
+                        className={`box-border flex min-h-[420px] w-full flex-col items-center justify-start border-border px-6 py-10 hover:cursor-pointer hover:border-l-transparent tablet:px-8 tablet:py-16 border-l-0 ${index % 2 === 0 ? 'tablet:border-l-0' : 'tablet:border-l'} ${index % 4 === 0 ? 'desktop:border-l-0' : 'desktop:border-l'}`}
                         role="button"
                         tabIndex={0}
                         aria-haspopup="dialog"
@@ -115,18 +115,18 @@ export default function QuemSomos() {
 
             <TeamPopup creator={activeCreator} onClose={() => setActiveCreator(null)}></TeamPopup>
 
-            <section className="mb-32">
-                <div className="mx-auto flex w-full max-w-[1200px] items-stretch justify-center gap-[28px] px-12">
-                    <div className="flex w-full min-w-0 max-w-[560px] flex-1 flex-col gap-[16px] rounded-[40px] bg-dusk p-[30px]">
+            <section className="mb-16 tablet:mb-24 desktop:mb-32">
+                <div className="mx-auto flex w-full max-w-[1200px] flex-col items-stretch justify-center gap-[28px] px-6 tablet:flex-row tablet:px-12">
+                    <div className="flex w-full min-w-0 max-w-full flex-1 flex-col gap-[16px] rounded-[40px] bg-dusk p-6 tablet:max-w-[560px] tablet:p-[30px]">
                         <div className="pb-[28px]">
                             <p className={sectionTagClass}>NOSSA MISSÃO</p>
-                            <h2 className="mb-[1.2rem] w-4/5 text-[3.1rem] font-light leading-[1.08] text-mist">Transformamos pontos em <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">mobilidade.</span></h2>
-                            <p className="max-w-[720px] font-sans text-[1.35rem] font-extralight text-mist-dim">A MoovUp permite que usuários convertam os pontos acumulados por interações sustentáveis em passagens de transporte público, incentivando escolhas conscientes e facilitando o acesso à mobilidade urbana.</p>
+                            <h2 className="mb-[1.2rem] w-full text-[2rem] font-light leading-[1.08] text-mist tablet:w-4/5 tablet:text-[2.6rem] desktop:text-[3.1rem]">Transformamos pontos em <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">mobilidade.</span></h2>
+                            <p className="max-w-[720px] font-sans text-[1.2rem] font-extralight text-mist-dim tablet:text-[1.35rem]">A MoovUp permite que usuários convertam os pontos acumulados por interações sustentáveis em passagens de transporte público, incentivando escolhas conscientes e facilitando o acesso à mobilidade urbana.</p>
                         </div>
 
-                        <div className="flex items-start justify-between gap-[14px] border-t border-border pt-[24px]">
+                        <div className="flex flex-col items-start justify-between gap-[14px] border-t border-border pt-[24px] tablet:flex-row">
                             {solutionSteps.map((step) => (
-                                <div key={step.number} className="flex min-w-0 flex-1 flex-col items-center text-center">
+                                <div key={step.number} className="flex w-full min-w-0 flex-1 flex-col items-center text-center">
                                     <span className="mb-4 inline-flex h-[64px] w-[64px] items-center justify-center rounded-full border border-aurora-glow bg-aurora-glow text-[2.2rem] text-aurora-soft">
                                         <FontAwesomeIcon icon={step.icon} />
                                     </span>
@@ -142,7 +142,7 @@ export default function QuemSomos() {
                             onClick={() => navigate('/sobre')}
                         >CONHEÇA NOSSA SOLUÇÃO</Button>
                     </div>
-                    <div className="flex w-full min-w-0 max-w-[560px] flex-1 flex-col gap-[16px] rounded-[40px] bg-dusk p-[30px]">
+                    <div className="flex w-full min-w-0 max-w-full flex-1 flex-col gap-[16px] rounded-[40px] bg-dusk p-6 tablet:max-w-[560px] tablet:p-[30px]">
                         <p className={sectionTagClass}>COMO FUNCIONA</p>
                         <div className="flex flex-1 flex-col justify-between gap-[16px]">
                             {solutionCards.map((card) => (
@@ -163,14 +163,14 @@ export default function QuemSomos() {
 
 
             <section>
-                <div className="mx-auto my-56 w-full max-w-[1200px] px-16">
+                <div className="mx-auto my-20 w-full max-w-[1200px] px-6 tablet:my-32 tablet:px-16 desktop:my-56">
                     <div className="mb-16 pt-[30px]">
                         <p className={`${sectionTagClass} border-2 border-aurora-glow bg-[var(--color-roxo-mais-opaco)] px-[20px] py-[5px]`}>NOSSOS VALORES</p>
-                        <h2 className="mb-[8px] w-4/5 text-[6rem] font-light leading-[1.08] text-mist">O que nos <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">move</span></h2>
+                        <h2 className="mb-[8px] w-full text-[2.6rem] font-light leading-[1.08] text-mist tablet:w-4/5 tablet:text-[4rem] desktop:text-[6rem]">O que nos <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">move</span></h2>
                     </div>
-                    <div className="grid grid-cols-3 justify-center gap-[20px]">
+                    <div className="grid grid-cols-1 justify-center gap-[20px] tablet:grid-cols-3">
                         {values.map((value) => (
-                            <div key={value.topic} className="w-full min-w-0 rounded-[10px] border border-border bg-void p-12 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-500 ease-in-out hover:bg-aurora-glow">
+                            <div key={value.topic} className="w-full min-w-0 rounded-[10px] border border-border bg-void p-6 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-500 ease-in-out hover:bg-aurora-glow tablet:p-12">
                                 <p className="mb-4 inline-block rounded-[16px] border border-border bg-aurora-glow px-5 py-4 text-[56px] leading-none">{value.icon}</p>
                                 <h3 className="pb-[30px] font-serif text-[2.3rem] font-thin">{value.topic}</h3>
                                 <p className="font-sans text-[1.5rem] font-extralight text-mist-dim">{value.subtitle}</p>
