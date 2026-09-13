@@ -34,10 +34,10 @@ export default function Home() {
     const { onOpenModal, userEmail, userId } = useOutletContext<HomeContext>()
 
     return (
-        <div className="page__home">
-            <div className="ambient" aria-hidden="true">
-                <span className="orb orb-1" />
-                <span className="orb orb-2" />
+        <>
+            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+                <span className="absolute -left-[100px] -top-[150px] h-[700px] w-[500px] animate-orb-float rounded-full opacity-45 blur-[110px] [background:radial-gradient(circle,var(--color-aurora)_0%,transparent_70%)]" />
+                <span className="absolute -right-[120px] bottom-10 h-[100px] w-[500px] animate-orb-float rounded-full opacity-45 blur-[110px] [background:radial-gradient(circle,var(--color-ember)_0%,transparent_100%)]" />
             </div>
 
             <section>
@@ -103,6 +103,6 @@ export default function Home() {
             </section>
 
             <Foot ctaTo="/Sobre" btnStr='SAIBA MAIS' large />
-        </div>
+        </>
     )
 }

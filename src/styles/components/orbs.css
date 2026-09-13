@@ -14,8 +14,6 @@
     position: absolute;
 }
 
-.page__home main,
-.page__home footer,
 .page__faq main,
 .page__faq footer,
 .page__sobre main,
@@ -28,7 +26,6 @@
     z-index: 1;
 }
 
-.page__home .orb-1,
 .page__contato .orb-1 {
     background: radial-gradient(circle, var(--aurora) 0%, var(--transparent) 70%);
     height: 700px;
@@ -37,7 +34,6 @@
     width: 500px;
 }
 
-.page__home .orb-2,
 .page__contato .orb-2 {
     background: radial-gradient(circle, var(--ember) 0%, var(--transparent) 100%);
     bottom: 40px;
