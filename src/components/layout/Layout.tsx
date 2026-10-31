@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Header from './Header.tsx'
 import Footer from './Footer.tsx'
 import LoginModal from './LoginModal.tsx'
+import { WalletProvider } from '../../context/WalletProvider.tsx'
 
 
 function Layout(){
@@ -27,7 +28,9 @@ function Layout(){
             <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userId={userId} />
             <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin}/>
             <main>
-                <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userId }}/>
+                <WalletProvider userId={userId}>
+                    <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userId }}/>
+                </WalletProvider>
             </main>
             <Footer/>
         </>

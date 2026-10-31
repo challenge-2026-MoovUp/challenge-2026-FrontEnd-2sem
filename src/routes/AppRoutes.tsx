@@ -7,12 +7,16 @@ import QuemSomos from '../pages/QuemSomos/QuemSomos.tsx';
 import Faq from '../pages/Faq/Faq.tsx';
 import Contato from '../pages/Contato/Contato.tsx';
 import Video from '../pages/Video/Video.tsx';
+import Feed from '../pages/Feed/Feed.tsx'
+import Carteira from '../pages/Carteira/Carteira.tsx'
 
 export default function AppRoutes() {
     return (
         <Routes>
             <Route element={<Layout />}>
                 <Route index element={<Home />} />
+                <Route path="feed" element={<Feed />} />
+                <Route path="carteira" element={<Carteira />} />
                 <Route path="quem-somos" element={<QuemSomos />}/>
                 <Route path="sobre" element={<Sobre />} />
                 <Route path="solucao" element={<Solucao />} />
