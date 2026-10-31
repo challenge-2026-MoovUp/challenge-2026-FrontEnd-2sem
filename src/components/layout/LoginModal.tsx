@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 import LogoMoovup from '../../assets/moov-up-icon.png'
 import Button from '../common/Button.tsx'
 import type { LoginFormData } from '../../types/login'
@@ -36,101 +38,162 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
         reset()
     }
 
+    const fieldErrorClass = "border-ember focus:border-ember focus:ring-ember/30"
+    const fieldOkClass = "border-border-mid focus:border-aurora-soft focus:ring-aurora/25"
+
     function inputClass(hasError?: boolean) {
-        return `h-12 w-full appearance-none rounded-[10px] border ${hasError ? 'border-ember' : 'border-border-mid'} bg-void px-4 py-[13px] text-[1.5rem] font-light tracking-[0.01em] text-mist outline-none [caret-color:var(--color-aurora-soft)] [color-scheme:dark] [transition:all_.5s_ease] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 hover:bg-dusk-mid-80 focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]`
+        return `h-12 w-full rounded-xl border bg-void/60 pl-11 pr-4 text-[1.45rem] font-light tracking-[0.01em] text-mist outline-none transition-all duration-200 [color-scheme:dark] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 focus:bg-violet-glow-03 focus:ring-2 focus:ring-offset-0 ${hasError ? fieldErrorClass : fieldOkClass}`
     }
 
-    const errorTextClass = "font-sans text-[1.2rem] text-ember"
+    const errorTextClass = "flex items-center gap-[6px] font-sans text-[1.15rem] text-ember"
 
     return (
         <dialog
             ref={dialogRef}
-            className="m-0 h-screen max-h-full w-screen max-w-full overflow-auto border-0 bg-[rgba(4,8,20,0.88)] p-6 font-sans text-mist [transition:.35s] backdrop:backdrop-blur-[6px] backdrop:bg-night-68 tablet:p-12"
-            id="ModalEmBreve"
-            aria-labelledby="modalEmBreveTitle"
+            onClose={onClose}
+            onCancel={onClose}
+            className="m-0 h-screen max-h-full w-screen max-w-full overflow-auto border-0 bg-transparent p-0 font-sans text-mist [transition:.35s] backdrop:bg-night-68 backdrop:backdrop-blur-[6px]"
+            id="ModalLogin"
+            aria-labelledby="modalLoginTitle"
         >
-            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
-                <span className="absolute left-[8%] top-[10%] h-[420px] w-[420px] rounded-full opacity-45 blur-[110px] [background:radial-gradient(circle,var(--color-aurora)_0%,transparent_70%)]" />
-                <span className="absolute bottom-[8%] right-[6%] h-[520px] w-[520px] rounded-full opacity-35 blur-[110px] [background:radial-gradient(circle,var(--color-ember-soft)_0%,transparent_80%)]" />
+            <div className="relative flex min-h-full w-full items-center justify-center p-6 tablet:p-12">
+                {/* Glow ambiente, mesma linguagem visual do CTA "Comece hoje" */}
+                <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+                    <span className="absolute left-[8%] top-[10%] h-[420px] w-[420px] rounded-full opacity-45 blur-[110px] [background:radial-gradient(circle,var(--color-aurora)_0%,transparent_70%)]" />
+                    <span className="absolute bottom-[8%] right-[6%] h-[520px] w-[520px] rounded-full opacity-35 blur-[110px] [background:radial-gradient(circle,var(--color-ember-soft)_0%,transparent_80%)]" />
+                </div>
+
+                <div className="relative z-[1] w-full max-w-[440px] overflow-hidden rounded-[28px] border border-border bg-dusk-74 p-8 shadow-[0_24px_60px_var(--color-void-42)] backdrop-blur-[18px] tablet:p-11">
+                    <button
+                        className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full text-mist-dim outline-none transition-colors duration-200 hover:bg-mist-08 hover:text-mist focus-visible:ring-2 focus-visible:ring-aurora-soft/50"
+                        aria-label="Fechar"
+                        id="btnFecharModal"
+                        type="button"
+                        onClick={onClose}
+                    >
+                        <FontAwesomeIcon icon={faXmark} className="text-[1.6rem]" />
+                    </button>
+
+                    <div className="flex flex-col items-center gap-4 text-center">
+                        <img src={LogoMoovup} alt="logo moovUp" className="w-[72px]" />
+                        <div className="flex flex-col gap-1">
+                            <h2 id="modalLoginTitle" className="font-serif text-[2.2rem] font-medium text-mist">
+                                Bem-vindo de volta
+                            </h2>
+                            <p className="text-[1.4rem] font-extralight text-mist-dim">
+                                Conecte-se e veja o seu engajamento valer benefícios
+                            </p>
+                        </div>
+                    </div>
+
+                    <form
+                        className="mt-9 flex w-full flex-col gap-5"
+                        id="msg"
+                        autoComplete="off"
+                        onSubmit={handleSubmit(onSubmit)}
+                        noValidate
+                    >
+                        <div className="flex flex-col gap-[6px]">
+                            <label htmlFor="loginUser" className="font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim">
+                                Usuário
+                            </label>
+                            <div className="relative">
+                                <FontAwesomeIcon icon={faUser} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim" />
+                                <input
+                                    id="loginUser"
+                                    className={inputClass(!!errors.user)}
+                                    type="text"
+                                    placeholder="Como quer ser chamado"
+                                    aria-invalid={!!errors.user}
+                                    aria-describedby={errors.user ? 'loginUser-error' : undefined}
+                                    {...register('user', {
+                                        required: 'Informe seu usuário',
+                                    })}
+                                />
+                            </div>
+                            {errors.user && (
+                                <p id="loginUser-error" role="alert" className={errorTextClass}>
+                                    {errors.user.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col gap-[6px]">
+                            <label htmlFor="loginEmail" className="font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim">
+                                E-mail
+                            </label>
+                            <div className="relative">
+                                <FontAwesomeIcon icon={faEnvelope} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim" />
+                                <input
+                                    id="loginEmail"
+                                    className={inputClass(!!errors.email)}
+                                    type="email"
+                                    placeholder="seu@email.com"
+                                    autoComplete="new-password"
+                                    aria-invalid={!!errors.email}
+                                    aria-describedby={errors.email ? 'loginEmail-error' : undefined}
+                                    {...register('email', {
+                                        required: 'Informe seu e-mail',
+                                        pattern: {
+                                            value: EMAIL_PATTERN,
+                                            message: 'Informe um e-mail válido',
+                                        },
+                                    })}
+                                />
+                            </div>
+                            {errors.email && (
+                                <p id="loginEmail-error" role="alert" className={errorTextClass}>
+                                    {errors.email.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col gap-[6px]">
+                            <label htmlFor="loginSenha" className="font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim">
+                                Senha
+                            </label>
+                            <div className="relative">
+                                <FontAwesomeIcon icon={faLock} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim" />
+                                <input
+                                    id="loginSenha"
+                                    className={inputClass(!!errors.senha)}
+                                    type="password"
+                                    placeholder="••••••••"
+                                    autoComplete="off"
+                                    aria-invalid={!!errors.senha}
+                                    aria-describedby={errors.senha ? 'loginSenha-error' : undefined}
+                                    {...register('senha', {
+                                        required: 'Informe sua senha',
+                                    })}
+                                />
+                            </div>
+                            {errors.senha && (
+                                <p id="loginSenha-error" role="alert" className={errorTextClass}>
+                                    {errors.senha.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <Button
+                            variant="primary"
+                            className="mt-2 !m-0 !flex h-14 w-full items-center justify-center rounded-2xl !border-none bg-gradiente-aurora !text-mist hover:!shadow-[0_8px_32px_var(--color-aurora-35)]"
+                        >
+                            <span>Conectar-se</span>
+                        </Button>
+                    </form>
+
+                    <p className="relative z-[1] mx-auto mt-7 w-full text-center font-sans text-[1.1rem] leading-[1.6] text-dust">
+                        Ao continuar, você concorda com os nossos{' '}
+                        <a href="https://www.soulup.io/terms-and-privacy-soul.pdf" target="_blank" rel="noopener noreferrer" className="font-sans text-aurora-soft underline-offset-2 hover:underline">
+                            Termos de Serviço
+                        </a>{' '}
+                        e reconhece que leu e compreendeu a nossa{' '}
+                        <a href="https://www.soulup.io/terms-and-privacy-soul.pdf" target="_blank" rel="noopener noreferrer" className="font-sans text-aurora-soft underline-offset-2 hover:underline">
+                            Política de Privacidade.
+                        </a>
+                    </p>
+                </div>
             </div>
-
-            <button
-                className="absolute left-[10px] top-[10px] h-11 min-w-[110px] cursor-pointer rounded-full border-none bg-transparent px-[18px] font-sans text-[1.5rem] font-medium normal-case leading-[44px] tracking-[0.06em] text-mist"
-                aria-label="Voltar"
-                id="btnFecharModal"
-                type="button"
-                onClick={onClose}
-            >
-                {'‹ voltar'}
-            </button>
-
-            <form
-                className="relative z-[1] mx-auto my-16 flex w-full max-w-[400px] flex-col items-center justify-center gap-5 border-b border-border-mid pb-[34px] font-sans"
-                id="msg"
-                autoComplete='off'
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-            >
-                <div className="flex items-center justify-center gap-5">
-                    <img src={LogoMoovup} alt="logo moovUp" className="w-[100px]" />
-                </div>
-
-                <p className="text-[1.5rem] font-extralight">
-                    Conecte-se e veja o seu engajamento valer benefícios
-                </p>
-
-                <div className="mt-[30px] flex w-full flex-col gap-5">
-                    <label className="flex flex-col gap-[10px]">
-                        <input
-                            className={inputClass(!!errors.user)}
-                            type="text"
-                            placeholder="usuario"
-                            {...register('user', {
-                                required: 'Informe seu usuário',
-                            })}
-                        />
-                        {errors.user && <p className={errorTextClass}>{errors.user.message}</p>}
-                    </label>
-
-                    <label className="flex flex-col gap-[10px]">
-                        <input
-                            className={inputClass(!!errors.email)}
-                            type="email"
-                            placeholder="seu@email.com"
-                            autoComplete='new-password'
-                            {...register('email', {
-                                required: 'Informe seu e-mail',
-                                pattern: {
-                                    value: EMAIL_PATTERN,
-                                    message: 'Informe um e-mail válido',
-                                },
-                            })}
-                        />
-                        {errors.email && <p className={errorTextClass}>{errors.email.message}</p>}
-                    </label>
-
-                    <label className="flex flex-col gap-[10px]">
-                        <input className={inputClass()} id="senha" type="password" placeholder="senha" autoComplete='off'/>
-                    </label>
-                </div>
-
-                <Button variant="primary" className="!flex h-14 w-full items-center justify-center rounded-2xl bg-dusk">
-                    <span>Conectar-se</span>
-                </Button>
-            </form>
-
-            <p className="relative z-[1] mx-auto w-full max-w-[400px] text-center font-sans text-[1.2rem] text-dust">
-                Ao continuar, você concorda com os nossos{' '}
-                <a href="https://www.soulup.io/terms-and-privacy-soul.pdf" target="_blank" rel="noopener noreferrer" className="font-sans text-aurora">
-                    Termos de Serviço
-                </a>{' '}
-                e reconhece que leu e compreendeu a nossa{' '}
-                <a href="https://www.soulup.io/terms-and-privacy-soul.pdf" target="_blank" rel="noopener noreferrer" className="font-sans text-aurora">
-                    Política de Privacidade.
-                </a>
-            </p>
         </dialog>
     )
 }
-
-
