@@ -1,3 +1,5 @@
+import { creditDeadlineHours, maxChallengeBonus, minRedeemPoints, pointsPerAction, pointsValidityMonths, welcomeBonus } from '../../data/points'
+
 interface solutionInfoProps {
     isActive: boolean
 }
@@ -23,7 +25,7 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Crie sua conta em 2 minutos</h3>
-                        <h3 className={journeySubtitleClass}>Cadastro gratuito com nome, e-mail e número de telefone. Nenhum cartão de crédito necessário. Ao finalizar, você já recebe 50 pontos de boas-vindas para começar.</h3>
+                        <h3 className={journeySubtitleClass}>Cadastro gratuito com nome, e-mail e número de telefone. Nenhum cartão de crédito necessário. Ao finalizar, você já recebe {welcomeBonus} pontos de boas-vindas para começar.</h3>
                         <h3 className={`${sectionTagClass} text-[1rem]`}>grátis para sempre</h3>
                     </div>
                 </article>
@@ -34,8 +36,8 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Interaja e acumule pontos</h3>
-                        <h3 className={journeySubtitleClass}>Cada curtida gera 15 pts, comentários valem 25 pts, posts originais até 80 pts e desafios semanais podem render até 200 pts de bônus. Tudo contabilizado automaticamente.</h3>
-                        <h3 className={`${sectionTagClass} text-[1rem]`}>+15 a +200 pts por ação</h3>
+                        <h3 className={journeySubtitleClass}>Cada curtida gera {pointsPerAction.curtida} pts, respostas valem {pointsPerAction.resposta} pts, reposts {pointsPerAction.repost} pts, posts originais {pointsPerAction.publicacao} pts e desafios semanais podem render até {maxChallengeBonus} pts de bônus. Tudo contabilizado automaticamente.</h3>
+                        <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.curtida} a +{maxChallengeBonus} pts por ação</h3>
                     </div>
                 </article>
                 <article>
@@ -56,8 +58,8 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Selecione o resgate</h3>
-                        <h3 className={journeySubtitleClass}>Com 400 pts no saldo, acesse "Resgatar" → "Transporte", escolha o modal, a quantidade de viagens e confirme com sua senha. Tudo dentro do app, sem sair da plataforma.</h3>
-                        <h3 className={`${sectionTagClass} text-[1rem]`}>mínimo: 400 pts</h3>
+                        <h3 className={journeySubtitleClass}>Com {minRedeemPoints} pts no saldo, acesse "Resgatar" → "Transporte", escolha o modal, a quantidade de viagens e confirme com sua senha. Tudo dentro do app, sem sair da plataforma.</h3>
+                        <h3 className={`${sectionTagClass} text-[1rem]`}>mínimo: {minRedeemPoints} pts</h3>
                     </div>
                 </article>
                 <article>
@@ -66,8 +68,8 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                         <p className="text-[3rem]">🚇</p>
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
-                        <h3 className={journeyTitleClass}>Embarque em até 24 horas</h3>
-                        <p className={journeySubtitleClass}>O crédito é processado automaticamente e aparece no seu cartão de transporte em até 24 horas úteis. Você recebe uma notificação assim que estiver disponível. Sem taxas, sem surpresas.</p>
+                        <h3 className={journeyTitleClass}>Embarque em até {creditDeadlineHours} horas</h3>
+                        <p className={journeySubtitleClass}>O crédito é processado automaticamente e aparece no seu cartão de transporte em até {creditDeadlineHours} horas úteis. Você recebe uma notificação assim que estiver disponível. Sem taxas, sem surpresas.</p>
                         <p className={`${sectionTagClass} text-[1rem]`}>zero taxas de conversão</p>
                     </div>
                 </article>
@@ -82,7 +84,7 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                         <i aria-hidden="true" className={markerClass}>+</i>
                     </summary>
                     <div className="border-t border-border px-4 py-[14px] text-[1.3rem] leading-[1.45] text-dust">
-                        O processamento é feito em até 24 horas úteis após a confirmação do resgate. Em dias úteis durante o horário comercial, costuma ser mais rápido — muitos usuários recebem o crédito em menos de 2 horas. Você recebe uma notificação assim que o crédito for aplicado.
+                        O processamento é feito em até {creditDeadlineHours} horas úteis após a confirmação do resgate. Em dias úteis durante o horário comercial, costuma ser mais rápido — muitos usuários recebem o crédito em menos de 2 horas. Você recebe uma notificação assim que o crédito for aplicado.
                     </div>
                 </details>
 
@@ -106,7 +108,7 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                         <i aria-hidden="true" className={markerClass}>+</i>
                     </summary>
                     <div className="border-t border-border px-4 py-[14px] text-[1.3rem] leading-[1.45] text-dust">
-                        Os pontos têm validade de 12 meses a partir da última movimentação da conta. Qualquer interação na plataforma ou resgate renova automaticamente o prazo. Antes do vencimento, você recebe notificações com 30 e 7 dias de antecedência.
+                        Os pontos têm validade de {pointsValidityMonths} meses a partir da última movimentação da conta. Qualquer interação na plataforma ou resgate renova automaticamente o prazo. Antes do vencimento, você recebe notificações com 30 e 7 dias de antecedência.
                     </div>
                 </details>
 

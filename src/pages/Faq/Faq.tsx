@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Accordion from '../../components/common/Accordion';
 import type { AccordionItemData } from '../../components/common/Accordion';
 import FaqSidebar from '../../components/common/FaqSidebar';
+import { maxChallengeBonus, metroOption, minRedeemPoints, pointsPerAction, pointsValidityMonths, weeklyPassOption } from '../../data/points';
 
 interface FaqCategory {
   id: string;
@@ -73,12 +74,14 @@ const categories: FaqCategory[] = [
         id: 'calculo-pontos',
         title: 'Como os pontos são calculados?',
         preview:
-          'Os pontos são calculados com base nas interações realizadas dentro da plataforma...',
+          `Cada curtida vale ${pointsPerAction.curtida} pontos, respostas ${pointsPerAction.resposta}, reposts ${pointsPerAction.repost} e publicações ${pointsPerAction.publicacao}...`,
         content: (
           <>
-            Os pontos são calculados com base nas interações realizadas dentro da plataforma.
-            Curtidas, compartilhamentos, comentários, participação em campanhas e desafios
-            especiais possuem valores específicos em pontuação. Algumas ações promocionais podem
+            Os pontos são calculados com base nas interações realizadas dentro da plataforma:
+            cada curtida vale {pointsPerAction.curtida} pontos, respostas {pointsPerAction.resposta},
+            reposts {pointsPerAction.repost} e publicações originais {pointsPerAction.publicacao}.
+            Desafios semanais rendem até {maxChallengeBonus} pontos de bônus.
+            Algumas ações promocionais podem
             oferecer multiplicadores temporários, aumentando a quantidade de pontos recebidos. O
             usuário pode acompanhar todas as movimentações diretamente pelo painel da conta.
           </>
@@ -88,10 +91,10 @@ const categories: FaqCategory[] = [
         id: 'pontos-expiram',
         title: 'Os pontos expiram?',
         preview:
-          'Sim. Os pontos acumulados possuem validade e podem expirar após determinado período sem movimentação...',
+          `Sim. Os pontos valem por ${pointsValidityMonths} meses contados da última movimentação da conta...`,
         content: (
           <>
-            Sim. Os pontos acumulados possuem validade e podem expirar após determinado período
+            Sim. Os pontos acumulados valem por {pointsValidityMonths} meses e podem expirar após esse período
             sem movimentação na conta. Para evitar a perda dos pontos, basta continuar utilizando
             a plataforma regularmente, realizando interações ou efetuando resgates dentro do prazo
             informado. O sistema também poderá enviar notificações avisando sobre pontos próximos
@@ -103,13 +106,14 @@ const categories: FaqCategory[] = [
         id: 'minimo-resgate',
         title: 'Qual o mínimo de pontos para resgatar?',
         preview:
-          'O valor mínimo para resgate pode variar conforme a recompensa disponível no momento...',
+          `O resgate começa a partir de ${minRedeemPoints} pontos, o equivalente a uma passagem de ônibus municipal...`,
         content: (
           <>
-            O valor mínimo para resgate pode variar conforme a recompensa disponível no momento.
-            Em geral, os usuários conseguem iniciar seus resgates a partir de uma quantidade básica
-            de pontos acumulados na plataforma. Quanto maior a pontuação acumulada, maiores poderão
-            ser os benefícios, descontos e vantagens oferecidos dentro das campanhas parceiras.
+            O resgate começa a partir de {minRedeemPoints} pontos, o equivalente a uma passagem de
+            ônibus municipal. Cada recompensa tem seu próprio preço em pontos — uma passagem de
+            metrô ou de trem sai por {metroOption.points} pontos e o passe semanal ilimitado por{' '}
+            {weeklyPassOption.points.toLocaleString('pt-BR')}. A tabela
+            completa de modais e valores está na página Sobre, na aba "Tipos de passagem".
           </>
         ),
       },
