@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { Credenciais } from '../../types/api'
 import { useForm } from 'react-hook-form'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -6,17 +7,18 @@ import LogoMoovup from '../../assets/moov-up-icon.png'
 import Button from '../common/Button.tsx'
 import type { LoginFormData } from '../../types/login'
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 interface LoginModalProps {
     isOpen: boolean
     onClose: () => void
-    onLogin: (email: string, user: string) => void
+    onLogin: (credenciais: Credenciais) => Promise<{ ok: boolean; reason?: string}>
 }
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null)
-
+    const [enviando, setEnviando] = useState(false)
+    const [erroApi, setErroApi] = useState<string | null>(null)
+    
     const {
         register,
         handleSubmit,
@@ -30,12 +32,17 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
         } else {
             dialogRef.current?.close()
             reset()
+            setErroApi(null)
         }
     }, [isOpen, reset])
 
-    function onSubmit(data: LoginFormData) {
-        onLogin(data.email, data.user)
-        reset()
+    async function onSubmit(data: LoginFormData){
+        setEnviando(true)
+        setErroApi(null)
+        const resultado = await onLogin({ email: data.email, senha: data.senha })
+        setEnviando(false)
+        if (resultado.ok) reset()
+            else setErroApi(resultado.reason ?? 'Não foi possível entrar')
     }
 
     const fieldErrorClass = "border-ember focus:border-ember focus:ring-ember/30"
@@ -173,12 +180,17 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                                 </p>
                             )}
                         </div>
-
+                        {erroApi && (
+                            <p role="alert" className={errorTextClass}>
+                                {erroApi}
+                            </p>
+                        )}
                         <Button
+                            type="submit"
+                            disabled={enviando}
                             variant="primary"
-                            className="mt-2 !m-0 !flex h-14 w-full items-center justify-center rounded-2xl !border-none bg-gradiente-aurora !text-mist hover:!shadow-[0_8px_32px_var(--color-aurora-35)]"
-                        >
-                            <span>Conectar-se</span>
+                            className="mt-2 !m-0 !flex h-14 w-full items-center justify-center rounded-2xl !border-none bg-gradiente-aurora !text-mist hover:!shadow-[0_8px_32px_var(--color-aurora-35)] disabled:cursor-wait disabled:opacity-60">
+                                <span>{enviando ? 'Entrando...' : 'Conectar-se'}</span>
                         </Button>
                     </form>
 

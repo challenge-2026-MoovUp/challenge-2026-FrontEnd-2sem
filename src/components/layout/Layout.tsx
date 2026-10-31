@@ -1,35 +1,34 @@
 import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 import Header from './Header.tsx'
 import Footer from './Footer.tsx'
 import LoginModal from './LoginModal.tsx'
+import type { Credenciais } from '../../types/api'
 import { WalletProvider } from '../../context/WalletProvider.tsx'
 
 
 function Layout(){
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [userEmail, setUserEmail] = useState<string | null >(() => 
-        localStorage.getItem('userEmail')
-    )
-    const [userId, setUserId] = useState<string | null> (() =>
-        localStorage.getItem('userId')
-    )
+    const { usuario, entrar } = useAuth()
 
-    function handleLogin(email: string, user: string) {
-        setUserId(user)
-        setUserEmail(email)
-        localStorage.setItem('userEmail', email)
-        localStorage.setItem('userId', user)
-        setIsModalOpen(false)
+    const userEmail = usuario?.email ?? null
+    const userId = usuario?.id ?? null
+    const userName = usuario?.nome ?? null
+
+    async function handleLogin(credenciais: Credenciais) {
+        const resultado = await entrar(credenciais)
+        if (resultado.ok) setIsModalOpen(false)
+        return resultado
     }
 
     return(
         <>
-            <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userId={userId} />
+            <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userId={userId} userName={userName} />
             <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin}/>
             <main>
-                <WalletProvider userId={userId}>
-                    <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userId }}/>
+                <WalletProvider userId={userId} >
+                    <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userName, userId }}/>
                 </WalletProvider>
             </main>
             <Footer/>
