@@ -9,6 +9,7 @@ import Contato from '../pages/Contato/Contato.tsx';
 import Video from '../pages/Video/Video.tsx';
 import Feed from '../pages/Feed/Feed.tsx'
 import Carteira from '../pages/Carteira/Carteira.tsx'
+import NotFound from '../pages/NotFound/NotFound.tsx'
 
 export default function AppRoutes() {
     return (
@@ -23,6 +24,7 @@ export default function AppRoutes() {
                 <Route path="solucao/video/:videoId" element={<Video />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="contato" element={<Contato />} />
+                <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
     )
