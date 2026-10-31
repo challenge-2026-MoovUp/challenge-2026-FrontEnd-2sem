@@ -5,6 +5,7 @@ import Foot from '../../components/common/Foot'
 interface HomeContext {
     onOpenModal: () => void
     userEmail: string | null
+    userName: string | null
     userId: string | null
 }
 
@@ -31,7 +32,7 @@ const steps = [
 ]
 
 export default function Home() {
-    const { onOpenModal, userEmail, userId } = useOutletContext<HomeContext>()
+    const { onOpenModal, userEmail, userName } = useOutletContext<HomeContext>()
 
     return (
         <>
@@ -44,7 +45,7 @@ export default function Home() {
                 <div className="mx-auto my-16 flex h-auto flex-col items-center justify-center py-10 tablet:my-24 tablet:h-[600px] tablet:py-0 desktop:my-40">
                     <div className="flex w-full max-w-[900px] flex-col items-center px-4 text-center tablet:w-4/5 tablet:px-0">
                         {userEmail ? (
-                            <p className={sectionTagClass}>Bem vindo, {userId}</p>
+                            <p className={sectionTagClass}>Bem vindo, {userName}</p>
                         ) : (
                             <p className={sectionTagClass}>Suas interações valem pontos</p>
                         )}

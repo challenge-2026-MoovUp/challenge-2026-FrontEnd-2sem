@@ -4,6 +4,7 @@ import { focusRing, primaryActionClass } from '../common/uiStyles'
 
 interface ComposerProps {
     userId: string | null
+    userName: string | null
     pointsPerPost: number
     onPublish: (content: string) => void
     onOpenModal: () => void
@@ -11,7 +12,7 @@ interface ComposerProps {
 
 const maxLength = 280
 
-export default function Composer({ userId, pointsPerPost, onPublish, onOpenModal }: ComposerProps) {
+export default function Composer({ userId, userName, pointsPerPost, onPublish, onOpenModal }: ComposerProps) {
     const [content, setContent] = useState('')
 
     const remaining = maxLength - content.length
@@ -32,7 +33,7 @@ export default function Composer({ userId, pointsPerPost, onPublish, onOpenModal
     return (
         <form onSubmit={handleSubmit} className="border-b border-border py-8">
             <div className="flex gap-4">
-                <Avatar initials={userId ? userId.slice(0, 2) : 'MU'} className="bg-dusk-mid text-aurora-soft" />
+                <Avatar initials={userName ? userName.slice(0, 2) : 'MU'} className="bg-dusk-mid text-aurora-soft" />
                 <label className="flex-1">
                     <span className="sr-only">Escreva uma publicação</span>
                     <textarea

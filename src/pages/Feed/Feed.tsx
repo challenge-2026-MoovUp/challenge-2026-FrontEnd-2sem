@@ -14,6 +14,7 @@ import { useWallet } from '../../hooks/useWallet'
 interface FeedContext {
     onOpenModal: () => void
     userEmail: string | null
+    userName: string | null
     userId: string | null
 }
 
@@ -26,7 +27,7 @@ const tabs = [
 type TabId = (typeof tabs)[number]['id']
 
 export default function Feed() {
-    const { onOpenModal, userId } = useOutletContext<FeedContext>()
+    const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
     const { earn } = useWallet()
     const { posts: postsDaApi, loading, error, recarregar, publicar } = useFeed()
 
@@ -118,9 +119,9 @@ export default function Feed() {
         if (requireLogin()) return
         const author = {
             id: 'eu',
-            name: userId as string,
-            handle: `@${(userId as string).toLowerCase().replace(/\s+/g, '')}`,
-            initials: (userId as string).slice(0, 2),
+            name: userName as string,
+            handle: `@${(userName as string).toLowerCase().replace(/\s+/g, '')}`,
+            initials: (userName as string).slice(0, 2),
             avatarClass: 'bg-dusk-mid text-aurora-soft',
         }
         setPosts((previous) =>
@@ -178,7 +179,7 @@ export default function Feed() {
             <section className="mx-auto w-full max-w-[1400px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
                 <div className="grid grid-cols-1 items-start gap-14 desktop:grid-cols-[minmax(0,240px)_minmax(0,1fr)_minmax(0,280px)] desktop:gap-16">
                     <aside className="desktop:sticky desktop:top-[100px]">
-                        <WalletRail userId={userId} />
+                        <WalletRail userId={userId} userName={userName} />
                     </aside>
 
                     <div>
@@ -211,6 +212,7 @@ export default function Feed() {
 
                         <Composer
                             userId={userId}
+                            userName={userName}
                             pointsPerPost={pointsPerAction.publicacao}
                             onPublish={handlePublish}
                             onOpenModal={onOpenModal}
@@ -251,6 +253,7 @@ export default function Feed() {
                                 key={post.id}
                                 post={post}
                                 userId={userId}
+                                userName={userName}
                                 liked={Boolean(liked[post.id])}
                                 reposted={Boolean(reposted[post.id])}
                                 saved={Boolean(saved[post.id])}
