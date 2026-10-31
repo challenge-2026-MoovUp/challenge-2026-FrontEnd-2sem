@@ -187,6 +187,15 @@ body {
     width: 100%;
 }
 
+/* O React monta dentro de #root, então o filho flex do body é ele — e não o
+   <main>. Sem esta regra o "flex: 1" abaixo não tem efeito nenhum, e em página
+   curta (o Feed sem posts, por exemplo) o rodapé para no meio da tela. */
+#root {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
 body main {
     flex: 1;
 }
