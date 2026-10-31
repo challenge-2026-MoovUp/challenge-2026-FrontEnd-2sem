@@ -8,6 +8,7 @@ import { faUser, faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 interface HeaderProps {
     onOpenModal: () => void
     userEmail: string | null
+    userName: string | null
     userId: string | null
 }
 
@@ -21,7 +22,7 @@ const navItems = [
     { path: '/feed', label: 'Feed' },
     { path: '/carteira', label: 'Carteira' },
 ]
-export default function Header({ onOpenModal, userId }: HeaderProps) {
+export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
 
     function handleNavClick() {
@@ -63,7 +64,7 @@ export default function Header({ onOpenModal, userId }: HeaderProps) {
                     </button>
                     {userId ? (
                         <Button variant="primary" onClick={onOpenModal}>
-                            <span className="font-sans"> <FontAwesomeIcon icon={faUser} /> {userId}</span>
+                            <span className="font-sans"> <FontAwesomeIcon icon={faUser} /> {userName}</span>
                         </Button>
                     ) : (
                         <Button variant="primary" onClick={onOpenModal}>

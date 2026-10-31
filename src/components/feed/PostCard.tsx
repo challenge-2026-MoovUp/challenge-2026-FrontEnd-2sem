@@ -20,6 +20,7 @@ import { focusRing, softTransition } from '../common/uiStyles'
 interface PostCardProps {
     post: FeedPost
     userId: string | null
+    userName: string | null
     liked: boolean
     reposted: boolean
     saved: boolean
@@ -76,7 +77,7 @@ function ActionButton({
 
 export default function PostCard({
     post,
-    userId,
+    userName,
     liked,
     reposted,
     saved,
@@ -219,7 +220,7 @@ export default function PostCard({
 
                             <form onSubmit={handleReplySubmit} className="mt-[16px] flex items-center gap-3">
                                 <Avatar
-                                    initials={userId ? userId.slice(0, 2) : 'MU'}
+                                    initials={userName ? userName.slice(0, 2) : 'MU'}
                                     className="bg-dusk-mid text-aurora-soft"
                                     size="sm"
                                 />

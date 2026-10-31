@@ -8,6 +8,7 @@ import { useWallet } from '../../hooks/useWallet'
 
 interface WalletRailProps {
     userId: string | null
+    userName: string | null
 }
 
 const rows = [
@@ -18,18 +19,18 @@ const rows = [
     { key: 'viagem', icon: faTrain, label: 'Viagens' },
 ] as const
 
-export default function WalletRail({ userId }: WalletRailProps) {
+export default function WalletRail({ userName }: WalletRailProps) {
     const { points, ledger } = useWallet()
     const earned = rows.reduce((total, row) => total + ledger[row.key] * pointsPerAction[row.key], 0)
 
     return (
         <div className="flex flex-col gap-10 font-sans">
             <div className="flex items-center gap-3">
-                <Avatar initials={userId ? userId.slice(0, 2) : 'MU'} className="bg-dusk-mid text-aurora-soft" />
+                <Avatar initials={userName ? userName.slice(0, 2) : 'MU'} className="bg-dusk-mid text-aurora-soft" />
                 <div className="min-w-0">
-                    <p className="truncate text-[1.6rem] font-normal text-mist">{userId ?? 'Visitante'}</p>
+                    <p className="truncate text-[1.6rem] font-normal text-mist">{userName ?? 'Visitante'}</p>
                     <p className="font-sans text-[1.2rem] font-light text-mist-soft">
-                        {userId ? 'Membro MoovUp' : 'Entre para pontuar'}
+                        {userName ? 'Membro MoovUp' : 'Entre para pontuar'}
                     </p>
                 </div>
             </div>

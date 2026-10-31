@@ -3,6 +3,8 @@ interface ButtonProps {
     onClick?: () => void
     variant?: 'primary' | 'cta-primary' | 'cta-outline'
     className?: string
+    type?: 'button' | 'submit'
+    disabled?: boolean
 }
 
 const baseClass = "flex justify-items-center whitespace-nowrap rounded-[20px] bg-transparent text-center text-base font-bold font-sans"
@@ -13,12 +15,12 @@ const variantClasses = {
     'cta-outline': `${baseClass} m-4 rounded-[50px] border-[1.5px] border-border-mid px-8 py-4 text-[1.3rem] font-medium tracking-[0.08em] text-mist [transition:all_.5s_ease] hover:border-mist-22 hover:text-mist`,
 }
 
-export default function Button({ children, onClick, variant = 'primary', className }: ButtonProps) {
+export default function Button({ children, onClick, variant = 'primary', className, type ='button', disabled }: ButtonProps) {
     const variantClass = variantClasses[variant]
     const buttonClass = className ? `${variantClass} ${className}` : variantClass
 
     return (
-        <button className={buttonClass} onClick={onClick}>
+        <button type = {type} className={buttonClass} onClick={onClick} disabled={disabled}>
             {children}
         </button>
     )
