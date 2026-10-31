@@ -25,6 +25,8 @@
     --color-mist: #EDE8DF;
     --color-mist-dim: #C8C0B4;
     --color-dust: #C8C0B4;
+    /* Texto secundario: 6.9:1 sobre --color-void (AA para corpo de texto). */
+    --color-mist-soft: #A69E92;
     --color-white: #FFFFFF;
     --color-gray-muted: #727272;
     --color-gray-strong: #666666;
