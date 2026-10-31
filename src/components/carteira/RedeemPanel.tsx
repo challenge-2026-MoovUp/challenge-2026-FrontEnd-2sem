@@ -5,16 +5,17 @@ import { faQrcode, faCreditCard, faArrowRight } from '@fortawesome/free-solid-sv
 import { creditDeadlineHours, minRedeemPoints, redeemOptions } from '../../data/points'
 import type { Redemption, RedemptionDelivery } from '../../types/wallet'
 import { useWallet } from '../../hooks/useWallet'
-import { focusRing, softTransition } from '../common/uiStyles'
 import type { CardVariant } from './TransportCard'
 import {
     eyebrowClass,
+    focusRing,
     labelClass,
     lineFieldClass,
     primaryActionClass,
     sectionClass,
     sectionLeadClass,
     sectionTitleClass,
+    softTransition,
 } from '../common/uiStyles'
 
 /* O gerador de QR entra em chunk próprio: só baixa quando alguém resgata. */
