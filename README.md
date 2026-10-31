@@ -23,6 +23,7 @@ O site foi construído com **React, TypeScript e Vite**, com roteamento via **Re
 - **Solução** com vídeo de pitch incorporado, destaques e cards de recursos
 - **FAQ** com perguntas organizadas por categoria, sidebar com scroll-spy e busca em tempo real que filtra as perguntas
 - **Contato** com canais de atendimento e formulário de mensagem
+- **Feed** em timeline no estilo X/Twitter: composer com limite de 280 caracteres, curtir/repostar/responder/salvar, abas Para você · Seguindo · Salvos, busca e filtro por hashtag, e carteira de pontos que atualiza a cada interação
 - **Carteira** com registro de viagens de metrô/CPTM (+50 pontos por embarque, até 2 por dia), conversão dos pontos em QR Code de embarque ou recarga de Bilhete Único/cartão top, e histórico de viagens e resgates — saldo persistido em `localStorage` e compartilhado com o Feed
 - **Roteamento client-side** entre todas as páginas com React Router
 - **Design responsivo mobile-first** construído com TailwindCSS (breakpoints customizados `tablet:` e `desktop:`)
