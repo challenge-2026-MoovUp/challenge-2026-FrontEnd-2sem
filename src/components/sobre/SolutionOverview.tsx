@@ -1,3 +1,4 @@
+import { creditDeadlineHours, maxChallengeBonus, minRedeemPoints, pointsPerAction, pointsValidityMonths } from '../../data/points'
 import { Link } from "react-router-dom"
 
 interface SolutionOverviewProps {
@@ -27,7 +28,7 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Interaja na plataforma</h3>
                         <h3 className={journeySubtitleClass}>Cada curtida, post, comentário e compartilhamento gera pontos automaticamente. Desafios semanais oferecem bônus e multiplicadores que aceleram muito o acúmulo.</h3>
-                        <h3 className={`${sectionTagClass} text-[1rem]`}>+15 a +200 pts por ação</h3>
+                        <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.curtida} a +{maxChallengeBonus} pts por ação</h3>
                     </div>
                 </article>
                 <article>
@@ -37,8 +38,8 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Acumule na carteira digital</h3>
-                        <h3 className={journeySubtitleClass}>Seu saldo cresce em tempo real e fica disponível na carteira MoovUp. Os pontos têm validade de 12 meses a partir da última movimentação — sem perder o que você ganhou.</h3>
-                        <h3 className={`${sectionTagClass} text-[1rem]`}>mínimo: 400 pts para resgatar</h3>
+                        <h3 className={journeySubtitleClass}>Seu saldo cresce em tempo real e fica disponível na carteira MoovUp. Os pontos têm validade de {pointsValidityMonths} meses a partir da última movimentação — sem perder o que você ganhou.</h3>
+                        <h3 className={`${sectionTagClass} text-[1rem]`}>mínimo: {minRedeemPoints} pts para resgatar</h3>
                     </div>
                 </article>
                 <article>
@@ -48,7 +49,7 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Resgate a passagem</h3>
-                        <h3 className={journeySubtitleClass}>Seu saldo cresce em tempo real e fica disponível na carteira MoovUp. Os pontos têm validade de 12 meses a partir da última movimentação — sem perder o que você ganhou.</h3>
+                        <h3 className={journeySubtitleClass}>Seu saldo cresce em tempo real e fica disponível na carteira MoovUp. Os pontos têm validade de {pointsValidityMonths} meses a partir da última movimentação — sem perder o que você ganhou.</h3>
                         <h3 className={`${sectionTagClass} text-[1rem]`}>Bilhete Único · top · QR Code</h3>
                     </div>
                 </article>
@@ -58,8 +59,8 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                         <p className="text-[3rem]">🚇</p>
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
-                        <h3 className={journeyTitleClass}>Embarque em até 24 horas</h3>
-                        <p className={journeySubtitleClass}>O crédito aparece na conta de transporte em até 24 horas úteis. Compatível com metrô, CPTM, ônibus municipais e linhas intermunicipais parceiras.</p>
+                        <h3 className={journeyTitleClass}>Embarque em até {creditDeadlineHours} horas</h3>
+                        <p className={journeySubtitleClass}>O crédito aparece na conta de transporte em até {creditDeadlineHours} horas úteis. Compatível com metrô, CPTM, ônibus municipais e linhas intermunicipais parceiras.</p>
                         <p className={`${sectionTagClass} text-[1rem]`}>zero taxas de conversão</p>
                     </div>
                 </article>
