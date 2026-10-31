@@ -199,70 +199,72 @@ export default function Faq() {
   const sidebarCategories = filteredCategories.map(({ id, label }) => ({ id, label }));
 
   return (
-    <main className="mx-auto flex w-[92%] flex-col tablet:w-[85%] desktop:w-1/2">
-      <div className="mt-16 flex w-full flex-col items-start gap-6 tablet:mt-24 tablet:flex-row tablet:items-end tablet:justify-between tablet:gap-0 desktop:mt-40">
-        <div className="flex max-w-full flex-col items-start text-[2.6rem] tablet:max-w-[50%] tablet:text-[3.4rem] desktop:text-[4.5rem]">
-          <h1 className="flex flex-col items-start text-left font-thin text-mist">
-            Perguntas{' '}
-            <span className="mt-1 block bg-gradiente-aurora bg-clip-text italic text-transparent">
-              frequentes
-            </span>
-          </h1>
+    <>
+      <div className="mx-auto flex w-[92%] flex-col tablet:w-[85%] desktop:w-1/2">
+        <div className="mt-16 flex w-full flex-col items-start gap-6 tablet:mt-24 tablet:flex-row tablet:items-end tablet:justify-between tablet:gap-0 desktop:mt-40">
+          <div className="flex max-w-full flex-col items-start text-[2.6rem] tablet:max-w-[50%] tablet:text-[3.4rem] desktop:text-[4.5rem]">
+            <h1 className="flex flex-col items-start text-left font-thin text-mist">
+              Perguntas{' '}
+              <span className="mt-1 block bg-gradiente-aurora bg-clip-text italic text-transparent">
+                frequentes
+              </span>
+            </h1>
+          </div>
+
+          <div className="flex w-full flex-col gap-2 tablet:w-auto">
+            <label className="relative block w-full tablet:w-fit">
+              <i aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base text-border-mid">🔍</i>
+              <input
+                type="search"
+                className="w-full rounded-[30px] border border-border-mid bg-dusk py-[0.9rem] pl-11 pr-8 font-sans text-mist outline-none [&::-webkit-search-cancel-button]:hidden focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)] tablet:w-auto tablet:pr-32"
+                placeholder="Buscar por palavra-chave..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </label>
+            <span className="font-sans text-[0.95rem] text-mist-dim">{totalQuestions} pergunta{totalQuestions === 1 ? '' : 's'} encontrada{totalQuestions === 1 ? '' : 's'}</span>
+          </div>
         </div>
 
-        <div className="flex w-full flex-col gap-2 tablet:w-auto">
-          <label className="relative block w-full tablet:w-fit">
-            <i aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base text-border-mid">🔍</i>
-            <input
-              type="search"
-              className="w-full rounded-[30px] border border-border-mid bg-dusk py-[0.9rem] pl-11 pr-8 font-sans text-mist outline-none [&::-webkit-search-cancel-button]:hidden focus:border-violet-glow-50 focus:bg-violet-glow-08 focus:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)] tablet:w-auto tablet:pr-32"
-              placeholder="Buscar por palavra-chave..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </label>
-          <span className="font-sans text-[0.95rem] text-mist-dim">{totalQuestions} pergunta{totalQuestions === 1 ? '' : 's'} encontrada{totalQuestions === 1 ? '' : 's'}</span>
-        </div>
-      </div>
+        <section className="mt-16 grid w-full grid-cols-1 gap-8 desktop:grid-cols-[180px_1fr]">
+          <FaqSidebar categories={sidebarCategories} />
 
-      <section className="mt-16 grid w-full grid-cols-1 gap-8 desktop:grid-cols-[180px_1fr]">
-        <FaqSidebar categories={sidebarCategories} />
-
-        <section className="flex w-full flex-col gap-16">
-          {filteredCategories.map((category) => (
-            <div className="flex w-full scroll-mt-[120px] flex-col items-stretch gap-5" key={category.id} id={category.id}>
-              <div className="flex items-end gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-aurora-glow bg-dusk text-[2rem] text-mist">{category.icon}</div>
-                <div>
-                  <h2 className="mt-10 w-[min(800px,100%)] self-start text-left text-[1.8rem] font-thin text-mist tablet:text-[2.2rem] desktop:text-[2.5rem]">{category.label}</h2>
-                  <div className="font-sans text-[0.95rem] text-mist-dim">{category.items.length} perguntas</div>
+          <section className="flex w-full flex-col gap-16">
+            {filteredCategories.map((category) => (
+              <div className="flex w-full scroll-mt-[120px] flex-col items-stretch gap-5" key={category.id} id={category.id}>
+                <div className="flex items-end gap-4">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-aurora-glow bg-dusk text-[2rem] text-mist">{category.icon}</div>
+                  <div>
+                    <h2 className="mt-10 w-[min(800px,100%)] self-start text-left text-[1.8rem] font-thin text-mist tablet:text-[2.2rem] desktop:text-[2.5rem]">{category.label}</h2>
+                    <div className="font-sans text-[0.95rem] text-mist-dim">{category.items.length} perguntas</div>
+                  </div>
                 </div>
+                <Accordion items={category.items} />
               </div>
-              <Accordion items={category.items} />
-            </div>
-          ))}
+            ))}
+          </section>
         </section>
-      </section>
 
-      <div className="mt-16 tablet:mt-24 desktop:mt-40">
-        <div className="box-border flex flex-col items-start gap-6 rounded-[30px] border border-border bg-dusk p-6 text-mist tablet:flex-row tablet:items-end tablet:justify-between tablet:gap-0 tablet:p-12">
-          <div>
-            <p className="mb-[10px] font-sans text-[1.3rem] font-medium text-aurora-soft">Ainda com dúvidas?</p>
-            <h3 className="mb-[10px] w-full bg-gradiente-mist bg-clip-text text-[2rem] font-light text-transparent tablet:w-[70%] tablet:text-[2.5rem] desktop:text-[3rem]">
-              Fale direto com a <span className="font-light italic text-ember-soft">nossa equipe</span>
-            </h3>
-            <p className="font-sans text-[1.2rem] font-light text-dust">Nosso time de suporte responde em até 24 horas.</p>
-          </div>
-          <div className="flex w-full flex-wrap justify-start tablet:w-auto tablet:justify-end tablet:p-8">
-            <Link
-              className="flex justify-items-center whitespace-nowrap rounded-[20px] bg-transparent text-center text-base font-bold font-sans border border-aurora-30 rounded-full px-[18px] py-[8px] text-[1.3rem] font-normal uppercase tracking-[0.06em] text-aurora-soft no-underline transition-all duration-200 hover:cursor-pointer hover:border-violet-glow-50 hover:bg-violet-glow-08 hover:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]"
-              to="/contato"
-            >
-              <span>Falar com o suporte</span>
-            </Link>
+        <div className="mt-16 tablet:mt-24 desktop:mt-40">
+          <div className="box-border flex flex-col items-start gap-6 rounded-[30px] border border-border bg-dusk p-6 text-mist tablet:flex-row tablet:items-end tablet:justify-between tablet:gap-0 tablet:p-12">
+            <div>
+              <p className="mb-[10px] font-sans text-[1.3rem] font-medium text-aurora-soft">Ainda com dúvidas?</p>
+              <h3 className="mb-[10px] w-full bg-gradiente-mist bg-clip-text text-[2rem] font-light text-transparent tablet:w-[70%] tablet:text-[2.5rem] desktop:text-[3rem]">
+                Fale direto com a <span className="font-light italic text-ember-soft">nossa equipe</span>
+              </h3>
+              <p className="font-sans text-[1.2rem] font-light text-dust">Nosso time de suporte responde em até 24 horas.</p>
+            </div>
+            <div className="flex w-full flex-wrap justify-start tablet:w-auto tablet:justify-end tablet:p-8">
+              <Link
+                className="flex justify-items-center whitespace-nowrap rounded-[20px] bg-transparent text-center text-base font-bold font-sans border border-aurora-30 rounded-full px-[18px] py-[8px] text-[1.3rem] font-normal uppercase tracking-[0.06em] text-aurora-soft no-underline transition-all duration-200 hover:cursor-pointer hover:border-violet-glow-50 hover:bg-violet-glow-08 hover:shadow-[0_0_20px_var(--color-violet-glow-08),inset_0_0_20px_var(--color-violet-glow-03)]"
+                to="/contato"
+              >
+                <span>Falar com o suporte</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }
