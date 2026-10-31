@@ -1,3 +1,5 @@
+import { redeemCards, redeemOptions } from '../../data/points'
+
 interface solutionPassProps{
     isActive: boolean
 }
@@ -16,93 +18,25 @@ export default function SolutionPassType( {isActive}: solutionPassProps ) {
             </div>
             <div className="my-[30px] flex flex-col gap-4">
 
-                <div className={cardClass}>
-                    <p className={iconClass}>🚌</p>
-                    <div className="flex min-w-0 flex-col gap-[10px]">
-                        <h3 className="text-[1.5rem] tablet:text-[1.9rem] font-thin text-mist">Ônibus municipal</h3>
-                        <p className="font-sans text-[1.25rem] font-extralight leading-[1.45] text-dust">Qualquer linha SPTrans, CMTC e sistemas municipais parceiros em São Paulo e região metropolitana. Sem restrição de horário.</p>
-                        <div className="flex flex-wrap gap-2">
-                            <p className={`${sectionTagClass} text-[.9rem]`}>bilhete único</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>qr code</p>
+                {redeemOptions.map((option) => (
+                    <div className={cardClass} key={option.id}>
+                        <p className={iconClass}>{option.icon}</p>
+                        <div className="flex min-w-0 flex-col gap-[10px]">
+                            <h3 className="text-[1.5rem] tablet:text-[1.9rem] font-thin text-mist">{option.name}</h3>
+                            <p className="font-sans text-[1.25rem] font-extralight leading-[1.45] text-dust">{option.description}</p>
+                            <div className="flex flex-wrap gap-2">
+                                {option.cards.map((card) => (
+                                    <p className={`${sectionTagClass} text-[.9rem]`} key={card}>{redeemCards[card]}</p>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex flex-col items-center justify-center gap-1 text-center">
+                            <h3 className="text-[2rem] tablet:text-[3.2rem] font-extralight leading-none text-mist">{option.points}</h3>
+                            <p className="font-sans text-base uppercase tracking-[0.15em] text-dust">pontos</p>
+                            <p className="font-sans text-[1.15rem] text-sage">≈ {option.reais}</p>
                         </div>
                     </div>
-                    <div className="flex flex-col items-center justify-center gap-1 text-center">
-                        <h3 className="text-[2rem] tablet:text-[3.2rem] font-extralight leading-none text-mist">400</h3>
-                        <p className="font-sans text-base uppercase tracking-[0.15em] text-dust">pontos</p>
-                        <p className="font-sans text-[1.15rem] text-sage">≈ R$ 4,40</p>
-                    </div>
-                </div>
-
-                <div className={cardClass}>
-                    <p className={iconClass}>🚇</p>
-                    <div className="flex min-w-0 flex-col gap-[10px]">
-                        <h3 className="text-[1.5rem] tablet:text-[1.9rem] font-thin text-mist">Metrô de São Paulo</h3>
-                        <p className="font-sans text-[1.25rem] font-extralight leading-[1.45] text-dust">Linhas 1 a 5 do Metrô de São Paulo, sem restrição de horário ou estação. Cobertura de toda a rede metropolitana.</p>
-                        <div className="flex flex-wrap gap-2">
-                            <p className={`${sectionTagClass} text-[.9rem]`}>bilhete único</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>top</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>qr code</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-1 text-center">
-                        <h3 className="text-[2rem] tablet:text-[3.2rem] font-extralight leading-none text-mist">500</h3>
-                        <p className="font-sans text-base uppercase tracking-[0.15em] text-dust">pontos</p>
-                        <p className="font-sans text-[1.15rem] text-sage">≈ R$ 5,00</p>
-                    </div>
-                </div>
-
-                <div className={cardClass}>
-                    <p className={iconClass}>🚆</p>
-                    <div className="flex min-w-0 flex-col gap-[10px]">
-                        <h3 className="text-[1.5rem] tablet:text-[1.9rem] font-thin text-mist">Trem CPTM</h3>
-                        <p className="font-sans text-[1.25rem] font-extralight leading-[1.45] text-dust">Linhas 7 a 13 da CPTM, cobrindo Grande São Paulo e municípios da região metropolitana como Mogi, Jundiaí e Francisco Morato.</p>
-                        <div className="flex flex-wrap gap-2">
-                            <p className={`${sectionTagClass} text-[.9rem]`}>bilhete único</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>top</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-1 text-center">
-                        <h3 className="text-[2rem] tablet:text-[3.2rem] font-extralight leading-none text-mist">500</h3>
-                        <p className="font-sans text-base uppercase tracking-[0.15em] text-dust">pontos</p>
-                        <p className="font-sans text-[1.15rem] text-sage">≈ R$ 5,00</p>
-                    </div>
-                </div>
-
-                <div className={cardClass}>
-                    <p className={iconClass}>🔄</p>
-                    <div className="flex min-w-0 flex-col gap-[10px]">
-                        <h3 className="text-[1.5rem] tablet:text-[1.9rem] font-thin text-mist">Bilhete integrado</h3>
-                        <p className="font-sans text-[1.25rem] font-extralight leading-[1.45] text-dust">Integração tarifária entre ônibus + metrô + trem em uma única viagem, dentro da janela de 3 horas. Ideal para trajetos longos com baldeação.</p>
-                        <div className="flex flex-wrap gap-2">
-                            <p className={`${sectionTagClass} text-[.9rem]`}>bilhete único</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>top</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-1 text-center">
-                        <h3 className="text-[2rem] tablet:text-[3.2rem] font-extralight leading-none text-mist">1200</h3>
-                        <p className="font-sans text-base uppercase tracking-[0.15em] text-dust">pontos</p>
-                        <p className="font-sans text-[1.15rem] text-sage">≈ R$ 12,50</p>
-                    </div>
-                </div>
-
-                <div className={cardClass}>
-                    <p className={iconClass}>📅</p>
-                    <div className="flex min-w-0 flex-col gap-[10px]">
-                        <h3 className="text-[1.5rem] tablet:text-[1.9rem] font-thin text-mist">Passe semanal ilimitado</h3>
-                        <p className="font-sans text-[1.25rem] font-extralight leading-[1.45] text-dust">7 dias consecutivos de viagens ilimitadas em todos os modais parceiros — metrô, trem e ônibus — sem restrição de quantidade de embarques.</p>
-                        <div className="flex flex-wrap gap-2">
-                            <p className={`${sectionTagClass} text-[.9rem]`}>bilhete único</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>top</p>
-                            <p className={`${sectionTagClass} text-[.9rem]`}>qr code</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-1 text-center">
-                        <h3 className="text-[2rem] tablet:text-[3.2rem] font-extralight leading-none text-mist">6000</h3>
-                        <p className="font-sans text-base uppercase tracking-[0.15em] text-dust">pontos</p>
-                        <p className="font-sans text-[1.15rem] text-sage">≈ R$ 55,00</p>
-                    </div>
-                </div>
-
+                ))}
 
                 <div className="mt-10 tablet:mt-16">
                     <div className="mb-8">
