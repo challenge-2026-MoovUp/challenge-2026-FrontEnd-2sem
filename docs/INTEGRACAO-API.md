@@ -249,34 +249,79 @@ que te deixa continuar demonstrando o projeto se a API cair na apresentação.
 
 ---
 
-## 6. Furos do contrato — perguntar ao time do back
+## 6. Furos do contrato — respostas
 
-O texto que você colou chegou truncado em alguns pontos (`GET /usuarios/{id}/pontos`,
-`POST /usuarios/{id}/resgates`, `GET /tickets/estoque`, `GET /usuarios/{id}/impacto`
-aparecem cortados no meio). Confirme antes de codar:
+Sondado contra `http://localhost:8080` em 01/11/2026. ✅ respondido, ❌ não
+existe, ❓ segue em aberto.
 
-1. `GET /usuarios/{id}/pontos` — formato exato da resposta.
-2. `POST /usuarios/{id}/resgates` — **qual é o body?** (`idTicket`? `modalidade`?)
-   e o que retorna. É o endpoint central da carteira e é o mais ilegível no texto.
-3. `GET /tickets/estoque` — nomes dos quatro contadores.
-4. `GET /usuarios/{id}/impacto` — confirmar `{ idUsuario, totalViagens, totalKm, totalCo2Evitado }`.
-5. **Curtir postagem** — existe endpoint? (§4)
-6. **Autor na postagem** — dá para incluir `nomeUsuario` na resposta? (§4)
-7. **CORS** — o Spring precisa liberar `http://localhost:5173` (porta do Vite),
-   senão o browser bloqueia toda chamada e você vai achar que o seu código está
-   errado. É o erro nº 1 de integração nesse tipo de projeto.
-8. **Registrar viagem** — não há endpoint; a carteira depende disso ou fica local?
+1. ✅ `GET /usuarios/{id}/pontos` → `{ idUsuario, saldoPontos }`.
+2. ❌ `POST /usuarios/{id}/resgates` → 404. O endpoint não existe; todo o
+   `resgatesApi.ts` está no vácuo.
+3. ❌ `GET /tickets/estoque` → 404. Nenhuma rota `/tickets` existe, então o
+   `ticketsApi.ts` inteiro também está no vácuo.
+4. ✅ `GET /usuarios/{id}/impacto` → `{ idUsuario, totalViagens, totalKm,
+   totalCo2Evitado }`, como o contrato dizia. Mas
+   `GET /usuarios/{id}/impacto/historico` → 404.
+5. ❓ **Curtir postagem** — não confirmado. `POST`/`PATCH` em
+   `/postagens/{id}/curtidas` e `/postagens/{id}/curtir` devolveram 400, não
+   404, então pode ser rota existente com body errado. Perguntar ao back.
+6. ✅ **Autor na postagem** — resolvido: a resposta **já traz `nomeUsuario`**.
+   Ver as pendências do §8: isso dispensa o `GET /usuarios` do feed.
+7. ✅ **CORS** — liberado. Preflight `OPTIONS` devolve 200 com
+   `Access-Control-Allow-Origin: *` e `Allow-Methods: GET, POST, PUT, PATCH,
+   DELETE, OPTIONS`.
+8. ❓ **Registrar viagem** — continua sem endpoint. A carteira segue local.
 
 ---
 
 ## 7. Checklist
 
-- [ ] `.env` com `VITE_API_URL`, `.env` no `.gitignore`, `.env.example` criado
-- [ ] CORS liberado no backend para a porta do Vite
-- [ ] `api/http.ts` com `request<T>` + `ApiError` (204 e `!res.ok` tratados)
-- [ ] `types/api.ts` com os DTOs e enums do contrato
-- [ ] `usuariosApi.ts` + `useAuth` + `LoginModal` ligados (fluxo piloto)
-- [ ] `postagensApi.ts` + `comentariosApi.ts` + `feedMapper` + `useFeed`
-- [ ] `ticketsApi.ts` + `resgatesApi.ts`
-- [ ] `WalletProvider` assíncrono, com fallback local
-- [ ] Respostas das 8 perguntas do §6
+- [x] `.env` com `VITE_API_URL`, `.env` no `.gitignore`, `.env.example` criado
+- [x] CORS liberado no backend para a porta do Vite
+- [x] `api/http.ts` com `request<T>` + `ApiError` (204 e `!res.ok` tratados)
+- [x] `types/api.ts` com os DTOs e enums do contrato
+- [x] `usuariosApi.ts` + `useAuth` + `LoginModal` ligados (login e cadastro)
+- [x] `postagensApi.ts` + `comentariosApi.ts` + `feedMapper` + `useFeed`
+- [x] Tela de perfil: `types/perfil.ts`, `useUsuario`, `pages/Usuario`, rota
+      `usuario/:id` e os links no `PostCard`, na sidebar e no header
+- [ ] `ticketsApi.ts` + `resgatesApi.ts` — **bloqueado**: os endpoints não
+      existem (§6.2 e §6.3). O código está escrito e não é chamado por ninguém.
+- [ ] `WalletProvider` assíncrono, com fallback local — segue 100%
+      `localStorage`, com saldo inicial fixo de 8150 pontos
+- [x] Respostas das 8 perguntas do §6 (duas seguem em aberto: curtida e viagem)
+
+---
+
+## 8. Pendências abertas
+
+**Pedir ao time do back**
+
+1. **Postagens por usuário.** `GET /usuarios/{id}/postagens` → 404, e
+   `GET /postagens?idUsuario={id}` responde 200 **ignorando o filtro** (devolve
+   o feed inteiro). Por isso o `useUsuario` baixa todas as postagens e filtra no
+   cliente. Com o endpoint, são duas linhas a menos no hook.
+2. **`apelido` único no usuário** (string, UNIQUE) + `GET /usuarios/apelido/{apelido}`,
+   para a URL do perfil deixar de ser `/usuario/b63e0d14-604d-4dfb-a9af-3df6a5dcd03f`.
+   O prefixo `apelido/` é necessário porque `/usuarios/{id}` já ocupa esse padrão
+   de rota. Se o `apelido` entrar também no `PostagemDTO`, o link do feed já sai
+   bonito sem consulta extra.
+3. **Ids em dois formatos.** O banco tem ids de 5 caracteres (`60L2O`, `LYLTP`)
+   e UUIDs (`b63e0d14-...`). Parece seed manual vs. `POST /usuarios`. Padronizar.
+4. **`nomeUsuario` nos comentários.** A postagem já traz, o `ComentarioDTO` não.
+   Sem isso o front precisa do `GET /usuarios` só para nomear quem comentou.
+
+**Do nosso lado**
+
+5. **Tirar o `GET /usuarios` do `useFeed`/`useUsuario`.** Como `nomeUsuario` já
+   vem na postagem, o mapa de autores só é necessário para os comentários
+   (pendência 4). Quando ela cair, `mapaDeAutores` e o `autorDesconhecido` saem,
+   junto com o TODO no `feedMapper`.
+6. **"Quem seguir" da sidebar usa mock.** Os três perfis vêm de `data/feed.ts`
+   com ids inventados (`moovup`, `camila`, `beatriz`), e agora que são clicáveis
+   os links caem na tela de erro — confirmado: `GET /usuarios/moovup` → 404.
+   Trocar por `GET /usuarios/ranking`, que responde 200 com
+   `{ posicao, id, nome, saldoPontos }`.
+7. **Saldo divergente.** O perfil mostra o `saldoPontos` da API e a Carteira
+   mostra o número do `localStorage`. Os dois aparecem na mesma navegação e não
+   batem.
+8. **Assuntos em alta** continuam mock; não há rota no contrato.

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -102,11 +103,20 @@ export default function PostCard({
     return (
         <article className="border-b border-border py-7">
             <div className="flex gap-3">
-                <Avatar initials={post.author.initials} className={post.author.avatarClass} />
+                <Link to={`/usuario/${post.author.id}`} aria-hidden="true" tabIndex={-1} className="shrink-0">
+                    <Avatar initials={post.author.initials} className={post.author.avatarClass} />
+                </Link>
 
                 <div className="min-w-0 flex-1">
                     <header className="flex flex-wrap items-center gap-x-2 gap-y-0">
-                        <h3 className="text-[1.7rem] font-medium text-mist">{post.author.name}</h3>
+                        <h3 className="text-[1.7rem] font-medium text-mist">
+                            <Link
+                                to={`/usuario/${post.author.id}`}
+                                className={`hover:underline ${softTransition} ${focusRing}`}
+                            >
+                                {post.author.name}
+                            </Link>
+                        </h3>
                         {post.author.verified && (
                             <FontAwesomeIcon
                                 icon={faCircleCheck}
@@ -131,11 +141,10 @@ export default function PostCard({
                                         type="button"
                                         onClick={() => onTagClick(tag)}
                                         aria-pressed={activeTag === tag}
-                                        className={`rounded-full border px-3 py-[3px] font-sans text-[1.2rem] font-light hover:cursor-pointer ${softTransition} ${focusRing} ${
-                                            activeTag === tag
+                                        className={`rounded-full border px-3 py-[3px] font-sans text-[1.2rem] font-light hover:cursor-pointer ${softTransition} ${focusRing} ${activeTag === tag
                                                 ? 'border-aurora-42 text-aurora-soft'
                                                 : 'border-border text-mist-dim hover:border-aurora-30 hover:text-aurora-soft'
-                                        }`}
+                                            }`}
                                     >
                                         {tag}
                                     </button>
@@ -202,7 +211,12 @@ export default function PostCard({
                                         <Avatar initials={reply.author.initials} className={reply.author.avatarClass} size="sm" />
                                         <div className="min-w-0 flex-1">
                                             <p className="flex flex-wrap items-center gap-x-2 text-[1.5rem] font-normal text-mist">
-                                                {reply.author.name}
+                                                <Link
+                                                    to={`/usuario/${reply.author.id}`}
+                                                    className={`hover:underline ${softTransition} ${focusRing}`}
+                                                >
+                                                    {reply.author.name}
+                                                </Link>
                                                 <span className="font-sans text-[1.2rem] font-light text-mist-soft">
                                                     {reply.author.handle} · {reply.time}
                                                 </span>

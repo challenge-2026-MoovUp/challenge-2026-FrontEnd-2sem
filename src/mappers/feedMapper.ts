@@ -4,6 +4,7 @@
 
 import type { ComentarioDTO, PostagemDTO, UsuarioDTO } from '../types/api'
 import type { FeedAuthor, FeedPost, FeedReply } from '../types/feed'
+import type { PerfilUsuario } from '../types/perfil'
 
 /* As mesmas classes de avatar usadas em data/feed.ts. */
 const avatarClasses = [
@@ -49,6 +50,21 @@ export function toFeedAuthor(usuario: UsuarioDTO): FeedAuthor {
         handle: handleDe(usuario.nome),
         initials: iniciais(usuario.nome),
         avatarClass: avatarClassDe(usuario.id),
+    }
+}
+
+export function toPerfilUsuario(dto: UsuarioDTO): PerfilUsuario {
+    return {
+        ...toFeedAuthor(dto),
+        email: dto.email,
+        saldoPontos: dto.saldoPontos,
+        /* dataCadastro vem só com a data ("2026-10-27"); viram "outubro de 2026". */
+        membroDesde: new Date(dto.dataCadastro).toLocaleDateString('pt-BR', {
+            month: 'long',
+            year: 'numeric',
+        }),
+        /* O contrato usa 'A' para ativo e 'I' para inativo. */
+        ativo: dto.status === 'A',
     }
 }
 
