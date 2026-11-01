@@ -4,13 +4,13 @@ import { useAuth } from '../../hooks/useAuth'
 import Header from './Header.tsx'
 import Footer from './Footer.tsx'
 import LoginModal from './LoginModal.tsx'
-import type { Credenciais } from '../../types/api'
+import type { Credenciais, NovoUsuario } from '../../types/api'
 import { WalletProvider } from '../../context/WalletProvider.tsx'
 
 
 function Layout(){
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { usuario, entrar } = useAuth()
+    const { usuario, entrar, cadastrar } = useAuth()
 
     const userEmail = usuario?.email ?? null
     const userId = usuario?.id ?? null
@@ -22,10 +22,16 @@ function Layout(){
         return resultado
     }
 
+    async function handleCadastro(dados: NovoUsuario) {
+        const resultado = await cadastrar(dados)
+        if (resultado.ok) setIsModalOpen(false)
+        return resultado
+    }
+
     return(
         <>
             <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userId={userId} userName={userName} />
-            <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin}/>
+            <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin} onCadastrar={handleCadastro}/>
             <main>
                 <WalletProvider userId={userId} >
                     <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userName, userId }}/>

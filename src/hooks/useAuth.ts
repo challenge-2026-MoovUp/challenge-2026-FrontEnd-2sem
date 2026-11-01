@@ -1,8 +1,8 @@
 /* Login/cadastro contra a API. O contrato não tem token: o login devolve o
    usuário e o front guarda o id para usá-lo nas demais chamadas.
 
-   Ainda não está ligado em LoginModal.tsx. Quando for ligar, o id guardado aqui
-   é o mesmo que o WalletProvider já recebe como userId. */
+   Ligado no Layout: entrar() e cadastrar() alimentam o LoginModal, e o id
+   guardado aqui é o mesmo que o WalletProvider recebe como userId. */
 
 import { useCallback, useState } from 'react'
 import { ApiError } from '../api/http'

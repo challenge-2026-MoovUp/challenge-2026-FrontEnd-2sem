@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Credenciais } from '../../types/api'
+import type { Credenciais, NovoUsuario } from '../../types/api'
 import { useForm } from 'react-hook-form'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -12,9 +12,10 @@ interface LoginModalProps {
     isOpen: boolean
     onClose: () => void
     onLogin: (credenciais: Credenciais) => Promise<{ ok: boolean; reason?: string}>
+    onCadastrar: (dados: NovoUsuario) => Promise<{ ok: boolean; reason?: string}>
 }
 
-export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: LoginModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null)
     const [enviando, setEnviando] = useState(false)
     const [erroApi, setErroApi] = useState<string | null>(null)
@@ -43,6 +44,17 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
         setEnviando(false)
         if (resultado.ok) reset()
             else setErroApi(resultado.reason ?? 'Não foi possível entrar')
+    }
+
+    /* Cadastro: POST /usuarios com os mesmos três campos do formulário,
+       usando o "usuário" digitado como nome. */
+    async function onCadastro(data: LoginFormData){
+        setEnviando(true)
+        setErroApi(null)
+        const resultado = await onCadastrar({ nome: data.user, email: data.email, senha: data.senha })
+        setEnviando(false)
+        if (resultado.ok) reset()
+            else setErroApi(resultado.reason ?? 'Não foi possível criar a conta')
     }
 
     const fieldErrorClass = "border-ember focus:border-ember focus:ring-ember/30"
@@ -192,6 +204,15 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                             className="mt-2 !m-0 !flex h-14 w-full items-center justify-center rounded-2xl !border-none bg-gradiente-aurora !text-mist hover:!shadow-[0_8px_32px_var(--color-aurora-35)] disabled:cursor-wait disabled:opacity-60">
                                 <span>{enviando ? 'Entrando...' : 'Conectar-se'}</span>
                         </Button>
+
+                        <button
+                            type="button"
+                            disabled={enviando}
+                            onClick={handleSubmit(onCadastro)}
+                            className="font-sans text-[1.25rem] text-aurora-soft underline-offset-2 transition-opacity duration-200 hover:underline disabled:cursor-wait disabled:opacity-60"
+                        >
+                            Não tem conta? Criar conta
+                        </button>
                     </form>
 
                     <p className="relative z-[1] mx-auto mt-7 w-full text-center font-sans text-[1.1rem] leading-[1.6] text-dust">
