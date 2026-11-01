@@ -1,5 +1,6 @@
+/* Campos do formulário do modal. No modo login o "nome" não é usado. */
 export interface LoginFormData {
-    user: string
+    nome: string
     email: string
     senha: string
 }

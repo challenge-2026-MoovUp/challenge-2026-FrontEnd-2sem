@@ -8,6 +8,30 @@ import Button from '../common/Button.tsx'
 import type { LoginFormData } from '../../types/login'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/* O modal é uma tela só com dois modos: entrar e criar conta. O que muda é o
+   texto, o campo "nome" (só no cadastro) e qual função é chamada no submit. */
+type Modo = 'login' | 'cadastro'
+
+const textos = {
+    login: {
+        titulo: 'Bem-vindo de volta',
+        subtitulo: 'Conecte-se e veja o seu engajamento valer benefícios',
+        botao: 'Conectar-se',
+        enviando: 'Entrando...',
+        trocar: 'Não tem conta? Criar conta',
+        erro: 'Não foi possível entrar',
+    },
+    cadastro: {
+        titulo: 'Crie sua conta',
+        subtitulo: 'Comece a acumular pontos pelas suas viagens',
+        botao: 'Criar conta',
+        enviando: 'Criando...',
+        trocar: 'Já tem conta? Entrar',
+        erro: 'Não foi possível criar a conta',
+    },
+}
+
 interface LoginModalProps {
     isOpen: boolean
     onClose: () => void
@@ -17,9 +41,12 @@ interface LoginModalProps {
 
 export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: LoginModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null)
+    const [modo, setModo] = useState<Modo>('login')
     const [enviando, setEnviando] = useState(false)
     const [erroApi, setErroApi] = useState<string | null>(null)
-    
+
+    const texto = textos[modo]
+
     const {
         register,
         handleSubmit,
@@ -34,27 +61,27 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
             dialogRef.current?.close()
             reset()
             setErroApi(null)
+            setModo('login')
         }
     }, [isOpen, reset])
+
+    function trocarModo() {
+        setModo(modo === 'login' ? 'cadastro' : 'login')
+        reset()
+        setErroApi(null)
+    }
 
     async function onSubmit(data: LoginFormData){
         setEnviando(true)
         setErroApi(null)
-        const resultado = await onLogin({ email: data.email, senha: data.senha })
-        setEnviando(false)
-        if (resultado.ok) reset()
-            else setErroApi(resultado.reason ?? 'Não foi possível entrar')
-    }
 
-    /* Cadastro: POST /usuarios com os mesmos três campos do formulário,
-       usando o "usuário" digitado como nome. */
-    async function onCadastro(data: LoginFormData){
-        setEnviando(true)
-        setErroApi(null)
-        const resultado = await onCadastrar({ nome: data.user, email: data.email, senha: data.senha })
+        const resultado = modo === 'login'
+            ? await onLogin({ email: data.email, senha: data.senha })
+            : await onCadastrar({ nome: data.nome, email: data.email, senha: data.senha })
+
         setEnviando(false)
         if (resultado.ok) reset()
-            else setErroApi(resultado.reason ?? 'Não foi possível criar a conta')
+            else setErroApi(resultado.reason ?? texto.erro)
     }
 
     const fieldErrorClass = "border-ember focus:border-ember focus:ring-ember/30"
@@ -64,6 +91,8 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
         return `h-12 w-full rounded-xl border bg-void/60 pl-11 pr-4 text-[1.45rem] font-light tracking-[0.01em] text-mist outline-none transition-all duration-200 [color-scheme:dark] placeholder:text-gray-olive selection:bg-aurora-42 selection:text-mist hover:border-mist-22 focus:bg-violet-glow-03 focus:ring-2 focus:ring-offset-0 ${hasError ? fieldErrorClass : fieldOkClass}`
     }
 
+    const labelClass = "font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim"
+    const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim"
     const errorTextClass = "flex items-center gap-[6px] font-sans text-[1.15rem] text-ember"
 
     return (
@@ -97,10 +126,10 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
                         <img src={LogoMoovup} alt="logo moovUp" className="w-[72px]" />
                         <div className="flex flex-col gap-1">
                             <h2 id="modalLoginTitle" className="font-serif text-[2.2rem] font-medium text-mist">
-                                Bem-vindo de volta
+                                {texto.titulo}
                             </h2>
                             <p className="text-[1.4rem] font-extralight text-mist-dim">
-                                Conecte-se e veja o seu engajamento valer benefícios
+                                {texto.subtitulo}
                             </p>
                         </div>
                     </div>
@@ -112,37 +141,39 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
                         onSubmit={handleSubmit(onSubmit)}
                         noValidate
                     >
-                        <div className="flex flex-col gap-[6px]">
-                            <label htmlFor="loginUser" className="font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim">
-                                Usuário
-                            </label>
-                            <div className="relative">
-                                <FontAwesomeIcon icon={faUser} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim" />
-                                <input
-                                    id="loginUser"
-                                    className={inputClass(!!errors.user)}
-                                    type="text"
-                                    placeholder="Como quer ser chamado"
-                                    aria-invalid={!!errors.user}
-                                    aria-describedby={errors.user ? 'loginUser-error' : undefined}
-                                    {...register('user', {
-                                        required: 'Informe seu usuário',
-                                    })}
-                                />
+                        {modo === 'cadastro' && (
+                            <div className="flex flex-col gap-[6px]">
+                                <label htmlFor="loginNome" className={labelClass}>
+                                    Nome
+                                </label>
+                                <div className="relative">
+                                    <FontAwesomeIcon icon={faUser} className={iconClass} />
+                                    <input
+                                        id="loginNome"
+                                        className={inputClass(!!errors.nome)}
+                                        type="text"
+                                        placeholder="Como quer ser chamado"
+                                        aria-invalid={!!errors.nome}
+                                        aria-describedby={errors.nome ? 'loginNome-error' : undefined}
+                                        {...register('nome', {
+                                            required: 'Informe seu nome',
+                                        })}
+                                    />
+                                </div>
+                                {errors.nome && (
+                                    <p id="loginNome-error" role="alert" className={errorTextClass}>
+                                        {errors.nome.message}
+                                    </p>
+                                )}
                             </div>
-                            {errors.user && (
-                                <p id="loginUser-error" role="alert" className={errorTextClass}>
-                                    {errors.user.message}
-                                </p>
-                            )}
-                        </div>
+                        )}
 
                         <div className="flex flex-col gap-[6px]">
-                            <label htmlFor="loginEmail" className="font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim">
+                            <label htmlFor="loginEmail" className={labelClass}>
                                 E-mail
                             </label>
                             <div className="relative">
-                                <FontAwesomeIcon icon={faEnvelope} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim" />
+                                <FontAwesomeIcon icon={faEnvelope} className={iconClass} />
                                 <input
                                     id="loginEmail"
                                     className={inputClass(!!errors.email)}
@@ -168,11 +199,11 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
                         </div>
 
                         <div className="flex flex-col gap-[6px]">
-                            <label htmlFor="loginSenha" className="font-sans text-[1.2rem] font-medium uppercase tracking-[0.06em] text-mist-dim">
+                            <label htmlFor="loginSenha" className={labelClass}>
                                 Senha
                             </label>
                             <div className="relative">
-                                <FontAwesomeIcon icon={faLock} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[1.3rem] text-mist-dim" />
+                                <FontAwesomeIcon icon={faLock} className={iconClass} />
                                 <input
                                     id="loginSenha"
                                     className={inputClass(!!errors.senha)}
@@ -183,6 +214,9 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
                                     aria-describedby={errors.senha ? 'loginSenha-error' : undefined}
                                     {...register('senha', {
                                         required: 'Informe sua senha',
+                                        minLength: modo === 'cadastro'
+                                            ? { value: 6, message: 'A senha precisa de ao menos 6 caracteres' }
+                                            : undefined,
                                     })}
                                 />
                             </div>
@@ -192,26 +226,27 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
                                 </p>
                             )}
                         </div>
+
                         {erroApi && (
                             <p role="alert" className={errorTextClass}>
                                 {erroApi}
                             </p>
                         )}
+
                         <Button
                             type="submit"
                             disabled={enviando}
                             variant="primary"
                             className="mt-2 !m-0 !flex h-14 w-full items-center justify-center rounded-2xl !border-none bg-gradiente-aurora !text-mist hover:!shadow-[0_8px_32px_var(--color-aurora-35)] disabled:cursor-wait disabled:opacity-60">
-                                <span>{enviando ? 'Entrando...' : 'Conectar-se'}</span>
+                                <span>{enviando ? texto.enviando : texto.botao}</span>
                         </Button>
 
                         <button
                             type="button"
-                            disabled={enviando}
-                            onClick={handleSubmit(onCadastro)}
-                            className="font-sans text-[1.25rem] text-aurora-soft underline-offset-2 transition-opacity duration-200 hover:underline disabled:cursor-wait disabled:opacity-60"
+                            onClick={trocarModo}
+                            className="font-sans text-[1.25rem] text-aurora-soft underline-offset-2 transition-opacity duration-200 hover:underline"
                         >
-                            Não tem conta? Criar conta
+                            {texto.trocar}
                         </button>
                     </form>
 
