@@ -82,13 +82,22 @@ export default function FeedSidebar({
                         return (
                             <li
                                 key={profile.id}
-                                className="flex items-center gap-3 border-b border-border py-3 last:border-0"
+                                className="group/perfil flex items-center gap-3 border-b border-border py-3 last:border-0"
                             >
-                                <Avatar initials={profile.initials} className={profile.avatarClass} size="sm" />
-                                <div className="min-w-0 flex-1">
-                                    <p className="truncate text-[1.35rem] font-light text-mist">{profile.name}</p>
-                                    <p className="truncate text-[1.1rem] font-light text-mist-soft">{profile.bio}</p>
-                                </div>
+                                <Link
+                                    to={`/usuario/${profile.id}`}
+                                    className={`flex min-w-0 flex-1 items-center gap-3 ${focusRing}`}
+                                >
+                                    <Avatar initials={profile.initials} className={profile.avatarClass} size="sm" />
+                                    <span className="min-w-0 flex-1">
+                                        <span className={`block truncate text-[1.35rem] font-light text-mist group-hover/perfil:underline ${softTransition}`}>
+                                            {profile.name}
+                                        </span>
+                                        <span className="block truncate text-[1.1rem] font-light text-mist-soft">
+                                            {profile.bio}
+                                        </span>
+                                    </span>
+                                </Link>
                                 <button
                                     type="button"
                                     onClick={() => onToggleFollow(profile.id)}
