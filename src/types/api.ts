@@ -147,3 +147,24 @@ export interface ViagemDTO {
     pontosGerados: number
     co2Evitado: number
 }
+
+export interface UsuarioAlteracao {
+    nome: string
+    email: string
+}
+
+export interface ImpactoDTO {
+    idUsuario: string
+    totalViagens: number
+    totalKm: number
+    totalCo2Evitado: number
+}
+
+export interface ImpactoHistoricoDTO {
+    id: string
+    idTicket: string
+    modalidade: Modalidade
+    co2Evitado: number
+    kmPercorridos: number
+    dataCalculo: string
+}

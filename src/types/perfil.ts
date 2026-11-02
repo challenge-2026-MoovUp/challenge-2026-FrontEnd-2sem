@@ -11,3 +11,15 @@ export interface PerfilUsuario extends FeedAuthor {
     /** false quando o usuário está inativo (status 'I' no contrato). */
     ativo: boolean
 }
+
+export interface ImpactoResumo {
+    viagens: string
+    km: string
+    co2: string
+}
+
+export interface ImpactoItem {
+    id: string
+    titulo: string
+    detalhe: string
+}
