@@ -31,10 +31,6 @@ export function buscarPontos(id: string) {
     return get<PontosDTO>(`/usuarios/${id}/pontos`)
 }
 
-export function buscarUsuario(id: string) {
-    return get<UsuarioDTO>(`/usuarios/${id}`)
-}
-
 export function atualizarUsuario(id: string, body: UsuarioAlteracao) {
     return put<UsuarioDTO>(`/usuarios/${id}`, body)
 }

@@ -5,6 +5,7 @@ import { trendTopics } from '../../data/feed'
 import { useRanking } from '../../hooks/useRanking'
 import Avatar from './Avatar'
 import { eyebrowClass, focusRing, ghostActionClass, lineFieldClass, softTransition } from '../common/uiStyles'
+import { rotaPerfil } from '../../routes/rotaPerfil'
 
 interface FeedSidebarProps {
     query: string
@@ -93,7 +94,7 @@ export default function FeedSidebar({
                                 className="group/perfil flex items-center gap-3 border-b border-border py-3 last:border-0"
                             >
                                 <Link
-                                    to={`/usuario/${profile.id}`}
+                                    to={rotaPerfil(profile.handle)}
                                     className={`flex min-w-0 flex-1 items-center gap-3 ${focusRing}`}
                                 >
                                     <Avatar initials={profile.initials} className={profile.avatarClass} size="sm" />

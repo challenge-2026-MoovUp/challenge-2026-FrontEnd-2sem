@@ -16,7 +16,7 @@ const heroCtaClass = "!my-[50px] !w-fit !text-[1.6rem] !font-extralight hover:!-
 const heroCtaOutlineClass = `${heroCtaClass} hover:!border-mist-30 hover:!bg-border`
 
 const features = [
-    { icon: '✦', topic: 'Ganhe pontos', about: 'Cada post, curtida e comentário gera pontos. Quanto mais voce interage, mais pontos acumula.', large: true },
+    { icon: '✦', topic: 'Ganhe pontos', about: 'Cada publicação e viagem registrada gera pontos. Quanto mais voce usa, mais pontos acumula.', large: true },
     { icon: '✦', topic: 'Desconto na energia', about: 'Converta seus pontos em desconto real na conta de energia elétrica. Simples e direto.', large: false },
     { icon: '✦', topic: 'Cashback e vouchers', about: 'Resgate pontos em parceiros selecionados, vouchers exclusivos e cashback direto na conta.', large: false },
     { icon: '✦', topic: 'Transportes sustentáveis', about: 'Troque seus pontos acumulados em passagens de trem e metrô.', large: false },
@@ -26,7 +26,7 @@ const features = [
 
 const steps = [
     { num: '1', numClass: 'bg-teal-muted-22 text-white', topic: 'Crie sua conta', subtitle: 'Cadastre-se gratuitamente em menos de 2 minutos com o seu email e numero de telefone.' },
-    { num: '2', numClass: 'bg-aurora-glow text-aurora-soft', topic: 'Interaja na plataforma', subtitle: 'Poste conteúdos, curta e comente. Cada ação gera pontos automaticamente.' },
+    { num: '2', numClass: 'bg-aurora-glow text-aurora-soft', topic: 'Interaja na plataforma', subtitle: 'Publique conteúdos e registre viagens. Cada ação gera pontos automaticamente.' },
     { num: '3', numClass: 'bg-sage-18 text-sage', topic: 'Acumule seus pontos', subtitle: 'Acompanhe seu saldo crescer em tempo real na sua carteira digital dentro do app.' },
     { num: '4', numClass: 'bg-gold-18 text-gold', topic: 'Resgate benefícios', subtitle: 'Troque seus pontos por descontos em energia, cashback ou vouchers de parceiros.' },
 ]
@@ -42,18 +42,18 @@ export default function Home() {
             </div>
 
             <section>
-                <div className="mx-auto my-16 flex h-auto flex-col items-center justify-center py-10 tablet:my-24 tablet:h-[600px] tablet:py-0 desktop:my-40">
-                    <div className="flex w-full max-w-[900px] flex-col items-center px-4 text-center tablet:w-4/5 tablet:px-0">
+                <div className="mx-auto my-16 flex h-auto flex-col items-center justify-center py-10 md:my-24 md:h-[600px] md:py-0 lg:my-40">
+                    <div className="flex w-full max-w-[900px] flex-col items-center px-4 text-center md:w-4/5 md:px-0">
                         {userEmail ? (
                             <p className={sectionTagClass}>Bem vindo, {userName}</p>
                         ) : (
                             <p className={sectionTagClass}>Suas interações valem pontos</p>
                         )}
-                        <h1 className="mb-12 w-full text-[2.6rem] font-extralight text-mist tablet:text-[4.5rem] desktop:text-[7rem]">
+                        <h1 className="mb-12 w-full text-[2.6rem] font-extralight text-mist sm:text-[3.4rem] md:text-[4.5rem] lg:text-[7rem] xl:text-[8rem]">
                             Interaja, ganhe <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">pontos</span> e resgate <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">benefícios</span> reais
                         </h1>
-                        <p className="font-sans text-[1.3rem] font-thin text-mist-dim tablet:text-[1.6rem] desktop:text-[2rem]">A plataforma que transforma cada curtida, post e comentário em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
-                        <div className="flex flex-col items-center justify-center gap-4 tablet:flex-row">
+                        <p className="font-sans text-[1.3rem] font-thin text-mist-dim md:text-[1.6rem] lg:text-[2rem]">A plataforma que transforma publicações e viagens em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
+                        <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
                             {userEmail ? null : (
                                 <Button variant="cta-primary" className={heroCtaClass} onClick={onOpenModal}>Criar Conta Grátis</Button>
                             )}
@@ -64,18 +64,18 @@ export default function Home() {
             </section>
 
             <section>
-                <div className="m-6 tablet:m-16 desktop:m-32">
+                <div className="m-6 md:m-16 lg:m-32">
                     <p className={sectionTagClass}>Recursos</p>
-                    <h2 className="mb-12 w-full text-[2.4rem] font-extralight text-mist tablet:w-[60%] tablet:text-[4rem] desktop:text-[6rem]">Tudo que voce precisa para <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">ganhar mais</span></h2>
+                    <h2 className="mb-12 w-full text-[2.4rem] font-extralight text-mist md:w-[60%] md:text-[4rem] lg:text-[6rem]">Tudo que voce precisa para <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">ganhar mais</span></h2>
 
-                    <div className="grid grid-cols-1 items-stretch justify-center gap-6 tablet:grid-cols-2 tablet:gap-12 desktop:grid-cols-3">
+                    <div className="grid grid-cols-1 items-stretch justify-center gap-6 md:grid-cols-2 md:gap-12 lg:grid-cols-3 xl:gap-16">
                         {features.map((feature, index) => (
                             <div
                                 key={feature.topic}
-                                className={`group rounded-[10px] border border-border bg-void p-6 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-300 ease-in-out hover:border-aurora-42 hover:bg-aurora-glow hover:shadow-[0_18px_38px_var(--color-void-34)] hover:-translate-y-[6px] tablet:p-12 ${feature.large ? 'tablet:col-span-2' : ''} ${index < 2 ? 'min-h-[150px] tablet:min-h-[250px]' : 'min-h-[120px] tablet:min-h-[150px]'}`}
+                                className={`group rounded-[10px] border border-border bg-void p-6 font-bold text-mist transition-[background-color,border-color,box-shadow,transform] duration-300 ease-in-out hover:border-aurora-42 hover:bg-aurora-glow hover:shadow-[0_18px_38px_var(--color-void-34)] hover:-translate-y-[6px] md:p-12 ${feature.large ? 'md:col-span-2' : ''} ${index < 2 ? 'min-h-[150px] md:min-h-[250px]' : 'min-h-[120px] md:min-h-[150px]'}`}
                             >
                                 <p className="mb-[10px] inline-block rounded-[10px] border border-border bg-aurora-glow px-[8px] py-[4px] text-[1.8rem] transition-transform duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:scale-[1.08]">{feature.icon}</p>
-                                <h3 className="text-[2rem] font-extralight text-mist tablet:text-[2.5rem]">{feature.topic}</h3>
+                                <h3 className="text-[2rem] font-extralight text-mist md:text-[2.5rem]">{feature.topic}</h3>
                                 <p className="pt-[10px] font-sans text-[1.3rem] font-thin text-mist-dim">{feature.about}</p>
                             </div>
                         ))}
@@ -84,15 +84,15 @@ export default function Home() {
             </section>
 
             <div id="steps-goto"></div>
-            <section className="mx-[calc(50%_-_50vw)] mt-12 border-t border-border bg-void-45 py-8 backdrop-blur-[16px] tablet:mt-20 tablet:py-12">
-                <div className="mx-auto w-[92%] tablet:w-[80%] desktop:w-[70%]">
+            <section className="mx-[calc(50%_-_50vw)] mt-12 border-t border-border bg-void-45 py-8 backdrop-blur-[16px] md:mt-20 md:py-12">
+                <div className="mx-auto w-[92%] md:w-[80%] lg:w-[70%]">
                     <p className={`${sectionTagClass} !text-[1.7rem]`}>Como Funciona</p>
-                    <h2 className="mb-12 w-full text-[2.6rem] font-extralight text-mist tablet:text-[4.5rem] desktop:text-[7rem]">Em <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">4 passos </span>simples</h2>
-                    <div className="grid grid-cols-1 gap-6 tablet:grid-cols-2 tablet:gap-0 desktop:grid-cols-4">
+                    <h2 className="mb-12 w-full text-[2.6rem] font-extralight text-mist sm:text-[3.4rem] md:text-[4.5rem] lg:text-[7rem] xl:text-[8rem]">Em <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">4 passos </span>simples</h2>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-0 lg:grid-cols-4">
                         {steps.map((step, index) => (
                             <div
                                 key={step.num}
-                                className={`flex h-auto flex-col rounded-[16px] border-border px-6 py-8 text-left font-bold text-mist [transition:all_.5s_ease] hover:-translate-y-[4px] hover:bg-dusk-mid hover:shadow-[0_18px_40px_var(--color-aurora-14)] tablet:rounded-none tablet:px-[24px] tablet:py-[40px] ${index % 2 === 0 ? '' : 'tablet:border-l'} ${index % 4 === 0 ? '' : 'desktop:border-l'} ${index === 0 ? 'desktop:rounded-l-[30px]' : ''} ${index === steps.length - 1 ? 'desktop:rounded-r-[30px]' : ''}`}
+                                className={`flex h-auto flex-col rounded-[16px] border-border px-6 py-8 text-left font-bold text-mist [transition:all_.5s_ease] hover:-translate-y-[4px] hover:bg-dusk-mid hover:shadow-[0_18px_40px_var(--color-aurora-14)] md:rounded-none md:px-[24px] md:py-[40px] ${index % 2 === 0 ? '' : 'md:border-l'} ${index % 4 === 0 ? '' : 'lg:border-l'} ${index === 0 ? 'lg:rounded-l-[30px]' : ''} ${index === steps.length - 1 ? 'lg:rounded-r-[30px]' : ''}`}
                             >
                                 <p className={`inline-flex h-[32px] w-[32px] self-start items-center justify-center rounded-full border border-current font-sans text-[1.7rem] font-light leading-none ${step.numClass}`}>{step.num}</p>
                                 <h3 className="pt-[10px] text-[2rem] font-thin text-mist">{step.topic}</h3>

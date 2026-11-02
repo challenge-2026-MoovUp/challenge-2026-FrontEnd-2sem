@@ -104,14 +104,14 @@ export default function LoginModal({ isOpen, onClose, onLogin, onCadastrar }: Lo
             id="ModalLogin"
             aria-labelledby="modalLoginTitle"
         >
-            <div className="relative flex min-h-full w-full items-center justify-center p-6 tablet:p-12">
+            <div className="relative flex min-h-full w-full items-center justify-center p-6 md:p-12">
                 {/* Glow ambiente, mesma linguagem visual do CTA "Comece hoje" */}
                 <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
                     <span className="absolute left-[8%] top-[10%] h-[420px] w-[420px] rounded-full opacity-45 blur-[110px] [background:radial-gradient(circle,var(--color-aurora)_0%,transparent_70%)]" />
                     <span className="absolute bottom-[8%] right-[6%] h-[520px] w-[520px] rounded-full opacity-35 blur-[110px] [background:radial-gradient(circle,var(--color-ember-soft)_0%,transparent_80%)]" />
                 </div>
 
-                <div className="relative z-[1] w-full max-w-[440px] overflow-hidden rounded-[28px] border border-border bg-dusk-74 p-8 shadow-[0_24px_60px_var(--color-void-42)] backdrop-blur-[18px] tablet:p-11">
+                <div className="relative z-[1] w-full max-w-[440px] overflow-hidden rounded-[28px] border border-border bg-dusk-74 p-8 shadow-[0_24px_60px_var(--color-void-42)] backdrop-blur-[18px] md:p-11">
                     <button
                         className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full text-mist-dim outline-none transition-colors duration-200 hover:bg-mist-08 hover:text-mist focus-visible:ring-2 focus-visible:ring-aurora-soft/50"
                         aria-label="Fechar"

@@ -36,8 +36,6 @@ interface CardFormData {
 
 const cardNames: Record<CardVariant, string> = { top: 'cartão top', bilheteUnico: 'Bilhete Único' }
 
-const opcoes = redeemOptions.filter((option) => option.id === 'metro' || option.id === 'cptm')
-
 const deliveries = [
     { id: 'qrCode', icon: faQrcode, label: 'QR Code' },
     { id: 'recarga', icon: faCreditCard, label: 'Recarga' },
@@ -45,7 +43,7 @@ const deliveries = [
 
 export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChange, onOpenModal }: RedeemPanelProps) {
     const { points, estoque, redeem } = useWallet()
-    const [optionId, setOptionId] = useState(opcoes[0].id)
+    const [optionId, setOptionId] = useState(redeemOptions[0].id)
     const [delivery, setDelivery] = useState<RedemptionDelivery>('qrCode')
     const [result, setResult] = useState<Redemption | null>(null)
     const [error, setError] = useState<string | null>(null)
@@ -56,7 +54,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
         formState: { errors },
     } = useForm<CardFormData>({ values: { cardNumber } })
 
-    const selected = opcoes.find((item) => item.id === optionId)
+    const selected = redeemOptions.find((item) => item.id === optionId)
     const missing = selected ? selected.points - points : 0
 
     function reset() {
@@ -88,7 +86,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                 {userId && ` ${estoque.toLocaleString('pt-BR')} passagens em estoque.`}
             </p>
 
-            <div className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+            <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end">
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Passagem</span>
                     <select
@@ -99,7 +97,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                         }}
                         className={lineFieldClass}
                     >
-                        {opcoes.map((option) => (
+                        {redeemOptions.map((option) => (
                             <option key={option.id} value={option.id} className="bg-dusk">
                                 {option.name} — {option.points.toLocaleString('pt-BR')} pts (≈ {option.reais})
                             </option>
@@ -136,7 +134,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
             </div>
 
             {delivery === 'recarga' ? (
-                <form onSubmit={handleSubmit(finish)} className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+                <form onSubmit={handleSubmit(finish)} className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end">
                     <label className="flex flex-1 flex-col gap-2">
                         <span className={labelClass}>Número do {cardNames[card]}</span>
                         <input

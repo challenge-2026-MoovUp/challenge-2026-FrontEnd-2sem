@@ -10,12 +10,12 @@ const socialLinkClass = "inline-flex items-center text-5xl text-aurora after:mx-
 export default function Footer(){
     return (
         <footer className="sticky bottom-0 z-[1000]">
-            <div className="relative flex w-full flex-col items-center gap-4 border-t border-dusk-light bg-void-78 p-6 font-sans text-2xl font-normal text-mist-dim backdrop-blur-[16px] before:content-[''] before:pointer-events-none before:absolute before:left-0 before:right-0 before:-top-[24px] before:h-[24px] before:bg-gradient-to-t before:from-void-28 before:to-transparent tablet:grid tablet:grid-cols-[1fr_auto_1fr] tablet:items-center tablet:gap-0 tablet:p-8">
-                <div className="flex w-40 justify-center tablet:justify-self-start">
+            <div className="relative flex w-full flex-col items-center gap-4 border-t border-dusk-light bg-void-78 p-6 font-sans text-2xl font-normal text-mist-dim backdrop-blur-[16px] before:content-[''] before:pointer-events-none before:absolute before:left-0 before:right-0 before:-top-[24px] before:h-[24px] before:bg-gradient-to-t before:from-void-28 before:to-transparent md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-0 md:p-8">
+                <div className="flex w-40 justify-center md:justify-self-start">
                     <img src={Logo} alt="Logo da MoovUp" className="h-auto w-1/4" />
                     <p className="self-center pl-[15px] font-serif text-2xl text-mist-dim">MoovUp</p>
                 </div>
-                <div className="flex items-center justify-center tablet:justify-self-center">
+                <div className="flex items-center justify-center md:justify-self-center">
                     <a href="https://x.com/soulupoficial?s=20" target="_blank" className={socialLinkClass}>
                         <FontAwesomeIcon icon={faXTwitter} className="fa-brands"/>
                     </a>
@@ -26,7 +26,7 @@ export default function Footer(){
                         <FontAwesomeIcon icon={faLinkedin} className="fa-brands"/>
                     </a>
                 </div>
-                <div className="text-center font-medium text-mist-dim tablet:justify-self-end tablet:text-right">
+                <div className="text-center font-medium text-mist-dim md:justify-self-end md:text-right">
                     <p className="font-sans">&copy; {new Date().getFullYear()} MoovUp. Todos os direitos reservados.</p>
                 </div>
             </div>

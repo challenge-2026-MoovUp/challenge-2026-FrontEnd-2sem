@@ -25,11 +25,11 @@ export default function Carteira() {
     const lastDigits = cardNumber.replace(/\D/g, '').slice(-4)
 
     return (
-        <section className="mx-auto w-full max-w-[1180px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
-            <header className="flex flex-col gap-10 desktop:flex-row desktop:items-end desktop:justify-between">
+        <section className="mx-auto w-full max-w-[1180px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
+            <header className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p className={eyebrowClass}>Carteira · Transporte</p>
-                    <h1 className="pt-3 text-[3.4rem] font-medium leading-[1.05] tracking-[-0.02em] text-mist tablet:text-[4.6rem]">
+                    <h1 className="pt-3 text-[3.4rem] font-medium leading-[1.05] tracking-[-0.02em] text-mist md:text-[4.6rem] xl:text-[5.2rem]">
                         Seus cartões de transporte
                     </h1>
                     <p className="max-w-[46ch] pt-4 text-[1.5rem] font-light leading-[1.6] text-mist-soft">
@@ -37,7 +37,7 @@ export default function Carteira() {
                     </p>
                 </div>
 
-                <p className="shrink-0 desktop:text-right">
+                <p className="shrink-0 lg:text-right">
                     <span className="block text-[1.15rem] font-medium uppercase tracking-[0.12em] text-mist-soft">
                         Saldo em pontos
                     </span>
@@ -60,7 +60,7 @@ export default function Carteira() {
                 </div>
             )}
 
-            <div className="mt-16 grid grid-cols-1 gap-10 tablet:grid-cols-2 tablet:gap-12">
+            <div className="mt-16 grid grid-cols-1 gap-10 sm:gap-12 md:grid-cols-2 xl:gap-16">
                 <TransportCard
                     variant="bilheteUnico"
                     balance={balance}

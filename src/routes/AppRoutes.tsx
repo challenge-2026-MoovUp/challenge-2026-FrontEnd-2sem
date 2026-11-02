@@ -28,7 +28,7 @@ export default function AppRoutes() {
                 <Route path="solucao/video/:videoId" element={<Video />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="contato" element={<Contato />} />
-                <Route path="usuario/:id" element={<Usuario />}/>
+                <Route path="usuario/:handle" element={<Usuario />}/>
                 <Route path="admin" element={<Admin />} />
                 <Route path="*" element={<NotFound />} />
             </Route>

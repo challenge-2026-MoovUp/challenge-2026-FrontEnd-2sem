@@ -41,7 +41,7 @@ export default function Admin() {
     }
 
     return (
-        <section className="mx-auto w-full max-w-[1000px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
+        <section className="mx-auto w-full max-w-[1000px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
             <p className={eyebrowClass}>Administração</p>
             <h1 className="pt-3 text-[3.4rem] font-medium leading-[1.05] text-mist">Tickets</h1>
 
@@ -55,7 +55,7 @@ export default function Admin() {
             {error && <p className="pt-5 text-[1.4rem] font-light text-ember">{error}</p>}
 
             <h2 className={`${sectionTitleClass} mt-12`}>Abastecer estoque</h2>
-            <form onSubmit={handleAbastecer} className="mt-6 flex flex-col gap-6 tablet:flex-row tablet:items-end">
+            <form onSubmit={handleAbastecer} className="mt-6 flex flex-col gap-6 md:flex-row md:items-end">
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Modalidade</span>
                     <select
@@ -89,7 +89,7 @@ export default function Admin() {
             </form>
 
             <h2 className={`${sectionTitleClass} mt-12`}>Lista</h2>
-            <div className="mt-6 flex flex-col gap-6 tablet:flex-row">
+            <div className="mt-6 flex flex-col gap-6 md:flex-row">
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Status</span>
                     <select

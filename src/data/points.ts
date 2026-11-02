@@ -5,20 +5,12 @@
 /* ---------- Ganho de pontos ---------- */
 
 export const pointsPerAction = {
-    curtida: 15,
-    resposta: 25,
     viagem: 35,
     publicacao: 50,
 } as const
 
 /** Validade do QR Code gerado no resgate, em horas. */
 export const ticketValidityHours = 48
-
-/** Pontos creditados no cadastro. */
-export const welcomeBonus = 50
-
-/** Teto do bônus dos desafios semanais. */
-export const maxChallengeBonus = 200
 
 /* ---------- Resgate ---------- */
 
@@ -53,16 +45,6 @@ export interface RedeemOption {
 
 export const redeemOptions: RedeemOption[] = [
     {
-        id: 'onibus',
-        icon: '🚌',
-        name: 'Ônibus municipal',
-        description:
-            'Qualquer linha SPTrans, CMTC e sistemas municipais parceiros em São Paulo e região metropolitana. Sem restrição de horário.',
-        points: 400,
-        reais: 'R$ 4,40',
-        cards: ['bilheteUnico', 'qrCode'],
-    },
-    {
         id: 'metro',
         icon: '🚇',
         name: 'Metrô de São Paulo',
@@ -82,33 +64,10 @@ export const redeemOptions: RedeemOption[] = [
         reais: 'R$ 5,00',
         cards: ['bilheteUnico', 'top'],
     },
-    {
-        id: 'integrado',
-        icon: '🔄',
-        name: 'Bilhete integrado',
-        description:
-            'Integração tarifária entre ônibus + metrô + trem em uma única viagem, dentro da janela de 3 horas. Ideal para trajetos longos com baldeação.',
-        points: 1200,
-        reais: 'R$ 12,50',
-        cards: ['bilheteUnico', 'top'],
-    },
-    {
-        id: 'semanal',
-        icon: '📅',
-        name: 'Passe semanal ilimitado',
-        description:
-            '7 dias consecutivos de viagens ilimitadas em todos os modais parceiros — metrô, trem e ônibus — sem restrição de quantidade de embarques.',
-        points: 6000,
-        reais: 'R$ 55,00',
-        cards: ['bilheteUnico', 'top', 'qrCode'],
-    },
 ]
 
 /** Atalho usado nos textos que citam uma passagem de metrô. */
 export const metroOption = redeemOptions.find((option) => option.id === 'metro') as RedeemOption
-
-/** Atalho usado nos textos que citam o passe semanal. */
-export const weeklyPassOption = redeemOptions.find((option) => option.id === 'semanal') as RedeemOption
 
 /* A Sobre só tarifa transporte. Para os outros benefícios usamos a mesma taxa do
    metrô e da CPTM — 500 pontos ≈ R$ 5,00 — ou seja, R$ 0,01 por ponto. */

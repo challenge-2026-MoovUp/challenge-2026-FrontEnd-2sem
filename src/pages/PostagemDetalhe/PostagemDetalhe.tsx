@@ -4,13 +4,14 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Avatar from '../../components/feed/Avatar'
 import { focusRing, ghostActionClass, softTransition } from '../../components/common/uiStyles'
 import { usePostagem } from '../../hooks/usePostagem'
+import { rotaPerfil } from '../../routes/rotaPerfil'
 
 export default function PostagemDetalhe() {
     const { id } = useParams()
     const { post, loading, error, recarregar } = usePostagem(id)
 
     return (
-        <section className="mx-auto w-full max-w-[760px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
+        <section className="mx-auto w-full max-w-[760px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
             <Link
                 to="/feed"
                 className={`inline-flex items-center gap-2 text-[1.3rem] font-light text-mist-soft hover:text-mist ${softTransition} ${focusRing}`}
@@ -38,7 +39,7 @@ export default function PostagemDetalhe() {
                         <Avatar initials={post.author.initials} className={post.author.avatarClass} />
                         <div className="min-w-0">
                             <Link
-                                to={`/usuario/${post.author.id}`}
+                                to={rotaPerfil(post.author.handle)}
                                 className={`block truncate text-[1.7rem] font-medium text-mist hover:underline ${softTransition} ${focusRing}`}
                             >
                                 {post.author.name}
@@ -70,7 +71,7 @@ export default function PostagemDetalhe() {
                                 <div className="min-w-0 flex-1">
                                     <p className="text-[1.2rem] font-light text-mist-soft">
                                         <Link
-                                            to={`/usuario/${reply.author.id}`}
+                                            to={rotaPerfil(reply.author.handle)}
                                             className={`text-[1.5rem] font-normal text-mist hover:underline ${softTransition} ${focusRing}`}
                                         >
                                             {reply.author.name}
