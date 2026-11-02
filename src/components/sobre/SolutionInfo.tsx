@@ -11,7 +11,7 @@ const markerClass = "relative flex h-[22px] w-[22px] flex-shrink-0 items-center 
 
 export default function SolutionInfo({ isActive } : solutionInfoProps) {
     return(
-        <div className={isActive ? "flex flex-col gap-8 desktop:flex-row desktop:gap-5" : "hidden"} id="container-3">
+        <div className={isActive ? "flex flex-col gap-8 desktop:flex-row desktop:gap-5" : "hidden"} id="container-3" role="tabpanel">
             <div className="flex min-w-0 flex-1 flex-col justify-start">
                 <div className="mb-10 flex flex-col gap-5 desktop:mb-[60px]">
                     <p className={`${sectionTagClass} text-[1.3rem]`}>Passo a passo</p>

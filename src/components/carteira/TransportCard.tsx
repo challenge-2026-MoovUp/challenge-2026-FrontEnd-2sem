@@ -69,8 +69,8 @@ function Windows() {
 
 function ContactlessIcon({ color }: { color: string }) {
     return (
-        <svg
-            role="img"
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- SVG inline: role="img" é a forma correta de anunciá-lo como imagem
+        <svg role="img"
             aria-label="Pagamento por aproximação"
             width="26"
             height="26"

@@ -13,7 +13,7 @@ const btnBaseClass = "flex h-[50px] w-full max-w-[300px] items-center justify-ce
 
 export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
     return (
-        <div className={isActive ? "flex flex-col gap-8 desktop:flex-row desktop:gap-10" : "hidden"} id="container-1">
+        <div className={isActive ? "flex flex-col gap-8 desktop:flex-row desktop:gap-10" : "hidden"} id="container-1" role="tabpanel">
             <div className="flex min-w-0 flex-1 flex-col justify-start">
                 <div className="mb-10 flex flex-col gap-5 desktop:mb-[60px]">
                     <p className={`${sectionTagClass} text-[1.3rem]`}>O DESAFIO</p>

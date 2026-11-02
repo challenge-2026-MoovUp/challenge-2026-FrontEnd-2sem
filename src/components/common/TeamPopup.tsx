@@ -27,8 +27,10 @@ export default function TeamPopup({ creator, onClose }: TeamPopupProps) {
 
     return (
         <div className="fixed inset-0 z-20 flex flex-col items-center justify-center pb-6 pt-[96px]">
-            <div
-                className="fixed inset-0 backdrop-blur-[18px]"
+            <button
+                type="button"
+                aria-label="Fechar"
+                className="fixed inset-0 border-none backdrop-blur-[18px]"
                 style={{ background: "radial-gradient(circle at 50% 42%, var(--color-indigo-glow-13), var(--color-transparent) 38%), var(--color-void-86)" }}
                 onClick={onClose}
             />
