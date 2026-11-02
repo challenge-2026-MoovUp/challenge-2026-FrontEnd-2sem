@@ -1,5 +1,5 @@
 import type { ComentarioDTO, NovoComentario } from '../types/api'
-import { get, post } from './http'
+import { del, get, post } from './http'
 
 export function listarComentarios(idPostagem: string) {
     return get<ComentarioDTO[]>(`/postagens/${idPostagem}/comentarios`)
@@ -7,4 +7,8 @@ export function listarComentarios(idPostagem: string) {
 
 export function criarComentario(idPostagem: string, body: NovoComentario) {
     return post<ComentarioDTO>(`/postagens/${idPostagem}/comentarios`, body)
+}
+
+export function excluirComentario(id: string) {
+    return del(`/comentarios/${id}`)
 }

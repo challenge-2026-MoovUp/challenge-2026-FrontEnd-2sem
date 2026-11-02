@@ -23,6 +23,13 @@ export interface Credenciais {
     senha: string
 }
 
+export interface RankingDTO {
+    posicao: number
+    id: string
+    nome: string
+    saldoPontos: number
+}
+
 export interface PostagemDTO {
     id: string
     idUsuario: string
@@ -43,6 +50,11 @@ export interface NovaPostagem {
     imagem?: string | null
     video?: string | null
     tipoPostagem: TipoPostagem
+}
+
+export interface PostagemAlteracao {
+    titulo: string
+    conteudo: string
 }
 
 export interface NovaCurtida {

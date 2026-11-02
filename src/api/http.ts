@@ -31,6 +31,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
         throw new ApiError(corpo?.status ?? res.status, corpo?.mensagem ?? 'Falha na API')
     }
 
+    if (res.status === 204) return undefined as T
+
     return (await res.json()) as T
 }
 
@@ -40,4 +42,12 @@ export function get<T>(path: string) {
 
 export function post<T>(path: string, body?: unknown) {
     return request<T>(path, { method: 'POST', body: JSON.stringify(body ?? {}) })
+}
+
+export function put<T>(path: string, body?: unknown) {
+    return request<T>(path, { method: 'PUT', body: JSON.stringify(body ?? {}) })
+}
+
+export function del(path: string) {
+    return request<void>(path, { method: 'DELETE' })
 }

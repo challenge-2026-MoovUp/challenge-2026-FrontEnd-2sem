@@ -1,4 +1,4 @@
-import type { Credenciais, NovoUsuario, UsuarioDTO } from '../types/api'
+import type { Credenciais, NovoUsuario, RankingDTO, UsuarioDTO } from '../types/api'
 import { get, post } from './http'
 
 export function criarUsuario(body: NovoUsuario) {
@@ -12,6 +12,10 @@ export function login(body: Credenciais) {
 
 export function listarUsuarios() {
     return get<UsuarioDTO[]>('/usuarios')
+}
+
+export function listarRanking() {
+    return get<RankingDTO[]>('/usuarios/ranking')
 }
 
 export function buscarUsuario(id: string) {
