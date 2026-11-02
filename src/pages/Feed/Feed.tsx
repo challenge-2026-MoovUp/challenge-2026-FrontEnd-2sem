@@ -234,9 +234,9 @@ export default function Feed() {
                         )}
 
                         {loading && (
-                            <p className="py-12 text-[1.4rem] font-light text-mist-soft" role="status">
+                            <output className="block py-12 text-[1.4rem] font-light text-mist-soft">
                                 Carregando publicações…
-                            </p>
+                            </output>
                         )}
 
                         {error && !loading && (
@@ -288,9 +288,8 @@ export default function Feed() {
                 </div>
             </section>
 
-            <div
+            <output
                 className="pointer-events-none fixed inset-x-0 bottom-8 z-[1100] flex justify-center px-4"
-                role="status"
                 aria-live="polite"
             >
                 {toast && (
@@ -301,7 +300,7 @@ export default function Feed() {
                         {toast.text}
                     </p>
                 )}
-            </div>
+            </output>
         </>
     )
 }

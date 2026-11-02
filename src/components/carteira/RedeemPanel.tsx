@@ -191,7 +191,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                             <QrTicket redemption={result} />
                         </Suspense>
                     ) : (
-                        <p role="status" className="font-sans text-[1.4rem] font-light text-mist">
+                        <output className="block font-sans text-[1.4rem] font-light text-mist">
                             <span className="text-sage">Recarga confirmada.</span>{' '}
                             {result.points.toLocaleString('pt-BR')} pontos no {cardNames[card]} •••{' '}
                             {result.cardNumber?.replace(/\s/g, '').slice(-4)} — o crédito aparece em até{' '}
@@ -199,7 +199,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                             <span className="block pt-1 font-mono text-[1.2rem] tracking-[0.14em] text-mist-soft">
                                 {result.ticketCode}
                             </span>
-                        </p>
+                        </output>
                     )}
                 </div>
             )}

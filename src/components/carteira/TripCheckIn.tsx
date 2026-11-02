@@ -90,12 +90,11 @@ export default function TripCheckIn({ userId, onOpenModal }: TripCheckInProps) {
             </form>
 
             {feedback && (
-                <p
-                    role="status"
-                    className={`mt-6 font-sans text-[1.35rem] font-light ${feedback.ok ? 'text-sage' : 'text-ember'}`}
+                <output
+                    className={`mt-6 block font-sans text-[1.35rem] font-light ${feedback.ok ? 'text-sage' : 'text-ember'}`}
                 >
                     {feedback.text}
-                </p>
+                </output>
             )}
         </section>
     )
