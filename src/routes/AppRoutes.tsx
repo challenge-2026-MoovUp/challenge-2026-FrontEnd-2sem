@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from '../components/layout/Layout.tsx';
 import Home from '../pages/Home/Home.tsx';
 import Sobre from '../pages/Sobre/Sobre.tsx';
@@ -12,13 +12,6 @@ import PostagemDetalhe from '../pages/PostagemDetalhe/PostagemDetalhe.tsx'
 import Carteira from '../pages/Carteira/Carteira.tsx'
 import NotFound from '../pages/NotFound/NotFound.tsx'
 import Usuario from '../pages/Usuario/Usuario.tsx'
-import { useUsuario } from '../hooks/useUsuario.ts'
-
-function UsuarioRoute() {
-    const { id } = useParams()
-    const { perfil, posts, loading, error, recarregar, curtir } = useUsuario(id)
-    return <Usuario perfil={perfil} posts={posts} loading={loading} error={error} onRecarregar={recarregar} onCurtir={curtir} />
-}
 
 export default function AppRoutes() {
     return (
@@ -34,7 +27,7 @@ export default function AppRoutes() {
                 <Route path="solucao/video/:videoId" element={<Video />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="contato" element={<Contato />} />
-                <Route path="usuario/:id" element={<UsuarioRoute />}/>
+                <Route path="usuario/:id" element={<Usuario />}/>
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>

@@ -1,8 +1,8 @@
 /* DTO da API → tipos de tela. Nenhum componente importa types/api.ts. */
 
-import type { ComentarioDTO, PostagemDTO, RankingDTO, UsuarioDTO } from '../types/api'
+import type { ComentarioDTO, ImpactoDTO, ImpactoHistoricoDTO, PostagemDTO, RankingDTO, UsuarioDTO } from '../types/api'
 import type { FeedAuthor, FeedPost, FeedReply, SuggestedProfile } from '../types/feed'
-import type { PerfilUsuario } from '../types/perfil'
+import type { ImpactoItem, ImpactoResumo, PerfilUsuario } from '../types/perfil'
 
 const avatarClasses = [
     'bg-gradiente-aurora text-void',
@@ -57,6 +57,30 @@ export function toPerfilUsuario(dto: UsuarioDTO): PerfilUsuario {
         }),
         ativo: dto.status === 'A',
     }
+}
+
+function emKg(gramas: number) {
+    return `${(gramas / 1000).toLocaleString('pt-BR')} kg`
+}
+
+export function toImpactoResumo(dto: ImpactoDTO): ImpactoResumo {
+    return {
+        viagens: dto.totalViagens.toLocaleString('pt-BR'),
+        km: `${dto.totalKm.toLocaleString('pt-BR')} km`,
+        co2: emKg(dto.totalCo2Evitado),
+    }
+}
+
+export function toImpactoItem(dto: ImpactoHistoricoDTO): ImpactoItem {
+    return {
+        id: dto.id,
+        titulo: `${dto.modalidade} · ${new Date(dto.dataCalculo).toLocaleDateString('pt-BR')}`,
+        detalhe: `${dto.kmPercorridos.toLocaleString('pt-BR')} km · ${emKg(dto.co2Evitado)} de CO₂ evitado`,
+    }
+}
+
+export function tituloDe(content: string) {
+    return content.split('\n')[0].slice(0, 50)
 }
 
 function tempoRelativo(dataIso: string, agora = new Date()) {

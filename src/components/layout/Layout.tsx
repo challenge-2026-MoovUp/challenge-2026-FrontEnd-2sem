@@ -10,7 +10,7 @@ import { WalletProvider } from '../../context/WalletProvider.tsx'
 
 function Layout(){
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { usuario, entrar, cadastrar } = useAuth()
+    const { usuario, entrar, cadastrar, atualizarSessao, sair } = useAuth()
 
     const userEmail = usuario?.email ?? null
     const userId = usuario?.id ?? null
@@ -34,7 +34,7 @@ function Layout(){
             <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin} onCadastrar={handleCadastro}/>
             <main>
                 <WalletProvider userId={userId} >
-                    <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userName, userId }}/>
+                    <Outlet context={{ onOpenModal: () => setIsModalOpen(true), userEmail, userName, userId, atualizarSessao, sair }}/>
                 </WalletProvider>
             </main>
             <Footer/>

@@ -1,5 +1,14 @@
-import type { Credenciais, NovoUsuario, PontosDTO, RankingDTO, UsuarioDTO } from '../types/api'
-import { get, post } from './http'
+import type {
+    Credenciais,
+    ImpactoDTO,
+    ImpactoHistoricoDTO,
+    NovoUsuario,
+    PontosDTO,
+    RankingDTO,
+    UsuarioAlteracao,
+    UsuarioDTO,
+} from '../types/api'
+import { del, get, post, put } from './http'
 
 export function criarUsuario(body: NovoUsuario) {
     return post<UsuarioDTO>('/usuarios', body)
@@ -24,4 +33,20 @@ export function buscarPontos(id: string) {
 
 export function buscarUsuario(id: string) {
     return get<UsuarioDTO>(`/usuarios/${id}`)
+}
+
+export function atualizarUsuario(id: string, body: UsuarioAlteracao) {
+    return put<UsuarioDTO>(`/usuarios/${id}`, body)
+}
+
+export function excluirUsuario(id: string) {
+    return del(`/usuarios/${id}`)
+}
+
+export function buscarImpacto(id: string) {
+    return get<ImpactoDTO>(`/usuarios/${id}/impacto`)
+}
+
+export function listarImpactoHistorico(id: string) {
+    return get<ImpactoHistoricoDTO[]>(`/usuarios/${id}/impacto/historico`)
 }
