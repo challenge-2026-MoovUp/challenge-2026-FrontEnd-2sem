@@ -1,5 +1,5 @@
 /* Endpoints de postagens. Criar uma postagem credita pontos ao autor:
-   TEXTO 50, IMAGEM 100, VIDEO 150 (ver divergência em docs/INTEGRACAO-API.md). */
+   TEXTO 50, IMAGEM 100, VIDEO 150 — divergem do 80 fixo de data/points.ts. */
 
 import type { CurtidaDTO, NovaCurtida, NovaPostagem, PostagemDTO } from '../types/api'
 import { del, get, post, put } from './http'
