@@ -88,7 +88,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                 {userId && ` ${estoque.toLocaleString('pt-BR')} passagens em estoque.`}
             </p>
 
-            <div className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+            <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end">
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Passagem</span>
                     <select
@@ -136,7 +136,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
             </div>
 
             {delivery === 'recarga' ? (
-                <form onSubmit={handleSubmit(finish)} className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+                <form onSubmit={handleSubmit(finish)} className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end">
                     <label className="flex flex-1 flex-col gap-2">
                         <span className={labelClass}>Número do {cardNames[card]}</span>
                         <input

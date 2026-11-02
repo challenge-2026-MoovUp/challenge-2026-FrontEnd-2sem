@@ -10,7 +10,7 @@ export default function PostagemDetalhe() {
     const { post, loading, error, recarregar } = usePostagem(id)
 
     return (
-        <section className="mx-auto w-full max-w-[760px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
+        <section className="mx-auto w-full max-w-[760px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
             <Link
                 to="/feed"
                 className={`inline-flex items-center gap-2 text-[1.3rem] font-light text-mist-soft hover:text-mist ${softTransition} ${focusRing}`}

@@ -17,7 +17,7 @@ export default function Video() {
     if (!video) return null
 
     return (
-        <div className="flex min-h-[calc(100dvh-194px)] flex-col items-center justify-center gap-6 overflow-hidden bg-void px-6 py-6 tablet:min-h-[calc(100dvh-150px)] desktop:min-h-[calc(100dvh-140px)]">
+        <div className="flex min-h-[calc(100dvh-194px)] flex-col items-center justify-center gap-6 overflow-hidden bg-void px-6 py-6 md:min-h-[calc(100dvh-150px)] lg:min-h-[calc(100dvh-140px)]">
             <div className="flex w-full max-w-[900px] flex-col items-center gap-4">
                 <Link
                     to="/solucao"

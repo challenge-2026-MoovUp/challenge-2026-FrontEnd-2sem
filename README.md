@@ -26,7 +26,7 @@ O site foi construído com **React, TypeScript e Vite**, com roteamento via **Re
 - **Feed** em timeline no estilo X/Twitter: composer com limite de 200 caracteres, curtir/responder/salvar, abas Para você · Seguindo · Salvos, busca e filtro por hashtag, e carteira de pontos que atualiza a cada interação
 - **Carteira** com registro de viagens de metrô/CPTM (+50 pontos por embarque, até 2 por dia), conversão dos pontos em QR Code de embarque ou recarga de Bilhete Único/cartão top, e histórico de viagens e resgates — saldo persistido em `localStorage` e compartilhado com o Feed
 - **Roteamento client-side** entre todas as páginas com React Router
-- **Design responsivo mobile-first** construído com TailwindCSS (breakpoints customizados `tablet:` e `desktop:`)
+- **Design responsivo mobile-first** construído com TailwindCSS (breakpoints `sm:`, `md:`, `lg:` e `xl:`)
 
 ---
 
@@ -49,15 +49,17 @@ O site foi construído com **React, TypeScript e Vite**, com roteamento via **Re
 
 ## 📱 Responsividade
 
-O layout é **mobile-first**: as classes do Tailwind sem prefixo já são o estilo de mobile, e dois breakpoints customizados (definidos em `@theme`, dentro de `src/global.css`) escalam o layout para telas maiores.
+O layout é **mobile-first**: as classes do Tailwind sem prefixo já são o estilo de mobile, e os breakpoints escalam o layout para telas maiores (`md` e `lg` ajustados em `@theme`, dentro de `src/global.css`).
 
 | Prefixo Tailwind | Breakpoint | Faixa de tela |
 |---|---|---|
-| _(sem prefixo)_ | — | Mobile, até 767px (cobre o "até 480px" do enunciado) |
-| `tablet:` | `48rem` (768px) | Tablet, 768px+ |
-| `desktop:` | `62rem` (992px) | Desktop, 992px+ |
+| _(sem prefixo)_ | — | Mobile, até 639px (cobre o "até 480px" do enunciado) |
+| `sm:` | `40rem` (640px) | Mobile grande, 640px+ |
+| `md:` | `48rem` (768px) | Tablet, 768px+ |
+| `lg:` | `62rem` (992px) | Desktop, 992px+ |
+| `xl:` | `80rem` (1280px) | Desktop grande, 1280px+ |
 
-Exemplo: `grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4` empilha os cards no celular, exibe 2 colunas no tablet e 4 no desktop.
+Exemplo: `grid-cols-1 md:grid-cols-2 lg:grid-cols-4` empilha os cards no celular, exibe 2 colunas no tablet e 4 no desktop.
 
 ---
 

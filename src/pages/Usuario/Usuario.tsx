@@ -140,7 +140,7 @@ export default function Usuario() {
     }
 
     return (
-        <section className="mx-auto w-full max-w-[760px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
+        <section className="mx-auto w-full max-w-[760px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
             <Link
                 to="/feed"
                 className={`inline-flex items-center gap-2 text-[1.3rem] font-light text-mist-soft hover:text-mist ${softTransition} ${focusRing}`}
@@ -171,7 +171,7 @@ export default function Usuario() {
                             <Avatar initials={perfil.initials} className={perfil.avatarClass} size="lg" />
 
                             <div className="min-w-0">
-                                <h1 className="truncate text-[3rem] font-medium leading-[1.1] tracking-[-0.02em] text-mist tablet:text-[3.4rem]">
+                                <h1 className="truncate text-[3rem] font-medium leading-[1.1] tracking-[-0.02em] text-mist md:text-[3.4rem]">
                                     {perfil.name}
                                 </h1>
                                 <p className="pt-1 text-[1.4rem] font-light text-mist-soft">
@@ -185,7 +185,7 @@ export default function Usuario() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-6 tablet:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                             <PerfilDado
                                 icon={faCoins}
                                 valor={`${perfil.saldoPontos.toLocaleString('pt-BR')} pts`}

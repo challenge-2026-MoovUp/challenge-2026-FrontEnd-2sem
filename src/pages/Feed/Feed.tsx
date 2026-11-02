@@ -168,15 +168,15 @@ export default function Feed() {
 
     return (
         <>
-            <section className="mx-auto w-full max-w-[1400px] px-5 py-14 font-sans tablet:px-10 tablet:py-20">
-                <div className="grid grid-cols-1 items-start gap-14 desktop:grid-cols-[minmax(0,240px)_minmax(0,1fr)_minmax(0,280px)] desktop:gap-16">
-                    <aside className="desktop:sticky desktop:top-[100px]">
+            <section className="mx-auto w-full max-w-[1400px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
+                <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)_minmax(0,280px)] lg:gap-16 xl:gap-20">
+                    <aside className="lg:sticky lg:top-[100px]">
                         <WalletRail userId={userId} userName={userName} onOpenModal={onOpenModal} />
                     </aside>
 
                     <div>
                         <header>
-                            <h1 className="pt-3 text-[3rem] font-medium leading-[1.05] tracking-[-0.02em] text-mist tablet:text-[3.8rem]">
+                            <h1 className="pt-3 text-[3rem] font-medium leading-[1.05] tracking-[-0.02em] text-mist md:text-[3.8rem]">
                                 O que está movendo São Paulo
                             </h1>
                         </header>
@@ -268,7 +268,7 @@ export default function Feed() {
                         )}
                     </div>
 
-                    <aside className="desktop:sticky desktop:top-[100px]">
+                    <aside className="lg:sticky lg:top-[100px]">
                         <FeedSidebar
                             query={query}
                             onQueryChange={setQuery}

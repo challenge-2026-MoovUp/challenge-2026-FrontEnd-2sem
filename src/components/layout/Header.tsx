@@ -33,12 +33,12 @@ export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
 
     return (
         <header className="relative sticky top-0 z-[1000] bg-void-78 backdrop-blur-[16px] after:content-[''] after:pointer-events-none after:absolute after:left-0 after:right-0 after:-bottom-[24px] after:h-[24px] after:bg-gradient-to-b after:from-void-28 after:to-transparent">
-            <div className="flex items-center justify-between border-b border-dusk-light px-4 py-[14px] font-sans tablet:px-[40px]">
-                <div className="flex w-32 tablet:w-40">
+            <div className="flex items-center justify-between border-b border-dusk-light px-4 py-[14px] font-sans md:px-[40px]">
+                <div className="flex w-32 md:w-40">
                     <img className="h-auto w-1/4" src={Logo} alt="Logo da MoovUp" />
                     <p className="self-center pl-[15px] font-serif text-2xl text-mist-dim">MoovUp</p>
                 </div>
-                <nav className="hidden gap-[20px] text-[15px] font-light tablet:flex tablet:w-4/5 tablet:justify-center">
+                <nav className="hidden gap-[20px] text-[15px] font-light md:flex md:w-4/5 md:justify-center">
                     {navItems.map((item) => (
                         <NavLink
                             key={item.path}
@@ -57,7 +57,7 @@ export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
                 <div className="flex items-center gap-3">
                     <button
                         type="button"
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-dusk-light text-mist-dim tablet:hidden"
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-dusk-light text-mist-dim md:hidden"
                         aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
                         aria-expanded={menuOpen}
                         onClick={() => setMenuOpen((open) => !open)}
@@ -78,7 +78,7 @@ export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
             </div>
 
             {menuOpen && (
-                <nav className="flex flex-col gap-1 border-b border-dusk-light bg-void-78 px-4 py-4 font-sans text-[15px] font-light backdrop-blur-[16px] tablet:hidden">
+                <nav className="flex flex-col gap-1 border-b border-dusk-light bg-void-78 px-4 py-4 font-sans text-[15px] font-light backdrop-blur-[16px] md:hidden">
                     {navItems.map((item) => (
                         <NavLink
                             key={item.path}

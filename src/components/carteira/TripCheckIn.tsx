@@ -88,7 +88,7 @@ export default function TripCheckIn({ userId, onOpenModal }: TripCheckInProps) {
                 Cada passagem resgatada vale uma viagem registrada e {pointsPerAction.viagem} pontos.
             </p>
 
-            <form onSubmit={(event) => void handleSubmit(event)} className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+            <form onSubmit={(event) => void handleSubmit(event)} className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end">
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Passagem</span>
                     <select value={ticketEscolhido} onChange={(event) => setTicket(event.target.value)} className={lineFieldClass}>
