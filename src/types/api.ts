@@ -81,3 +81,69 @@ export interface NovoComentario {
     idUsuario: string
     conteudo: string
 }
+
+export type Modalidade = 'ONIBUS' | 'METRO' | 'TREM'
+export type StatusTicket = 'DISPONIVEL' | 'RESERVADO' | 'UTILIZADO' | 'EXPIRADO'
+export type FormaRecebimento = 'QR_CODE' | 'RECARGA'
+
+export interface PontosDTO {
+    idUsuario: string
+    saldoPontos: number
+}
+
+export interface TicketDTO {
+    id: string
+    modalidade: Modalidade
+    status: StatusTicket
+    tarifaReais: number
+    custoEmPontos: number
+    formaRecebimento: FormaRecebimento | null
+    dataExpiracao: string
+    qrCodeHash: string
+}
+
+export interface NovoResgate {
+    modalidade: Modalidade
+    formaRecebimento: FormaRecebimento
+}
+
+export interface ResgateDTO {
+    ticket: TicketDTO
+    saldoRestante: number
+}
+
+export interface EstoqueDTO {
+    disponiveis: number
+    reservados: number
+    utilizados: number
+    expirados: number
+}
+
+export interface LinhaDTO {
+    codigo: string
+    nome: string
+    modalidade: Modalidade
+}
+
+export interface EstacaoDTO {
+    codigo: string
+    nome: string
+}
+
+export interface NovaViagem {
+    idTicket: string
+    linha: string
+    estacaoEmbarque: string
+}
+
+export interface ViagemDTO {
+    id: string
+    idUsuario: string
+    idTicket: string
+    modalidade: Modalidade
+    linha: string
+    estacaoEmbarque: string
+    dataViagem: string
+    pontosGerados: number
+    co2Evitado: number
+}
