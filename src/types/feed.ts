@@ -36,6 +36,4 @@ export interface TrendTopic {
     posts: string
 }
 
-export interface SuggestedProfile extends FeedAuthor {
-    bio: string
-}
+export type SuggestedProfile = FeedAuthor & { bio: string }
