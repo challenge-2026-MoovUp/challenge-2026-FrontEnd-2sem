@@ -168,3 +168,8 @@ export interface ImpactoHistoricoDTO {
     kmPercorridos: number
     dataCalculo: string
 }
+
+export interface SeguidoDTO {
+    id: string
+    nome: string
+}
