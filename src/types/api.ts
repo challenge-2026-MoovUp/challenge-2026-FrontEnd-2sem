@@ -173,3 +173,8 @@ export interface SeguidoDTO {
     id: string
     nome: string
 }
+
+export interface NovoLoteTickets {
+    modalidade: Modalidade
+    quantidade: number
+}
