@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/moov-up-icon.png'
 import Button from '../common/Button.tsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,6 +24,7 @@ const navItems = [
 ]
 export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
+    const navigate = useNavigate()
 
     function handleNavClick() {
         setMenuOpen(false)
@@ -63,7 +64,8 @@ export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
                         <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} />
                     </button>
                     {userId ? (
-                        <Button variant="primary" onClick={onOpenModal}>
+                        /* Logado: o chip leva ao próprio perfil, não ao modal de login. */
+                        <Button variant="primary" onClick={() => void navigate(`/usuario/${userId}`)}>
                             <span className="font-sans"> <FontAwesomeIcon icon={faUser} /> {userName}</span>
                         </Button>
                     ) : (
