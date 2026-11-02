@@ -12,6 +12,7 @@ import PostagemDetalhe from '../pages/PostagemDetalhe/PostagemDetalhe.tsx'
 import Carteira from '../pages/Carteira/Carteira.tsx'
 import NotFound from '../pages/NotFound/NotFound.tsx'
 import Usuario from '../pages/Usuario/Usuario.tsx'
+import Admin from '../pages/Admin/Admin.tsx'
 
 export default function AppRoutes() {
     return (
@@ -28,6 +29,7 @@ export default function AppRoutes() {
                 <Route path="faq" element={<Faq />} />
                 <Route path="contato" element={<Contato />} />
                 <Route path="usuario/:id" element={<Usuario />}/>
+                <Route path="admin" element={<Admin />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>

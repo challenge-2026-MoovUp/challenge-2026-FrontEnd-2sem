@@ -21,6 +21,7 @@ const navItems = [
     { path: '/contato', label: 'Contato' },
     { path: '/feed', label: 'Feed' },
     { path: '/carteira', label: 'Carteira' },
+    { path: '/admin', label: 'Admin' },
 ]
 export default function Header({ onOpenModal, userId, userName }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
