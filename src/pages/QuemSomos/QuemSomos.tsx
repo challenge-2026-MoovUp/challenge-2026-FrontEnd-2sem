@@ -21,7 +21,7 @@ const solutionSteps = [
 
 const solutionCards = [
     { icon: faCircleUser, title: 'Cadastro simples e seguro', subtitle: 'Crie sua conta na MoovUp em poucos passos e comece a participar.' },
-    { icon: faLeaf, title: 'Ações que geram impacto', subtitle: 'Realize interações sustentáveis, responda pesquisas, compartilhe conteúdos e mais.' },
+    { icon: faLeaf, title: 'Ações que geram impacto', subtitle: 'Realize interações sustentáveis, responda pesquisas e mais.' },
     { icon: faCoins, title: 'Pontos que têm valor', subtitle: 'Cada ação concluída gera pontos que se acumulam no seu saldo.' },
     { icon: faTicket, title: 'Conversão para passagens', subtitle: 'Troque seus pontos por passagens de ônibus, metrô e trem de forma rápida e prática.' },
     { icon: faCircleCheck, title: 'Mobilidade que transforma', subtitle: 'Mais do que se deslocar: é sobre criar um futuro mais acessível, sustentável e conectado.' },

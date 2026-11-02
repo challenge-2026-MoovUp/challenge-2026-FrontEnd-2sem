@@ -5,9 +5,8 @@ import FeedSidebar from '../../components/feed/FeedSidebar'
 import PostCard from '../../components/feed/PostCard'
 import WalletRail from '../../components/feed/WalletRail'
 import { focusRing, ghostActionClass, softTransition } from '../../components/common/uiStyles'
-import type { FeedPost } from '../../types/feed'
 import { actionLabels, pointsPerAction } from '../../data/points'
-import type { PointsAction } from '../../data/points'
+import { useCurtidas } from '../../hooks/useCurtidas'
 import { useFeed } from '../../hooks/useFeed'
 import { useWallet } from '../../hooks/useWallet'
 
@@ -26,21 +25,16 @@ const tabs = [
 
 type TabId = (typeof tabs)[number]['id']
 
+function tituloDe(content: string) {
+    return content.split('\n')[0].slice(0, 50)
+}
+
 export default function Feed() {
     const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
     const { earn } = useWallet()
-    const { posts: postsDaApi, loading, error, recarregar, publicar, comentar, curtir } = useFeed()
+    const { posts, loading, error, recarregar, publicar, comentar, curtir, editar, excluir, excluirResposta } = useFeed()
 
-    /* O feed vem da API, mas curtida, repost e resposta são otimistas: a cópia
-       local absorve a interação na hora e é substituída no próximo recarregar. */
-    const [posts, setPosts] = useState<FeedPost[]>([])
-
-    useEffect(() => {
-        setPosts(postsDaApi)
-    }, [postsDaApi])
-
-    const [liked, setLiked] = useState<Record<string, boolean>>({})
-    const [reposted, setReposted] = useState<Record<string, boolean>>({})
+    const { curtidas, marcarCurtida, desmarcarCurtida } = useCurtidas(userId)
     const [saved, setSaved] = useState<Record<string, boolean>>({})
     const [following, setFollowing] = useState<string[]>(['moovup'])
     const [tab, setTab] = useState<TabId>('para-voce')
@@ -72,50 +66,23 @@ export default function Feed() {
         })
     }, [posts, tab, following, saved, activeTag, query])
 
-    /** Credita (ou estorna) os pontos da ação na carteira e mostra o aviso flutuante. */
-    function reward(action: PointsAction, undo = false) {
-        const amount = pointsPerAction[action]
-        earn(action, undo)
-        setToast({
-            id: Date.now(),
-            text: undo ? `-${amount} pontos · ${actionLabels[action]} desfeita` : `+${amount} pontos · ${actionLabels[action]}`,
-        })
-    }
-
     function requireLogin() {
         if (userId) return false
         onOpenModal()
         return true
     }
 
-    /* A curtida é por usuário e não tem volta no servidor: quem já curtiu só
-       recebe 422. Então o coração não destoggla — uma vez curtido, fica. */
     async function handleLike(id: string) {
         if (requireLogin()) return
-        if (liked[id]) return
+        if (curtidas.includes(id)) return
 
+        marcarCurtida(id)
         const resultado = await curtir(id, userId as string)
 
         if (!resultado.ok) {
+            desmarcarCurtida(id)
             setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao curtir' })
-            return
         }
-
-        setLiked((previous) => ({ ...previous, [id]: true }))
-
-        /* Se o servidor já contava essa curtida (F5 apaga o estado local), o
-           coração acende sem creditar pontos de novo. */
-        if (!resultado.jaCurtiu) reward('curtida')
-    }
-
-    function handleRepost(id: string) {
-        if (requireLogin()) return
-        const isReposted = Boolean(reposted[id])
-        setReposted((previous) => ({ ...previous, [id]: !isReposted }))
-        setPosts((previous) =>
-            previous.map((post) => (post.id === id ? { ...post, reposts: post.reposts + (isReposted ? -1 : 1) } : post)),
-        )
-        reward('repost', isReposted)
     }
 
     function handleSave(id: string) {
@@ -132,22 +99,15 @@ export default function Feed() {
 
         if (!resultado.ok) {
             setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao comentar' })
-            return
         }
-
-        reward('resposta')
     }
 
     async function handlePublish(content: string) {
         if (requireLogin()) return
 
-        /* O contrato pede título separado do corpo; a UI tem um campo só, então
-           a primeira linha vira título. */
-        const titulo = content.split('\n')[0].slice(0, 80)
-
         const resultado = await publicar({
             idUsuario: userId as string,
-            titulo,
+            titulo: tituloDe(content),
             conteudo: content,
             tipoPostagem: 'TEXTO',
         })
@@ -160,7 +120,32 @@ export default function Feed() {
         setTab('para-voce')
         setActiveTag(null)
         setQuery('')
-        reward('publicacao')
+        earn('publicacao')
+        setToast({ id: Date.now(), text: `+${pointsPerAction.publicacao} pontos · ${actionLabels.publicacao}` })
+    }
+
+    async function handleEdit(id: string, content: string) {
+        const resultado = await editar(id, { titulo: tituloDe(content), conteudo: content })
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao editar' })
+        }
+    }
+
+    async function handleDelete(id: string) {
+        const resultado = await excluir(id)
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao excluir' })
+        }
+    }
+
+    async function handleDeleteReply(id: string) {
+        const resultado = await excluirResposta(id)
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao excluir a resposta' })
+        }
     }
 
     function handleTagClick(tag: string) {
@@ -258,15 +243,16 @@ export default function Feed() {
                                 post={post}
                                 userId={userId}
                                 userName={userName}
-                                liked={Boolean(liked[post.id])}
-                                reposted={Boolean(reposted[post.id])}
+                                liked={curtidas.includes(post.id)}
                                 saved={Boolean(saved[post.id])}
                                 activeTag={activeTag}
-                                onLike={handleLike}
-                                onRepost={handleRepost}
+                                onLike={(id) => void handleLike(id)}
                                 onSave={handleSave}
                                 onReply={handleReply}
                                 onTagClick={handleTagClick}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                                onDeleteReply={handleDeleteReply}
                             />
                         ))}
 

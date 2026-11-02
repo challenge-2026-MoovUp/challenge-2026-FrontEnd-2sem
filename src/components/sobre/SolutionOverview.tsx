@@ -27,7 +27,7 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Interaja na plataforma</h3>
-                        <h3 className={journeySubtitleClass}>Cada curtida, post, comentário e compartilhamento gera pontos automaticamente. Desafios semanais oferecem bônus e multiplicadores que aceleram muito o acúmulo.</h3>
+                        <h3 className={journeySubtitleClass}>Cada curtida, post e comentário gera pontos automaticamente. Desafios semanais oferecem bônus e multiplicadores que aceleram muito o acúmulo.</h3>
                         <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.curtida} a +{maxChallengeBonus} pts por ação</h3>
                     </div>
                 </article>

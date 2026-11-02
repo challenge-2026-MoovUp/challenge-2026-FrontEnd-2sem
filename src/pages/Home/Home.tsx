@@ -26,7 +26,7 @@ const features = [
 
 const steps = [
     { num: '1', numClass: 'bg-teal-muted-22 text-white', topic: 'Crie sua conta', subtitle: 'Cadastre-se gratuitamente em menos de 2 minutos com o seu email e numero de telefone.' },
-    { num: '2', numClass: 'bg-aurora-glow text-aurora-soft', topic: 'Interaja na plataforma', subtitle: 'Poste conteúdos, curta, comente e compartilhe. Cada ação gera pontos automaticamente.' },
+    { num: '2', numClass: 'bg-aurora-glow text-aurora-soft', topic: 'Interaja na plataforma', subtitle: 'Poste conteúdos, curta e comente. Cada ação gera pontos automaticamente.' },
     { num: '3', numClass: 'bg-sage-18 text-sage', topic: 'Acumule seus pontos', subtitle: 'Acompanhe seu saldo crescer em tempo real na sua carteira digital dentro do app.' },
     { num: '4', numClass: 'bg-gold-18 text-gold', topic: 'Resgate benefícios', subtitle: 'Troque seus pontos por descontos em energia, cashback ou vouchers de parceiros.' },
 ]

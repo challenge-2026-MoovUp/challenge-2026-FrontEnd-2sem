@@ -10,10 +10,7 @@ export const pointsPerAction = {
     /* Viagem registrada na carteira (metrô ou CPTM). Dez viagens pagam uma
        passagem de metrô, então o incentivo soma sem se pagar sozinho. */
     viagem: 50,
-    /* A Sobre não define preço para compartilhamento; mantemos entre resposta e
-       publicação, na mesma escala de múltiplos de 5. */
-    repost: 40,
-    publicacao: 80,
+    publicacao: 50,
 } as const
 
 export type PointsAction = keyof typeof pointsPerAction
@@ -24,7 +21,6 @@ export const emptyLedger: PointsLedger = {
     curtida: 0,
     resposta: 0,
     viagem: 0,
-    repost: 0,
     publicacao: 0,
 }
 
@@ -32,7 +28,6 @@ export const actionLabels: Record<PointsAction, string> = {
     curtida: 'curtida',
     resposta: 'resposta',
     viagem: 'viagem registrada',
-    repost: 'repost',
     publicacao: 'publicação',
 }
 

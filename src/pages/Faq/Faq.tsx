@@ -74,12 +74,12 @@ const categories: FaqCategory[] = [
         id: 'calculo-pontos',
         title: 'Como os pontos são calculados?',
         preview:
-          `Cada curtida vale ${pointsPerAction.curtida} pontos, respostas ${pointsPerAction.resposta}, reposts ${pointsPerAction.repost} e publicações ${pointsPerAction.publicacao}...`,
+          `Cada curtida vale ${pointsPerAction.curtida} pontos, respostas ${pointsPerAction.resposta} e publicações ${pointsPerAction.publicacao}...`,
         content: (
           <>
             Os pontos são calculados com base nas interações realizadas dentro da plataforma:
             cada curtida vale {pointsPerAction.curtida} pontos, respostas {pointsPerAction.resposta},
-            reposts {pointsPerAction.repost} e publicações originais {pointsPerAction.publicacao}.
+            e publicações originais {pointsPerAction.publicacao}.
             Desafios semanais rendem até {maxChallengeBonus} pontos de bônus.
             Algumas ações promocionais podem
             oferecer multiplicadores temporários, aumentando a quantidade de pontos recebidos. O

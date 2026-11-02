@@ -10,7 +10,7 @@ interface ComposerProps {
     onOpenModal: () => void
 }
 
-const maxLength = 280
+const maxLength = 200
 
 export default function Composer({ userId, userName, pointsPerPost, onPublish, onOpenModal }: ComposerProps) {
     const [content, setContent] = useState('')

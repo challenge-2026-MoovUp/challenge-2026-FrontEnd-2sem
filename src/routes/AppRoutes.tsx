@@ -8,6 +8,7 @@ import Faq from '../pages/Faq/Faq.tsx';
 import Contato from '../pages/Contato/Contato.tsx';
 import Video from '../pages/Video/Video.tsx';
 import Feed from '../pages/Feed/Feed.tsx'
+import PostagemDetalhe from '../pages/PostagemDetalhe/PostagemDetalhe.tsx'
 import Carteira from '../pages/Carteira/Carteira.tsx'
 import NotFound from '../pages/NotFound/NotFound.tsx'
 import Usuario from '../pages/Usuario/Usuario.tsx'
@@ -15,8 +16,8 @@ import { useUsuario } from '../hooks/useUsuario.ts'
 
 function UsuarioRoute() {
     const { id } = useParams()
-    const { perfil, posts, loading, error, recarregar } = useUsuario(id)
-    return <Usuario perfil={perfil} posts={posts} loading={loading} error={error} onRecarregar={recarregar} />
+    const { perfil, posts, loading, error, recarregar, curtir } = useUsuario(id)
+    return <Usuario perfil={perfil} posts={posts} loading={loading} error={error} onRecarregar={recarregar} onCurtir={curtir} />
 }
 
 export default function AppRoutes() {
@@ -25,6 +26,7 @@ export default function AppRoutes() {
             <Route element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="feed" element={<Feed />} />
+                <Route path="feed/:id" element={<PostagemDetalhe />} />
                 <Route path="carteira" element={<Carteira />} />
                 <Route path="quem-somos" element={<QuemSomos />}/>
                 <Route path="sobre" element={<Sobre />} />
