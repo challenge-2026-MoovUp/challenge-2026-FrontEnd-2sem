@@ -29,40 +29,26 @@ function handleDe(nome: string) {
     return `@${nome.trim().toLowerCase().replace(/\s+/g, '_')}`
 }
 
-function autorDesconhecido(idUsuario: string): FeedAuthor {
+function toFeedAuthor(id: string, nome: string): FeedAuthor {
     return {
-        id: idUsuario,
-        name: 'Usuário MoovUp',
-        handle: '@moovup',
-        initials: 'MU',
-        avatarClass: avatarClassDe(idUsuario),
-    }
-}
-
-function toFeedAuthor(usuario: UsuarioDTO): FeedAuthor {
-    return {
-        id: usuario.id,
-        name: usuario.nome,
-        handle: handleDe(usuario.nome),
-        initials: iniciais(usuario.nome),
-        avatarClass: avatarClassDe(usuario.id),
+        id,
+        name: nome,
+        handle: handleDe(nome),
+        initials: iniciais(nome),
+        avatarClass: avatarClassDe(id),
     }
 }
 
 export function toPerfilRanking(dto: RankingDTO): SuggestedProfile {
     return {
-        id: dto.id,
-        name: dto.nome,
-        handle: handleDe(dto.nome),
-        initials: iniciais(dto.nome),
-        avatarClass: avatarClassDe(dto.id),
+        ...toFeedAuthor(dto.id, dto.nome),
         bio: `${dto.posicao}º · ${dto.saldoPontos.toLocaleString('pt-BR')} pontos`,
     }
 }
 
 export function toPerfilUsuario(dto: UsuarioDTO): PerfilUsuario {
     return {
-        ...toFeedAuthor(dto),
+        ...toFeedAuthor(dto.id, dto.nome),
         email: dto.email,
         saldoPontos: dto.saldoPontos,
         membroDesde: new Date(dto.dataCadastro).toLocaleDateString('pt-BR', {
@@ -87,39 +73,23 @@ function tempoRelativo(dataIso: string, agora = new Date()) {
     return `há ${dias} d`
 }
 
-/* A postagem só traz idUsuario, então a tela carrega GET /usuarios e passa
-   este mapa para resolver o autor. */
-type MapaAutores = Map<string, UsuarioDTO>
-
-function toFeedReply(dto: ComentarioDTO, autores: MapaAutores): FeedReply {
-    const usuario = autores.get(dto.idUsuario)
-
+function toFeedReply(dto: ComentarioDTO): FeedReply {
     return {
         id: dto.id,
-        author: usuario ? toFeedAuthor(usuario) : autorDesconhecido(dto.idUsuario),
+        author: toFeedAuthor(dto.idUsuario, dto.nomeUsuario),
         time: tempoRelativo(dto.dataComentario),
         content: dto.conteudo,
     }
 }
 
-export function toFeedPost(
-    dto: PostagemDTO,
-    autores: MapaAutores,
-    comentarios: ComentarioDTO[] = [],
-): FeedPost {
-    const usuario = autores.get(dto.idUsuario)
-
+export function toFeedPost(dto: PostagemDTO, comentarios: ComentarioDTO[] = []): FeedPost {
     return {
         id: dto.id,
-        author: usuario ? toFeedAuthor(usuario) : autorDesconhecido(dto.idUsuario),
+        author: toFeedAuthor(dto.idUsuario, dto.nomeUsuario),
         time: tempoRelativo(dto.dataPostagem),
         content: dto.conteudo,
         likes: dto.curtidas,
         tags: [],
-        replies: comentarios.map((comentario) => toFeedReply(comentario, autores)),
+        replies: comentarios.map(toFeedReply),
     }
-}
-
-export function mapaDeAutores(usuarios: UsuarioDTO[]): MapaAutores {
-    return new Map(usuarios.map((usuario) => [usuario.id, usuario]))
 }

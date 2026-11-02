@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import { ApiError } from '../api/http'
-import { atualizarPostagem, criarPostagem, curtirPostagem, excluirPostagem, listarPostagens } from '../api/postagensApi'
+import { mensagemDe } from '../api/http'
+import { atualizarPostagem, criarPostagem, excluirPostagem, listarPostagens } from '../api/postagensApi'
 import { criarComentario, excluirComentario, listarComentarios } from '../api/comentariosApi'
-import { listarUsuarios } from '../api/usuariosApi'
-import { mapaDeAutores, toFeedPost } from '../mappers/feedMapper'
+import { toFeedPost } from '../mappers/feedMapper'
 import type { NovaPostagem, NovoComentario, PostagemAlteracao } from '../types/api'
 import type { FeedPost } from '../types/feed'
+import { curtirPost } from './useCurtidas'
 
 export function useFeed() {
     const [posts, setPosts] = useState<FeedPost[]>([])
@@ -17,17 +17,12 @@ export function useFeed() {
         setError(null)
 
         try {
-            const [postagens, usuarios] = await Promise.all([listarPostagens(), listarUsuarios()])
-            const autores = mapaDeAutores(usuarios)
+            const postagens = await listarPostagens()
+            const comentarios = await Promise.all(postagens.map((postagem) => listarComentarios(postagem.id)))
 
-            // Comentários são um endpoint por postagem: N+1 chamadas no feed.
-            const comentarios = await Promise.all(
-                postagens.map((postagem) => listarComentarios(postagem.id)),
-            )
-
-            setPosts(postagens.map((postagem, i) => toFeedPost(postagem, autores, comentarios[i])))
+            setPosts(postagens.map((postagem, i) => toFeedPost(postagem, comentarios[i])))
         } catch (erro) {
-            setError(erro instanceof ApiError ? erro.mensagem : 'Falha ao carregar o feed')
+            setError(mensagemDe(erro, 'Falha ao carregar o feed'))
         } finally {
             setLoading(false)
         }
@@ -37,95 +32,27 @@ export function useFeed() {
         void carregar()
     }, [carregar])
 
-    const publicar = useCallback(
-        async (body: NovaPostagem) => {
-            try {
-                await criarPostagem(body)
-                await carregar()
-                return { ok: true }
-            } catch (erro) {
-                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao publicar'
-                return { ok: false, reason }
-            }
-        },
-        [carregar],
-    )
-
-    const comentar = useCallback(
-        async (idPostagem: string, body: NovoComentario) => {
-            try {
-                await criarComentario(idPostagem, body)
-                await carregar()
-                return { ok: true }
-            } catch (erro) {
-                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao comentar'
-                return { ok: false, reason }
-            }
-        },
-        [carregar],
-    )
-
-    const curtir = useCallback(async (idPostagem: string, idUsuario: string) => {
-        const alterarCurtidas = (calcular: (likes: number) => number) =>
-            setPosts((anteriores) =>
-                anteriores.map((post) => (post.id === idPostagem ? { ...post, likes: calcular(post.likes) } : post)),
-            )
-
-        alterarCurtidas((likes) => likes + 1)
-
+    async function executar(acao: () => Promise<unknown>, falha: string) {
         try {
-            const { curtidas } = await curtirPostagem(idPostagem, { idUsuario })
-            alterarCurtidas(() => curtidas)
+            await acao()
+            await carregar()
             return { ok: true }
         } catch (erro) {
-            alterarCurtidas((likes) => likes - 1)
-            if (erro instanceof ApiError && erro.status === 422) return { ok: true }
-            const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao curtir'
-            return { ok: false, reason }
+            return { ok: false, reason: mensagemDe(erro, falha) }
         }
-    }, [])
+    }
 
-    const editar = useCallback(
-        async (id: string, body: PostagemAlteracao) => {
-            try {
-                await atualizarPostagem(id, body)
-                await carregar()
-                return { ok: true }
-            } catch (erro) {
-                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao editar'
-                return { ok: false, reason }
-            }
-        },
-        [carregar],
-    )
-
-    const excluir = useCallback(
-        async (id: string) => {
-            try {
-                await excluirPostagem(id)
-                await carregar()
-                return { ok: true }
-            } catch (erro) {
-                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao excluir'
-                return { ok: false, reason }
-            }
-        },
-        [carregar],
-    )
-
-    const excluirResposta = useCallback(
-        async (id: string) => {
-            try {
-                await excluirComentario(id)
-                await carregar()
-                return { ok: true }
-            } catch (erro) {
-                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao excluir a resposta'
-                return { ok: false, reason }
-            }
-        },
-        [carregar],
-    )
-
-    return { posts, loading, error, recarregar: carregar, publicar, comentar, curtir, editar, excluir, excluirResposta }
+    return {
+        posts,
+        loading,
+        error,
+        recarregar: carregar,
+        publicar: (body: NovaPostagem) => executar(() => criarPostagem(body), 'Falha ao publicar'),
+        comentar: (idPostagem: string, body: NovoComentario) =>
+            executar(() => criarComentario(idPostagem, body), 'Falha ao comentar'),
+        curtir: (idPostagem: string, idUsuario: string) => curtirPost(idPostagem, idUsuario, setPosts),
+        editar: (id: string, body: PostagemAlteracao) => executar(() => atualizarPostagem(id, body), 'Falha ao editar'),
+        excluir: (id: string) => executar(() => excluirPostagem(id), 'Falha ao excluir'),
+        excluirResposta: (id: string) => executar(() => excluirComentario(id), 'Falha ao excluir a resposta'),
+    }
 }

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ApiError } from '../api/http'
+import { mensagemDe } from '../api/http'
 import { criarUsuario, login as loginApi } from '../api/usuariosApi'
 import type { Credenciais, NovoUsuario, UsuarioDTO } from '../types/api'
 
@@ -32,8 +32,7 @@ export function useAuth() {
             salvarUsuario(resultado)
             return { ok: true }
         } catch (erro) {
-            const reason = erro instanceof ApiError ? erro.mensagem : 'Falha na operação'
-            return { ok: false, reason }
+            return { ok: false, reason: mensagemDe(erro, 'Falha na operação') }
         }
     }, [])
 

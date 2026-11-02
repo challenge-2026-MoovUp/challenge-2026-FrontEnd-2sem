@@ -33,6 +33,7 @@ export interface RankingDTO {
 export interface PostagemDTO {
     id: string
     idUsuario: string
+    nomeUsuario: string
     titulo: string
     conteudo: string
     imagem: string | null
@@ -70,6 +71,7 @@ export interface ComentarioDTO {
     id: string
     idPostagem: string
     idUsuario: string
+    nomeUsuario: string
     conteudo: string
     curtidas: number
     dataComentario: string

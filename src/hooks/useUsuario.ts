@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { ApiError } from '../api/http'
+import { ApiError, mensagemDe } from '../api/http'
 import { listarComentarios } from '../api/comentariosApi'
-import { curtirPostagem, listarPostagens } from '../api/postagensApi'
-import { buscarUsuario, listarUsuarios } from '../api/usuariosApi'
-import { mapaDeAutores, toFeedPost, toPerfilUsuario } from '../mappers/feedMapper'
+import { listarPostagens } from '../api/postagensApi'
+import { buscarUsuario } from '../api/usuariosApi'
+import { toFeedPost, toPerfilUsuario } from '../mappers/feedMapper'
 import type { FeedPost } from '../types/feed'
 import type { PerfilUsuario } from '../types/perfil'
+import { curtirPost } from './useCurtidas'
 
 export function useUsuario(id: string | undefined) {
     const [perfil, setPerfil] = useState<PerfilUsuario | null>(null)
@@ -26,24 +27,18 @@ export function useUsuario(id: string | undefined) {
         setNaoEncontrado(false)
 
         try {
-            const [usuario, postagens, usuarios] = await Promise.all([
-                buscarUsuario(id),
-                listarPostagens(),
-                listarUsuarios(),
-            ])
+            const [usuario, postagens] = await Promise.all([buscarUsuario(id), listarPostagens()])
             const minhas = postagens.filter((postagem) => postagem.idUsuario === id)
 
             const comentarios = await Promise.all(
                 minhas.map((postagem) => listarComentarios(postagem.id)),
             )
 
-            const autores = mapaDeAutores(usuarios)
-
             setPerfil(toPerfilUsuario(usuario))
-            setPosts(minhas.map((postagem, i) => toFeedPost(postagem, autores, comentarios[i])))
+            setPosts(minhas.map((postagem, i) => toFeedPost(postagem, comentarios[i])))
         } catch (erro) {
             if (erro instanceof ApiError && erro.status === 404) setNaoEncontrado(true)
-            setError(erro instanceof ApiError ? erro.mensagem : 'Falha ao carregar o perfil')
+            setError(mensagemDe(erro, 'Falha ao carregar o perfil'))
             setPerfil(null)
             setPosts([])
         } finally {
@@ -55,25 +50,13 @@ export function useUsuario(id: string | undefined) {
         void carregar()
     }, [carregar])
 
-    const curtir = useCallback(async (idPostagem: string, idUsuario: string) => {
-        const alterarCurtidas = (calcular: (likes: number) => number) =>
-            setPosts((anteriores) =>
-                anteriores.map((post) => (post.id === idPostagem ? { ...post, likes: calcular(post.likes) } : post)),
-            )
-
-        alterarCurtidas((likes) => likes + 1)
-
-        try {
-            const { curtidas } = await curtirPostagem(idPostagem, { idUsuario })
-            alterarCurtidas(() => curtidas)
-            return { ok: true }
-        } catch (erro) {
-            alterarCurtidas((likes) => likes - 1)
-            if (erro instanceof ApiError && erro.status === 422) return { ok: true }
-            const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao curtir'
-            return { ok: false, reason }
-        }
-    }, [])
-
-    return { perfil, posts, loading, error, naoEncontrado, recarregar: carregar, curtir }
+    return {
+        perfil,
+        posts,
+        loading,
+        error,
+        naoEncontrado,
+        recarregar: carregar,
+        curtir: (idPostagem: string, idUsuario: string) => curtirPost(idPostagem, idUsuario, setPosts),
+    }
 }
