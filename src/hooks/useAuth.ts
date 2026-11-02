@@ -46,5 +46,15 @@ export function useAuth() {
         [executar],
     )
 
-    return { usuario, entrar, cadastrar }
+    function atualizarSessao(novo: UsuarioDTO) {
+        setUsuario(novo)
+        salvarUsuario(novo)
+    }
+
+    function sair() {
+        setUsuario(null)
+        localStorage.removeItem(storageKey)
+    }
+
+    return { usuario, entrar, cadastrar, atualizarSessao, sair }
 }
