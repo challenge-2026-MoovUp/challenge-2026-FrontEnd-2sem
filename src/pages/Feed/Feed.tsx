@@ -26,7 +26,7 @@ const tabs = [
 type TabId = (typeof tabs)[number]['id']
 
 function tituloDe(content: string) {
-    return content.split('\n')[0].slice(0, 80)
+    return content.split('\n')[0].slice(0, 50)
 }
 
 export default function Feed() {

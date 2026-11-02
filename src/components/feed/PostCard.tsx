@@ -169,6 +169,7 @@ export default function PostCard({
                                     value={editDraft}
                                     onChange={(event) => setEditDraft(event.target.value)}
                                     rows={3}
+                                    maxLength={200}
                                     className={`w-full resize-none appearance-none border-0 border-b border-border-mid bg-transparent px-1 py-[9px] font-sans text-[1.5rem] font-light text-mist focus-visible:border-aurora focus-visible:outline-none ${focusRing}`}
                                 />
                             </label>
@@ -318,6 +319,7 @@ export default function PostCard({
                                         value={draft}
                                         onChange={(event) => setDraft(event.target.value)}
                                         placeholder="Responda a esta publicação..."
+                                        maxLength={200}
                                         className={`w-full appearance-none border-0 border-b border-border-mid bg-transparent px-1 py-[9px] font-sans text-[1.3rem] font-light text-mist placeholder:text-mist-soft focus-visible:border-aurora focus-visible:outline-none ${focusRing}`}
                                     />
                                 </label>
