@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { transportLines } from '../../data/transport'
-import { maxTripsPerDay, pointsPerAction } from '../../data/points'
+import { mensagemDe } from '../../api/http'
+import { listarEstacoes, listarLinhas } from '../../api/viagensApi'
+import { pointsPerAction } from '../../data/points'
+import type { EstacaoDTO, LinhaDTO } from '../../types/api'
 import { useWallet } from '../../hooks/useWallet'
 import {
     eyebrowClass,
@@ -20,27 +22,57 @@ interface TripCheckInProps {
 }
 
 export default function TripCheckIn({ userId, onOpenModal }: TripCheckInProps) {
-    const { registerTrip, tripsToday, canRegisterTrip } = useWallet()
-    const [lineId, setLineId] = useState(transportLines[0].id)
-    const [station, setStation] = useState(transportLines[0].stations[0])
+    const { registerTrip, tickets } = useWallet()
+    const [linhas, setLinhas] = useState<LinhaDTO[]>([])
+    const [estacoes, setEstacoes] = useState<EstacaoDTO[]>([])
+    const [linha, setLinha] = useState('')
+    const [estacao, setEstacao] = useState('')
+    const [ticket, setTicket] = useState('')
+    const [enviando, setEnviando] = useState(false)
     const [feedback, setFeedback] = useState<{ ok: boolean; text: string } | null>(null)
 
-    const line = transportLines.find((item) => item.id === lineId) ?? transportLines[0]
+    const ticketEscolhido = tickets.some((item) => item.id === ticket) ? ticket : (tickets[0]?.id ?? '')
 
-    function handleLineChange(nextId: string) {
-        const nextLine = transportLines.find((item) => item.id === nextId) ?? transportLines[0]
-        setLineId(nextId)
-        setStation(nextLine.stations[0])
-        setFeedback(null)
-    }
+    useEffect(() => {
+        async function carregarLinhas() {
+            try {
+                const resposta = await listarLinhas()
+                setLinhas(resposta)
+                setLinha(resposta[0]?.codigo ?? '')
+            } catch (erro) {
+                setFeedback({ ok: false, text: mensagemDe(erro, 'Falha ao carregar as linhas.') })
+            }
+        }
 
-    function handleSubmit(event: React.FormEvent) {
+        void carregarLinhas()
+    }, [])
+
+    useEffect(() => {
+        if (!linha) return
+
+        async function carregarEstacoes() {
+            try {
+                const resposta = await listarEstacoes(linha)
+                setEstacoes(resposta)
+                setEstacao(resposta[0]?.codigo ?? '')
+            } catch (erro) {
+                setFeedback({ ok: false, text: mensagemDe(erro, 'Falha ao carregar as estações.') })
+            }
+        }
+
+        void carregarEstacoes()
+    }, [linha])
+
+    async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
         if (!userId) {
             onOpenModal()
             return
         }
-        const result = registerTrip(lineId, station)
+
+        setEnviando(true)
+        const result = await registerTrip(ticketEscolhido, linha, estacao)
+        setEnviando(false)
         setFeedback(
             result.ok
                 ? { ok: true, text: `Viagem registrada. +${pointsPerAction.viagem} pontos na carteira.` }
@@ -53,16 +85,32 @@ export default function TripCheckIn({ userId, onOpenModal }: TripCheckInProps) {
             <p className={eyebrowClass}>Ganhar pontos</p>
             <h2 className={sectionTitleClass}>Registrar viagem</h2>
             <p className={sectionLeadClass}>
-                Metrô e CPTM valem {pointsPerAction.viagem} pontos por embarque, até {maxTripsPerDay} por dia.
+                Cada passagem resgatada vale uma viagem registrada e {pointsPerAction.viagem} pontos.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+            <form onSubmit={(event) => void handleSubmit(event)} className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
+                <label className="flex flex-1 flex-col gap-2">
+                    <span className={labelClass}>Passagem</span>
+                    <select value={ticketEscolhido} onChange={(event) => setTicket(event.target.value)} className={lineFieldClass}>
+                        {tickets.length === 0 && (
+                            <option value="" className="bg-dusk">
+                                Nenhuma passagem disponível
+                            </option>
+                        )}
+                        {tickets.map((item) => (
+                            <option key={item.id} value={item.id} className="bg-dusk">
+                                {item.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Linha</span>
-                    <select value={lineId} onChange={(event) => handleLineChange(event.target.value)} className={lineFieldClass}>
-                        {transportLines.map((item) => (
-                            <option key={item.id} value={item.id} className="bg-dusk">
-                                {item.operator} · {item.name}
+                    <select value={linha} onChange={(event) => setLinha(event.target.value)} className={lineFieldClass}>
+                        {linhas.map((item) => (
+                            <option key={item.codigo} value={item.codigo} className="bg-dusk">
+                                {item.nome}
                             </option>
                         ))}
                     </select>
@@ -70,23 +118,22 @@ export default function TripCheckIn({ userId, onOpenModal }: TripCheckInProps) {
 
                 <label className="flex flex-1 flex-col gap-2">
                     <span className={labelClass}>Estação de embarque</span>
-                    <select value={station} onChange={(event) => setStation(event.target.value)} className={lineFieldClass}>
-                        {line.stations.map((item) => (
-                            <option key={item} value={item} className="bg-dusk">
-                                {item}
+                    <select value={estacao} onChange={(event) => setEstacao(event.target.value)} className={lineFieldClass}>
+                        {estacoes.map((item) => (
+                            <option key={item.codigo} value={item.codigo} className="bg-dusk">
+                                {item.nome}
                             </option>
                         ))}
                     </select>
                 </label>
 
-                <div className="flex flex-col gap-2">
-                    <button type="submit" disabled={Boolean(userId) && !canRegisterTrip} className={primaryActionClass}>
-                        Registrar <FontAwesomeIcon icon={faArrowRight} />
-                    </button>
-                    <p className="font-sans text-[1.2rem] font-light text-mist-soft" aria-live="polite">
-                        {tripsToday} de {maxTripsPerDay} hoje
-                    </p>
-                </div>
+                <button
+                    type="submit"
+                    disabled={enviando || (Boolean(userId) && !ticketEscolhido)}
+                    className={primaryActionClass}
+                >
+                    Registrar <FontAwesomeIcon icon={faArrowRight} />
+                </button>
             </form>
 
             {feedback && (

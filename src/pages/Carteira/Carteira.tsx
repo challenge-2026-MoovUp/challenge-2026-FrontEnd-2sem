@@ -5,7 +5,7 @@ import TransportCard from '../../components/carteira/TransportCard'
 import type { CardVariant } from '../../components/carteira/TransportCard'
 import TripCheckIn from '../../components/carteira/TripCheckIn'
 import WalletTimeline from '../../components/carteira/WalletTimeline'
-import { eyebrowClass } from '../../components/common/uiStyles'
+import { eyebrowClass, ghostActionClass } from '../../components/common/uiStyles'
 import { useWallet } from '../../hooks/useWallet'
 import { pointsToBRL } from '../../data/points'
 
@@ -17,7 +17,7 @@ interface CarteiraContext {
 
 export default function Carteira() {
     const { onOpenModal, userId } = useOutletContext<CarteiraContext>()
-    const { points } = useWallet()
+    const { points, loading, error, recarregar } = useWallet()
     const [card, setCard] = useState<CardVariant>('bilheteUnico')
     const [cardNumber, setCardNumber] = useState('')
 
@@ -45,11 +45,20 @@ export default function Carteira() {
                         className="block text-[4.4rem] font-light leading-none tracking-[-0.02em] text-mist"
                         aria-live="polite"
                     >
-                        {points.toLocaleString('pt-BR')}
+                        {loading ? '...' : points.toLocaleString('pt-BR')}
                     </span>
                     <span className="block pt-1 text-[1.3rem] font-light text-sage">≈ {balance}</span>
                 </p>
             </header>
+
+            {error && (
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                    <p className="text-[1.4rem] font-light text-ember">{error}</p>
+                    <button type="button" onClick={() => void recarregar()} className={ghostActionClass}>
+                        Tentar de novo
+                    </button>
+                </div>
+            )}
 
             <div className="mt-16 grid grid-cols-1 gap-10 tablet:grid-cols-2 tablet:gap-12">
                 <TransportCard

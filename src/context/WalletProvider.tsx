@@ -1,174 +1,109 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import {
-    emptyLedger,
-    maxTripsPerDay,
-    minRedeemPoints,
-    pointsPerAction,
-    redeemOptions,
-    ticketValidityHours,
-} from '../data/points'
-import type { PointsAction } from '../data/points'
-import type { Redemption, RedemptionDelivery, Trip } from '../types/wallet'
+import { useCallback, useEffect, useState } from 'react'
+import { mensagemDe } from '../api/http'
+import { listarResgates, resgatar } from '../api/resgatesApi'
+import { buscarEstoque, marcarTicketUtilizado } from '../api/ticketsApi'
+import { buscarPontos } from '../api/usuariosApi'
+import { listarEstacoes, listarLinhas, listarViagens, registrarViagem } from '../api/viagensApi'
+import { modalidadePorOpcao, toRedemption, toTicketOption, toTrip } from '../mappers/walletMapper'
+import type { Redemption, RedemptionDelivery, TicketOption, Trip } from '../types/wallet'
 import { WalletContext } from './walletContext'
-import type { StoredWallet, WalletValue } from './walletContext'
-
-/** Saldo inicial de demonstração, creditado na primeira visita. */
-const initialPoints = 8150
-
-
-function storageKey(userId: string | null) {
-    return `moovup:wallet:${userId ?? 'visitante'}`
-}
-
-function emptyWallet(): StoredWallet {
-    return { points: initialPoints, ledger: { ...emptyLedger }, trips: [], redemptions: [] }
-}
-
-function readWallet(userId: string | null): StoredWallet {
-    try {
-        const raw = localStorage.getItem(storageKey(userId))
-        if (!raw) return emptyWallet()
-        const parsed = JSON.parse(raw) as Partial<StoredWallet>
-        return {
-            points: typeof parsed.points === 'number' ? parsed.points : initialPoints,
-            ledger: { ...emptyLedger, ...parsed.ledger },
-            trips: parsed.trips ?? [],
-            redemptions: parsed.redemptions ?? [],
-        }
-    } catch {
-        // localStorage indisponível ou conteúdo corrompido: começa limpo.
-        return emptyWallet()
-    }
-}
-
-function todayKey(date = new Date()) {
-    return date.toISOString().slice(0, 10)
-}
-
-/** Código legível impresso no comprovante e codificado no QR. */
-function buildTicketCode() {
-    const random = Math.random().toString(36).toUpperCase().slice(2, 6)
-    const stamp = Date.now().toString(36).toUpperCase().slice(-4)
-    return `MOOV-${stamp}-${random}`
-}
 
 export function WalletProvider({ userId, children }: { userId: string | null; children: React.ReactNode }) {
-    const [wallet, setWallet] = useState<StoredWallet>(() => readWallet(userId))
+    const [points, setPoints] = useState(0)
+    const [trips, setTrips] = useState<Trip[]>([])
+    const [redemptions, setRedemptions] = useState<Redemption[]>([])
+    const [tickets, setTickets] = useState<TicketOption[]>([])
+    const [estoque, setEstoque] = useState(0)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
 
-    // Cada usuário tem a sua carteira; trocar de conta recarrega o saldo dela.
-    useEffect(() => {
-        setWallet(readWallet(userId))
+    const recarregar = useCallback(async () => {
+        setError(null)
+
+        if (!userId) {
+            setPoints(0)
+            setTrips([])
+            setRedemptions([])
+            setTickets([])
+            setEstoque(0)
+            return
+        }
+
+        setLoading(true)
+
+        try {
+            const [pontos, resgates, viagens, linhas, disponivel] = await Promise.all([
+                buscarPontos(userId),
+                listarResgates(userId),
+                listarViagens(userId),
+                listarLinhas(),
+                buscarEstoque(),
+            ])
+            const linhasUsadas = [...new Set(viagens.map((viagem) => viagem.linha))]
+            const estacoes = await Promise.all(linhasUsadas.map(listarEstacoes))
+            const nomesLinhas = new Map(linhas.map((linha) => [linha.codigo, linha.nome]))
+            const nomesEstacoes = new Map(estacoes.flat().map((estacao) => [estacao.codigo, estacao.nome]))
+            const ticketsComViagem = viagens.map((viagem) => viagem.idTicket)
+
+            setPoints(pontos.saldoPontos)
+            setTrips(viagens.map((viagem) => toTrip(viagem, nomesLinhas, nomesEstacoes)))
+            setRedemptions(resgates.map(toRedemption))
+            setTickets(
+                resgates
+                    .filter(
+                        (ticket) =>
+                            ticket.status === 'RESERVADO' ||
+                            (ticket.status === 'UTILIZADO' && !ticketsComViagem.includes(ticket.id)),
+                    )
+                    .map(toTicketOption),
+            )
+            setEstoque(disponivel.disponiveis)
+        } catch (erro) {
+            setError(mensagemDe(erro, 'Falha ao carregar a carteira'))
+        } finally {
+            setLoading(false)
+        }
     }, [userId])
 
     useEffect(() => {
+        void recarregar()
+    }, [recarregar])
+
+    async function registerTrip(idTicket: string, linha: string, estacao: string) {
+        if (!userId) return { ok: false, reason: 'Entre na sua conta.' }
+
         try {
-            localStorage.setItem(storageKey(userId), JSON.stringify(wallet))
-        } catch {
-            // Sem persistência (modo privado, cota cheia): a sessão continua funcionando.
+            const ticket = tickets.find((item) => item.id === idTicket)
+            if (ticket?.status === 'RESERVADO') await marcarTicketUtilizado(idTicket)
+            await registrarViagem(userId, { idTicket, linha, estacaoEmbarque: estacao })
+            await recarregar()
+            return { ok: true }
+        } catch (erro) {
+            await recarregar()
+            return { ok: false, reason: mensagemDe(erro, 'Não foi possível registrar a viagem.') }
         }
-    }, [userId, wallet])
+    }
 
-    const earn = useCallback((action: PointsAction, undo = false) => {
-        const amount = pointsPerAction[action]
-        setWallet((previous) => ({
-            ...previous,
-            points: Math.max(0, previous.points + (undo ? -amount : amount)),
-            ledger: {
-                ...previous.ledger,
-                [action]: Math.max(0, previous.ledger[action] + (undo ? -1 : 1)),
-            },
-        }))
-    }, [])
+    async function redeem(optionId: string, delivery: RedemptionDelivery, cardNumber?: string) {
+        if (!userId) return { ok: false, reason: 'Entre na sua conta.' }
 
-    const tripsToday = useMemo(
-        () => wallet.trips.filter((trip) => trip.registeredAt.slice(0, 10) === todayKey()).length,
-        [wallet.trips],
+        try {
+            const { ticket } = await resgatar(userId, {
+                modalidade: modalidadePorOpcao[optionId],
+                formaRecebimento: delivery === 'recarga' ? 'RECARGA' : 'QR_CODE',
+            })
+            await recarregar()
+            return { ok: true, redemption: { ...toRedemption(ticket), cardNumber } }
+        } catch (erro) {
+            return { ok: false, reason: mensagemDe(erro, 'Não foi possível concluir o resgate.') }
+        }
+    }
+
+    return (
+        <WalletContext.Provider
+            value={{ points, trips, redemptions, tickets, estoque, loading, error, recarregar, registerTrip, redeem }}
+        >
+            {children}
+        </WalletContext.Provider>
     )
-
-    const registerTrip = useCallback(
-        (lineId: string, station: string) => {
-            if (tripsToday >= maxTripsPerDay) {
-                return {
-                    ok: false,
-                    reason: `Você já registrou ${maxTripsPerDay} viagens hoje. O limite volta amanhã.`,
-                }
-            }
-
-            const trip: Trip = {
-                id: `trip-${Date.now()}`,
-                lineId,
-                station,
-                registeredAt: new Date().toISOString(),
-                points: pointsPerAction.viagem,
-            }
-
-            setWallet((previous) => ({
-                ...previous,
-                points: previous.points + trip.points,
-                ledger: { ...previous.ledger, viagem: previous.ledger.viagem + 1 },
-                trips: [trip, ...previous.trips],
-            }))
-
-            return { ok: true, trip }
-        },
-        [tripsToday],
-    )
-
-    const redeem = useCallback(
-        (optionId: string, delivery: RedemptionDelivery, cardNumber?: string) => {
-            const option = redeemOptions.find((item) => item.id === optionId)
-            if (!option) return { ok: false, reason: 'Resgate indisponível.' }
-            if (wallet.points < minRedeemPoints) {
-                return { ok: false, reason: `O resgate começa em ${minRedeemPoints} pontos.` }
-            }
-            if (wallet.points < option.points) {
-                return {
-                    ok: false,
-                    reason: `Faltam ${(option.points - wallet.points).toLocaleString('pt-BR')} pontos para este resgate.`,
-                }
-            }
-            if (delivery === 'recarga' && !cardNumber) {
-                return { ok: false, reason: 'Informe o número do cartão para a recarga.' }
-            }
-
-            const createdAt = new Date()
-            const expiresAt = new Date(createdAt.getTime() + ticketValidityHours * 60 * 60 * 1000)
-            const ticketCode = buildTicketCode()
-
-            const redemption: Redemption = {
-                id: `redeem-${createdAt.getTime()}`,
-                optionId: option.id,
-                points: option.points,
-                delivery,
-                ticketCode,
-                payload: `MOOVUP|${ticketCode}|${option.id}|${option.points}|${expiresAt.toISOString()}`,
-                cardNumber,
-                createdAt: createdAt.toISOString(),
-                expiresAt: expiresAt.toISOString(),
-            }
-
-            setWallet((previous) => ({
-                ...previous,
-                points: previous.points - option.points,
-                redemptions: [redemption, ...previous.redemptions],
-            }))
-
-            return { ok: true, redemption }
-        },
-        [wallet.points],
-    )
-
-    const value = useMemo<WalletValue>(
-        () => ({
-            ...wallet,
-            tripsToday,
-            canRegisterTrip: tripsToday < maxTripsPerDay,
-            earn,
-            registerTrip,
-            redeem,
-        }),
-        [wallet, tripsToday, earn, registerTrip, redeem],
-    )
-
-    return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>
 }
