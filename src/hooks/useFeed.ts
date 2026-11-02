@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { ApiError } from '../api/http'
-import { criarPostagem, listarPostagens } from '../api/postagensApi'
+import { criarPostagem, curtirPostagem, listarPostagens } from '../api/postagensApi'
 import { criarComentario, listarComentarios } from '../api/comentariosApi'
 import { listarUsuarios } from '../api/usuariosApi'
 import { mapaDeAutores, toFeedPost } from '../mappers/feedMapper'
@@ -76,5 +76,22 @@ export function useFeed() {
         [carregar],
     )
 
-    return { posts, loading, error, recarregar: carregar, publicar, comentar }
+    /** Curte no servidor e aplica o total que ele devolve. Sem recarregar o
+        feed: a resposta já traz o novo valor de curtidas. O 422 de "já curtiu"
+        não é erro de verdade — o estado do servidor é o que a UI quer. */
+    const curtir = useCallback(async (idPostagem: string, idUsuario: string) => {
+        try {
+            const { curtidas } = await curtirPostagem(idPostagem, { idUsuario })
+            setPosts((anteriores) =>
+                anteriores.map((post) => (post.id === idPostagem ? { ...post, likes: curtidas } : post)),
+            )
+            return { ok: true }
+        } catch (erro) {
+            if (erro instanceof ApiError && erro.status === 422) return { ok: true, jaCurtiu: true }
+            const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao curtir'
+            return { ok: false, reason }
+        }
+    }, [])
+
+    return { posts, loading, error, recarregar: carregar, publicar, comentar, curtir }
 }

@@ -1,7 +1,7 @@
 /* Endpoints de postagens. Criar uma postagem credita pontos ao autor:
    TEXTO 50, IMAGEM 100, VIDEO 150 (ver divergência em docs/INTEGRACAO-API.md). */
 
-import type { NovaPostagem, PostagemDTO } from '../types/api'
+import type { CurtidaDTO, NovaCurtida, NovaPostagem, PostagemDTO } from '../types/api'
 import { del, get, post, put } from './http'
 
 export function listarPostagens() {
@@ -24,6 +24,9 @@ export function excluirPostagem(id: string) {
     return del(`/postagens/${id}`)
 }
 
-/* TODO(contrato): não existe endpoint para curtir postagem — o contrato devolve
-   o campo "curtidas" mas não expõe como incrementá-lo. Enquanto não houver, o
-   botão de curtir do feed só soma pontos localmente (WalletProvider). */
+/** POST /postagens/{id}/curtidas — 201 { idPostagem, curtidas }.
+    A curtida é por usuário: repetir devolve 422 "O usuário já curtiu esta
+    postagem". Descurtir não existe — a rota só aceita POST (Allow: POST). */
+export function curtirPostagem(id: string, body: NovaCurtida) {
+    return post<CurtidaDTO>(`/postagens/${id}/curtidas`, body)
+}

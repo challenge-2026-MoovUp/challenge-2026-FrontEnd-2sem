@@ -29,7 +29,7 @@ type TabId = (typeof tabs)[number]['id']
 export default function Feed() {
     const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
     const { earn } = useWallet()
-    const { posts: postsDaApi, loading, error, recarregar, publicar, comentar } = useFeed()
+    const { posts: postsDaApi, loading, error, recarregar, publicar, comentar, curtir } = useFeed()
 
     /* O feed vem da API, mas curtida, repost e resposta são otimistas: a cópia
        local absorve a interação na hora e é substituída no próximo recarregar. */
@@ -88,14 +88,24 @@ export default function Feed() {
         return true
     }
 
-    function handleLike(id: string) {
+    /* A curtida é por usuário e não tem volta no servidor: quem já curtiu só
+       recebe 422. Então o coração não destoggla — uma vez curtido, fica. */
+    async function handleLike(id: string) {
         if (requireLogin()) return
-        const isLiked = Boolean(liked[id])
-        setLiked((previous) => ({ ...previous, [id]: !isLiked }))
-        setPosts((previous) =>
-            previous.map((post) => (post.id === id ? { ...post, likes: post.likes + (isLiked ? -1 : 1) } : post)),
-        )
-        reward('curtida', isLiked)
+        if (liked[id]) return
+
+        const resultado = await curtir(id, userId as string)
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao curtir' })
+            return
+        }
+
+        setLiked((previous) => ({ ...previous, [id]: true }))
+
+        /* Se o servidor já contava essa curtida (F5 apaga o estado local), o
+           coração acende sem creditar pontos de novo. */
+        if (!resultado.jaCurtiu) reward('curtida')
     }
 
     function handleRepost(id: string) {

@@ -71,6 +71,16 @@ export interface NovaPostagem {
     tipoPostagem: TipoPostagem
 }
 
+export interface NovaCurtida {
+    idUsuario: string
+}
+
+/** Resposta de POST /postagens/{id}/curtidas: só o total novo. */
+export interface CurtidaDTO {
+    idPostagem: string
+    curtidas: number
+}
+
 /* ---------- Comentários ---------- */
 
 export interface ComentarioDTO {
