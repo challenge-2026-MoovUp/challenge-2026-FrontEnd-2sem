@@ -79,10 +79,10 @@ export default function QuemSomos() {
 
             <div className="mx-auto mb-16 grid w-full max-w-[1100px] grid-cols-1 gap-0 overflow-hidden rounded-[30px] border border-border bg-dusk tablet:mb-24 tablet:grid-cols-2 desktop:mb-40 desktop:grid-cols-4">
                 {creators.map((creator, index) => (
-                    <div
+                    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- o card contém links; <button> não pode aninhar <a>
+                    <div role="button"
                         key={creator.id}
                         className={`box-border flex min-h-[420px] w-full flex-col items-center justify-start border-border px-6 py-10 hover:cursor-pointer hover:border-l-transparent tablet:px-8 tablet:py-16 border-l-0 ${index % 2 === 0 ? 'tablet:border-l-0' : 'tablet:border-l'} ${index % 4 === 0 ? 'desktop:border-l-0' : 'desktop:border-l'}`}
-                        role="button"
                         tabIndex={0}
                         aria-haspopup="dialog"
                         onClick={(e) => handleCardClick(creator, e)}
