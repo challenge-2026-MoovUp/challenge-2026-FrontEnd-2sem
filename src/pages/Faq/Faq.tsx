@@ -106,12 +106,11 @@ const categories: FaqCategory[] = [
         id: 'minimo-resgate',
         title: 'Qual o mínimo de pontos para resgatar?',
         preview:
-          `O resgate começa a partir de ${minRedeemPoints} pontos, o equivalente a uma passagem de ônibus municipal...`,
+          `O resgate começa a partir de ${minRedeemPoints} pontos, o equivalente a uma passagem de metrô ou de trem...`,
         content: (
           <>
-            O resgate começa a partir de {minRedeemPoints} pontos, o equivalente a uma passagem de
-            ônibus municipal. Cada recompensa tem seu próprio preço em pontos — uma passagem de
-            metrô ou de trem sai por {metroOption.points} pontos e o passe semanal ilimitado por{' '}
+            O resgate começa a partir de {minRedeemPoints} pontos, o preço de uma passagem de
+            metrô ou de trem ({metroOption.points} pontos). O passe semanal ilimitado sai por{' '}
             {weeklyPassOption.points.toLocaleString('pt-BR')}. A tabela
             completa de modais e valores está na página Sobre, na aba "Tipos de passagem".
           </>

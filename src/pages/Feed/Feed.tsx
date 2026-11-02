@@ -5,7 +5,7 @@ import FeedSidebar from '../../components/feed/FeedSidebar'
 import PostCard from '../../components/feed/PostCard'
 import WalletRail from '../../components/feed/WalletRail'
 import { focusRing, ghostActionClass, softTransition } from '../../components/common/uiStyles'
-import { actionLabels, pointsPerAction } from '../../data/points'
+import { pointsPerAction } from '../../data/points'
 import { useCurtidas } from '../../hooks/useCurtidas'
 import { useFeed } from '../../hooks/useFeed'
 import { useWallet } from '../../hooks/useWallet'
@@ -31,7 +31,7 @@ function tituloDe(content: string) {
 
 export default function Feed() {
     const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
-    const { earn } = useWallet()
+    const { recarregar: recarregarCarteira } = useWallet()
     const { posts, loading, error, recarregar, publicar, comentar, curtir, editar, excluir, excluirResposta } = useFeed()
 
     const { curtidas, marcarCurtida, desmarcarCurtida } = useCurtidas(userId)
@@ -120,8 +120,8 @@ export default function Feed() {
         setTab('para-voce')
         setActiveTag(null)
         setQuery('')
-        earn('publicacao')
-        setToast({ id: Date.now(), text: `+${pointsPerAction.publicacao} pontos · ${actionLabels.publicacao}` })
+        void recarregarCarteira()
+        setToast({ id: Date.now(), text: `+${pointsPerAction.publicacao} pontos · publicação` })
     }
 
     async function handleEdit(id: string, content: string) {

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFeather, faTrain, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Avatar from './Avatar'
 import { eyebrowClass, focusRing, ghostActionClass, softTransition } from '../common/uiStyles'
-import { pointsPerAction, pointsToBRL } from '../../data/points'
+import { pointsToBRL } from '../../data/points'
 import { useWallet } from '../../hooks/useWallet'
 
 interface WalletRailProps {
@@ -12,14 +12,8 @@ interface WalletRailProps {
     onOpenModal: () => void
 }
 
-const rows = [
-    { key: 'publicacao', icon: faFeather, label: 'Publicações' },
-    { key: 'viagem', icon: faTrain, label: 'Viagens' },
-] as const
-
 export default function WalletRail({ userId, userName, onOpenModal }: WalletRailProps) {
-    const { points, ledger } = useWallet()
-    const earned = rows.reduce((total, row) => total + ledger[row.key] * pointsPerAction[row.key], 0)
+    const { points } = useWallet()
 
     const identidade = (
         <>
@@ -61,32 +55,6 @@ export default function WalletRail({ userId, userName, onOpenModal }: WalletRail
                 <Link to="/carteira" className={`${ghostActionClass} mt-5`}>
                     Registrar viagem <FontAwesomeIcon icon={faArrowRight} aria-hidden="true" />
                 </Link>
-            </div>
-
-            <div>
-                <p className={eyebrowClass}>Seus ganhos</p>
-                <ul className="pt-3">
-                    {rows.map((row) => (
-                        <li key={row.key} className="flex items-center gap-3 border-b border-border py-3 last:border-0">
-                            <FontAwesomeIcon
-                                icon={row.icon}
-                                className="w-[16px] shrink-0 text-[1.2rem] text-mist-soft"
-                                aria-hidden="true"
-                            />
-                            <p className="flex-1 text-[1.3rem] font-light text-mist-dim">
-                                {row.label}
-                                <span className="block text-[1.1rem] text-mist-soft">
-                                    +{pointsPerAction[row.key]} pts cada
-                                </span>
-                            </p>
-                            <p className="text-[1.5rem] font-light text-mist">{ledger[row.key]}</p>
-                        </li>
-                    ))}
-                </ul>
-                <p className="flex items-baseline justify-between pt-4 text-[1.3rem] font-light text-mist-dim">
-                    Total acumulado
-                    <span className="text-[1.6rem] text-sage">+{earned.toLocaleString('pt-BR')}</span>
-                </p>
             </div>
         </div>
     )

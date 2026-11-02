@@ -7,35 +7,12 @@
 export const pointsPerAction = {
     curtida: 15,
     resposta: 25,
-    /* Viagem registrada na carteira (metrô ou CPTM). Dez viagens pagam uma
-       passagem de metrô, então o incentivo soma sem se pagar sozinho. */
-    viagem: 50,
+    viagem: 35,
     publicacao: 50,
 } as const
 
-export type PointsAction = keyof typeof pointsPerAction
-
-export type PointsLedger = Record<PointsAction, number>
-
-export const emptyLedger: PointsLedger = {
-    curtida: 0,
-    resposta: 0,
-    viagem: 0,
-    publicacao: 0,
-}
-
-export const actionLabels: Record<PointsAction, string> = {
-    curtida: 'curtida',
-    resposta: 'resposta',
-    viagem: 'viagem registrada',
-    publicacao: 'publicação',
-}
-
-/** Viagens que podem ser registradas por dia (ida e volta). */
-export const maxTripsPerDay = 2
-
 /** Validade do QR Code gerado no resgate, em horas. */
-export const ticketValidityHours = 24
+export const ticketValidityHours = 48
 
 /** Pontos creditados no cadastro. */
 export const welcomeBonus = 50
@@ -46,7 +23,7 @@ export const maxChallengeBonus = 200
 /* ---------- Resgate ---------- */
 
 /** Saldo mínimo para abrir um resgate. */
-export const minRedeemPoints = 400
+export const minRedeemPoints = 555
 
 /** Validade dos pontos, em meses, contada da última movimentação. */
 export const pointsValidityMonths = 12
@@ -91,7 +68,7 @@ export const redeemOptions: RedeemOption[] = [
         name: 'Metrô de São Paulo',
         description:
             'Linhas 1 a 5 do Metrô de São Paulo, sem restrição de horário ou estação. Cobertura de toda a rede metropolitana.',
-        points: 500,
+        points: 555,
         reais: 'R$ 5,00',
         cards: ['bilheteUnico', 'top', 'qrCode'],
     },
@@ -101,7 +78,7 @@ export const redeemOptions: RedeemOption[] = [
         name: 'Trem CPTM',
         description:
             'Linhas 7 a 13 da CPTM, cobrindo Grande São Paulo e municípios da região metropolitana como Mogi, Jundiaí e Francisco Morato.',
-        points: 500,
+        points: 555,
         reais: 'R$ 5,00',
         cards: ['bilheteUnico', 'top'],
     },

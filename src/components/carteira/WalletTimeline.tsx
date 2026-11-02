@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrain, faQrcode, faCreditCard } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { redeemOptions } from '../../data/points'
-import { findLine } from '../../data/transport'
 import { useWallet } from '../../hooks/useWallet'
 import { eyebrowClass, sectionClass, sectionTitleClass } from '../common/uiStyles'
 
@@ -22,25 +21,21 @@ const dateFormat: Intl.DateTimeFormatOptions = {
     minute: '2-digit',
 }
 
-/** Viagens e resgates numa única linha do tempo, do mais recente ao mais antigo. */
 export default function WalletTimeline() {
     const { trips, redemptions } = useWallet()
 
     const entries: TimelineEntry[] = [
-        ...trips.map((trip) => {
-            const line = findLine(trip.lineId)
-            return {
-                id: trip.id,
-                at: trip.registeredAt,
-                icon: faTrain,
-                title: line ? `${line.operator} · ${line.name}` : 'Viagem registrada',
-                detail: trip.station,
-                amount: trip.points,
-            }
-        }),
+        ...trips.map((trip) => ({
+            id: trip.id,
+            at: trip.registeredAt,
+            icon: faTrain,
+            title: trip.lineName,
+            detail: trip.stationName,
+            amount: trip.points,
+        })),
         ...redemptions.map((redemption) => ({
             id: redemption.id,
-            at: redemption.createdAt,
+            at: redemption.expiresAt,
             icon: redemption.delivery === 'qrCode' ? faQrcode : faCreditCard,
             title: redeemOptions.find((item) => item.id === redemption.optionId)?.name ?? 'Resgate',
             detail: `${redemption.delivery === 'qrCode' ? 'QR Code' : 'Recarga de cartão'} · ${redemption.ticketCode}`,

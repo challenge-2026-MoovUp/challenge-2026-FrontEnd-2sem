@@ -1,25 +1,21 @@
 import { createContext } from 'react'
-import type { PointsAction, PointsLedger } from '../data/points'
-import type { Redemption, RedemptionDelivery, Trip } from '../types/wallet'
+import type { Redemption, RedemptionDelivery, TicketOption, Trip } from '../types/wallet'
 
-export interface StoredWallet {
+export interface WalletValue {
     points: number
-    ledger: PointsLedger
     trips: Trip[]
     redemptions: Redemption[]
-}
-
-export interface WalletValue extends StoredWallet {
-    /** Viagens já registradas hoje (limite em maxTripsPerDay). */
-    tripsToday: number
-    canRegisterTrip: boolean
-    earn: (action: PointsAction, undo?: boolean) => void
-    registerTrip: (lineId: string, station: string) => { ok: boolean; reason?: string; trip?: Trip }
+    tickets: TicketOption[]
+    estoque: number
+    loading: boolean
+    error: string | null
+    recarregar: () => Promise<void>
+    registerTrip: (idTicket: string, linha: string, estacao: string) => Promise<{ ok: boolean; reason?: string }>
     redeem: (
         optionId: string,
         delivery: RedemptionDelivery,
         cardNumber?: string,
-    ) => { ok: boolean; reason?: string; redemption?: Redemption }
+    ) => Promise<{ ok: boolean; reason?: string; redemption?: Redemption }>
 }
 
 export const WalletContext = createContext<WalletValue | null>(null)

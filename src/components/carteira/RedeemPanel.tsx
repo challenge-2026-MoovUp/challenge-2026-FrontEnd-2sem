@@ -36,14 +36,16 @@ interface CardFormData {
 
 const cardNames: Record<CardVariant, string> = { top: 'cartão top', bilheteUnico: 'Bilhete Único' }
 
+const opcoes = redeemOptions.filter((option) => option.id === 'metro' || option.id === 'cptm')
+
 const deliveries = [
     { id: 'qrCode', icon: faQrcode, label: 'QR Code' },
     { id: 'recarga', icon: faCreditCard, label: 'Recarga' },
 ] as const
 
 export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChange, onOpenModal }: RedeemPanelProps) {
-    const { points, redeem } = useWallet()
-    const [optionId, setOptionId] = useState(redeemOptions[1].id)
+    const { points, estoque, redeem } = useWallet()
+    const [optionId, setOptionId] = useState(opcoes[0].id)
     const [delivery, setDelivery] = useState<RedemptionDelivery>('qrCode')
     const [result, setResult] = useState<Redemption | null>(null)
     const [error, setError] = useState<string | null>(null)
@@ -54,7 +56,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
         formState: { errors },
     } = useForm<CardFormData>({ values: { cardNumber } })
 
-    const selected = redeemOptions.find((item) => item.id === optionId)
+    const selected = opcoes.find((item) => item.id === optionId)
     const missing = selected ? selected.points - points : 0
 
     function reset() {
@@ -62,12 +64,12 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
         setError(null)
     }
 
-    function finish(data?: CardFormData) {
+    async function finish(data?: CardFormData) {
         if (!userId) {
             onOpenModal()
             return
         }
-        const outcome = redeem(optionId, delivery, data?.cardNumber)
+        const outcome = await redeem(optionId, delivery, data?.cardNumber)
         if (!outcome.ok || !outcome.redemption) {
             setResult(null)
             setError(outcome.reason ?? 'Não foi possível concluir o resgate.')
@@ -83,6 +85,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
             <h2 className={sectionTitleClass}>Resgatar passagem</h2>
             <p className={sectionLeadClass}>
                 A partir de {minRedeemPoints} pontos, no QR Code do app ou como recarga no {cardNames[card]}.
+                {userId && ` ${estoque.toLocaleString('pt-BR')} passagens em estoque.`}
             </p>
 
             <div className="mt-8 flex flex-col gap-8 desktop:flex-row desktop:items-end">
@@ -96,7 +99,7 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                         }}
                         className={lineFieldClass}
                     >
-                        {redeemOptions.map((option) => (
+                        {opcoes.map((option) => (
                             <option key={option.id} value={option.id} className="bg-dusk">
                                 {option.name} — {option.points.toLocaleString('pt-BR')} pts (≈ {option.reais})
                             </option>
@@ -157,17 +160,22 @@ export default function RedeemPanel({ userId, card, cardNumber, onCardNumberChan
                         )}
                     </label>
 
-                    <button type="submit" className={primaryActionClass}>
+                    <button type="submit" disabled={Boolean(userId) && estoque === 0} className={primaryActionClass}>
                         Recarregar <FontAwesomeIcon icon={faArrowRight} />
                     </button>
                 </form>
             ) : (
-                <button type="button" onClick={() => finish()} className={`${primaryActionClass} mt-8`}>
+                <button
+                    type="button"
+                    disabled={Boolean(userId) && estoque === 0}
+                    onClick={() => void finish()}
+                    className={`${primaryActionClass} mt-8`}
+                >
                     Gerar QR Code <FontAwesomeIcon icon={faArrowRight} />
                 </button>
             )}
 
-            {selected && missing > 0 && !error && (
+            {userId && selected && missing > 0 && !error && (
                 <p className="mt-6 font-sans text-[1.35rem] font-light text-mist-soft">
                     Faltam <span className="text-ember">{missing.toLocaleString('pt-BR')} pontos</span> para{' '}
                     {selected.name.toLowerCase()}.
