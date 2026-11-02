@@ -1,37 +1,23 @@
-/* Tela de perfil: cabeçalho do usuário + todas as postagens dele.
-
-   Componente de apresentação: não chama API. Quem monta a rota passa
-   perfil/posts/loading/error — ver o hook useUsuario. Mesma linguagem visual
-   do Feed: sem caixas, hierarquia por tipografia e fios como separador. */
-
 import { useState } from 'react'
-import { Link, useOutletContext } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faCoins, faEnvelope, faCalendar } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faCoins, faEnvelope, faCalendar, faLeaf, faRoute, faTrain } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Avatar from '../../components/feed/Avatar'
 import PostCard from '../../components/feed/PostCard'
-import { focusRing, ghostActionClass, softTransition } from '../../components/common/uiStyles'
+import { focusRing, ghostActionClass, labelClass, lineFieldClass, softTransition } from '../../components/common/uiStyles'
 import { useCurtidas } from '../../hooks/useCurtidas'
-import type { FeedPost } from '../../types/feed'
-import type { PerfilUsuario } from '../../types/perfil'
+import { useUsuario } from '../../hooks/useUsuario'
+import type { UsuarioDTO } from '../../types/api'
 
 interface UsuarioContext {
     onOpenModal: () => void
     userId: string | null
     userName: string | null
+    atualizarSessao: (usuario: UsuarioDTO) => void
+    sair: () => void
 }
 
-interface UsuarioProps {
-    perfil: PerfilUsuario | null
-    posts: FeedPost[]
-    loading: boolean
-    error: string | null
-    onRecarregar: () => void
-    onCurtir: (idPostagem: string, idUsuario: string) => Promise<{ ok: boolean; reason?: string }>
-}
-
-/** Dado do perfil em uma linha: ícone discreto, valor em destaque, rótulo abaixo. */
 function PerfilDado({ icon, valor, label }: { icon: IconDefinition; valor: string; label: string }) {
     return (
         <div className="flex items-start gap-3">
@@ -44,36 +30,113 @@ function PerfilDado({ icon, valor, label }: { icon: IconDefinition; valor: strin
     )
 }
 
-export default function Usuario({ perfil, posts, loading, error, onRecarregar, onCurtir }: UsuarioProps) {
-    const { onOpenModal, userId, userName } = useOutletContext<UsuarioContext>()
+export default function Usuario() {
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const { onOpenModal, userId, userName, atualizarSessao, sair } = useOutletContext<UsuarioContext>()
+    const {
+        perfil,
+        impacto,
+        historico,
+        posts,
+        loading,
+        error,
+        recarregar,
+        editarConta,
+        excluirConta,
+        curtir,
+        comentar,
+        editarPostagem,
+        excluirPostagem,
+        excluirResposta,
+    } = useUsuario(id)
     const { curtidas, marcarCurtida, desmarcarCurtida } = useCurtidas(userId)
     const [saved, setSaved] = useState<Set<string>>(new Set())
-    const [erroCurtida, setErroCurtida] = useState<string | null>(null)
+    const [erroAcao, setErroAcao] = useState<string | null>(null)
+    const [editandoConta, setEditandoConta] = useState(false)
+    const [nome, setNome] = useState('')
+    const [email, setEmail] = useState('')
 
-    function toggleSaved(id: string) {
+    const contaPropria = Boolean(userId) && userId === id
+
+    function toggleSaved(idPostagem: string) {
         setSaved((anterior) => {
             const proximo = new Set(anterior)
-            if (proximo.has(id)) proximo.delete(id)
-            else proximo.add(id)
+            if (proximo.has(idPostagem)) proximo.delete(idPostagem)
+            else proximo.add(idPostagem)
             return proximo
         })
     }
 
-    async function handleLike(id: string) {
+    async function handleLike(idPostagem: string) {
         if (!userId) {
             onOpenModal()
             return
         }
-        if (curtidas.includes(id)) return
+        if (curtidas.includes(idPostagem)) return
 
-        setErroCurtida(null)
-        marcarCurtida(id)
-        const resultado = await onCurtir(id, userId)
+        setErroAcao(null)
+        marcarCurtida(idPostagem)
+        const resultado = await curtir(idPostagem, userId)
 
         if (!resultado.ok) {
-            desmarcarCurtida(id)
-            setErroCurtida(resultado.reason ?? 'Falha ao curtir')
+            desmarcarCurtida(idPostagem)
+            setErroAcao(resultado.reason ?? 'Falha ao curtir')
         }
+    }
+
+    async function executarAcao(acao: () => Promise<{ ok: boolean; reason?: string }>) {
+        setErroAcao(null)
+        const resultado = await acao()
+        if (!resultado.ok) setErroAcao(resultado.reason ?? 'Falha na operação')
+    }
+
+    function handleReply(idPostagem: string, conteudo: string) {
+        if (!userId) {
+            onOpenModal()
+            return
+        }
+        void executarAcao(() => comentar(idPostagem, userId, conteudo))
+    }
+
+    function abrirEdicaoConta() {
+        setNome(perfil?.name ?? '')
+        setEmail(perfil?.email ?? '')
+        setEditandoConta(true)
+    }
+
+    async function handleEditarConta(event: React.FormEvent) {
+        event.preventDefault()
+        setErroAcao(null)
+        const resultado = await editarConta({ nome, email })
+
+        if (!resultado.usuario) {
+            setErroAcao(resultado.reason ?? 'Falha ao editar a conta')
+            return
+        }
+
+        atualizarSessao(resultado.usuario)
+        setEditandoConta(false)
+    }
+
+    async function handleExcluirConta() {
+        if (!window.confirm('Excluir sua conta?')) return
+
+        setErroAcao(null)
+        const resultado = await excluirConta()
+
+        if (!resultado.ok) {
+            setErroAcao(resultado.reason ?? 'Falha ao excluir a conta')
+            return
+        }
+
+        sair()
+        navigate('/')
+    }
+
+    function handleSair() {
+        sair()
+        navigate('/')
     }
 
     return (
@@ -86,7 +149,7 @@ export default function Usuario({ perfil, posts, loading, error, onRecarregar, o
                 Voltar ao feed
             </Link>
 
-            {loading && (
+            {loading && !perfil && (
                 <output className="block py-16 text-[1.4rem] font-light text-mist-soft">
                     Carregando perfil...
                 </output>
@@ -95,13 +158,13 @@ export default function Usuario({ perfil, posts, loading, error, onRecarregar, o
             {error && !loading && (
                 <div className="flex flex-wrap items-center gap-4 py-16">
                     <p className="text-[1.4rem] font-light text-ember">{error}</p>
-                    <button type="button" onClick={onRecarregar} className={ghostActionClass}>
+                    <button type="button" onClick={() => void recarregar()} className={ghostActionClass}>
                         Tentar de novo
                     </button>
                 </div>
             )}
 
-            {perfil && !loading && !error && (
+            {perfil && !error && (
                 <>
                     <header className="flex flex-col gap-7 border-b border-border pb-10 pt-10">
                         <div className="flex items-center gap-5">
@@ -130,15 +193,87 @@ export default function Usuario({ perfil, posts, loading, error, onRecarregar, o
                             />
                             <PerfilDado icon={faEnvelope} valor={perfil.email} label="E-mail" />
                             <PerfilDado icon={faCalendar} valor={perfil.membroDesde} label="Membro desde" />
+                            {impacto && (
+                                <>
+                                    <PerfilDado icon={faTrain} valor={impacto.viagens} label="Viagens" />
+                                    <PerfilDado icon={faRoute} valor={impacto.km} label="Percorridos" />
+                                    <PerfilDado icon={faLeaf} valor={impacto.co2} label="CO₂ evitado" />
+                                </>
+                            )}
                         </div>
+
+                        {contaPropria && (
+                            <div className="flex flex-wrap gap-3">
+                                <button type="button" onClick={abrirEdicaoConta} className={ghostActionClass}>
+                                    Editar conta
+                                </button>
+                                <button type="button" onClick={handleSair} className={ghostActionClass}>
+                                    Sair
+                                </button>
+                                <button type="button" onClick={() => void handleExcluirConta()} className={ghostActionClass}>
+                                    Excluir conta
+                                </button>
+                            </div>
+                        )}
+
+                        {editandoConta && (
+                            <form onSubmit={(event) => void handleEditarConta(event)} className="flex flex-col gap-6">
+                                <label className="flex flex-col gap-2">
+                                    <span className={labelClass}>Nome</span>
+                                    <input
+                                        required
+                                        maxLength={40}
+                                        value={nome}
+                                        onChange={(event) => setNome(event.target.value)}
+                                        className={lineFieldClass}
+                                    />
+                                </label>
+                                <label className="flex flex-col gap-2">
+                                    <span className={labelClass}>E-mail</span>
+                                    <input
+                                        required
+                                        type="email"
+                                        maxLength={60}
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        className={lineFieldClass}
+                                    />
+                                </label>
+                                <div className="flex gap-3">
+                                    <button type="submit" className={ghostActionClass}>
+                                        Salvar
+                                    </button>
+                                    <button type="button" onClick={() => setEditandoConta(false)} className={ghostActionClass}>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+
+                        {erroAcao && <p className="text-[1.4rem] font-light text-ember">{erroAcao}</p>}
                     </header>
+
+                    <h2 className="border-b border-border py-5 text-[1.3rem] font-light text-mist-soft">
+                        Histórico de impacto
+                    </h2>
+
+                    {historico.length === 0 && (
+                        <p className="py-8 text-[1.4rem] font-light text-mist-soft">Nenhuma viagem registrada ainda.</p>
+                    )}
+
+                    <ul>
+                        {historico.map((item) => (
+                            <li key={item.id} className="border-b border-border py-4 last:border-0">
+                                <p className="text-[1.5rem] font-light text-mist">{item.titulo}</p>
+                                <p className="text-[1.2rem] font-light text-mist-soft">{item.detalhe}</p>
+                            </li>
+                        ))}
+                    </ul>
 
                     <h2 className="flex flex-wrap items-center gap-4 border-b border-border py-5 text-[1.3rem] font-light text-mist-soft">
                         Postagens
                         <span className="text-aurora-soft">{posts.length}</span>
                     </h2>
-
-                    {erroCurtida && <p className="pt-5 text-[1.4rem] font-light text-ember">{erroCurtida}</p>}
 
                     {posts.map((post) => (
                         <PostCard
@@ -149,10 +284,13 @@ export default function Usuario({ perfil, posts, loading, error, onRecarregar, o
                             liked={curtidas.includes(post.id)}
                             saved={saved.has(post.id)}
                             activeTag={null}
-                            onLike={(id) => void handleLike(id)}
+                            onLike={(idPostagem) => void handleLike(idPostagem)}
                             onSave={toggleSaved}
-                            onReply={() => undefined}
+                            onReply={handleReply}
                             onTagClick={() => undefined}
+                            onEdit={(idPostagem, conteudo) => void executarAcao(() => editarPostagem(idPostagem, conteudo))}
+                            onDelete={(idPostagem) => void executarAcao(() => excluirPostagem(idPostagem))}
+                            onDeleteReply={(idComentario) => void executarAcao(() => excluirResposta(idComentario))}
                         />
                     ))}
 

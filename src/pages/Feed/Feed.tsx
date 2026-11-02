@@ -8,6 +8,7 @@ import { focusRing, ghostActionClass, softTransition } from '../../components/co
 import { pointsPerAction } from '../../data/points'
 import { useCurtidas } from '../../hooks/useCurtidas'
 import { useFeed } from '../../hooks/useFeed'
+import { tituloDe } from '../../mappers/feedMapper'
 import { useWallet } from '../../hooks/useWallet'
 
 interface FeedContext {
@@ -24,10 +25,6 @@ const tabs = [
 ] as const
 
 type TabId = (typeof tabs)[number]['id']
-
-function tituloDe(content: string) {
-    return content.split('\n')[0].slice(0, 50)
-}
 
 export default function Feed() {
     const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
