@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ApiError } from '../api/http'
-import { criarPostagem, curtirPostagem, listarPostagens } from '../api/postagensApi'
-import { criarComentario, listarComentarios } from '../api/comentariosApi'
+import { atualizarPostagem, criarPostagem, curtirPostagem, excluirPostagem, listarPostagens } from '../api/postagensApi'
+import { criarComentario, excluirComentario, listarComentarios } from '../api/comentariosApi'
 import { listarUsuarios } from '../api/usuariosApi'
 import { mapaDeAutores, toFeedPost } from '../mappers/feedMapper'
-import type { NovaPostagem, NovoComentario } from '../types/api'
+import type { NovaPostagem, NovoComentario, PostagemAlteracao } from '../types/api'
 import type { FeedPost } from '../types/feed'
 
 export function useFeed() {
@@ -80,5 +80,47 @@ export function useFeed() {
         }
     }, [])
 
-    return { posts, loading, error, recarregar: carregar, publicar, comentar, curtir }
+    const editar = useCallback(
+        async (id: string, body: PostagemAlteracao) => {
+            try {
+                await atualizarPostagem(id, body)
+                await carregar()
+                return { ok: true }
+            } catch (erro) {
+                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao editar'
+                return { ok: false, reason }
+            }
+        },
+        [carregar],
+    )
+
+    const excluir = useCallback(
+        async (id: string) => {
+            try {
+                await excluirPostagem(id)
+                await carregar()
+                return { ok: true }
+            } catch (erro) {
+                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao excluir'
+                return { ok: false, reason }
+            }
+        },
+        [carregar],
+    )
+
+    const excluirResposta = useCallback(
+        async (id: string) => {
+            try {
+                await excluirComentario(id)
+                await carregar()
+                return { ok: true }
+            } catch (erro) {
+                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao excluir a resposta'
+                return { ok: false, reason }
+            }
+        },
+        [carregar],
+    )
+
+    return { posts, loading, error, recarregar: carregar, publicar, comentar, curtir, editar, excluir, excluirResposta }
 }

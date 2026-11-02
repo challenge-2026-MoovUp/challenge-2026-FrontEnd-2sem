@@ -13,10 +13,12 @@ import {
     faCoins,
     faTrophy,
     faPaperPlane,
+    faPen,
+    faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import type { FeedPost } from '../../types/feed'
 import Avatar from './Avatar'
-import { focusRing, softTransition } from '../common/uiStyles'
+import { focusRing, ghostActionClass, softTransition } from '../common/uiStyles'
 
 interface PostCardProps {
     post: FeedPost
@@ -31,6 +33,9 @@ interface PostCardProps {
     onSave: (id: string) => void
     onReply: (id: string, content: string) => void
     onTagClick: (tag: string) => void
+    onEdit?: (id: string, content: string) => void
+    onDelete?: (id: string) => void
+    onDeleteReply?: (id: string) => void
 }
 
 const statIcons: Record<NonNullable<FeedPost['stat']>['icon'], IconDefinition> = {
@@ -78,6 +83,7 @@ function ActionButton({
 
 export default function PostCard({
     post,
+    userId,
     userName,
     liked,
     reposted,
@@ -88,9 +94,37 @@ export default function PostCard({
     onSave,
     onReply,
     onTagClick,
+    onEdit,
+    onDelete,
+    onDeleteReply,
 }: PostCardProps) {
     const [showReplies, setShowReplies] = useState(false)
     const [draft, setDraft] = useState('')
+    const [editing, setEditing] = useState(false)
+    const [editDraft, setEditDraft] = useState('')
+
+    const isAuthor = userId === post.author.id
+
+    function startEditing() {
+        setEditDraft(post.content)
+        setEditing(true)
+    }
+
+    function handleEditSubmit(event: React.FormEvent) {
+        event.preventDefault()
+        const text = editDraft.trim()
+        if (!text) return
+        onEdit?.(post.id, text)
+        setEditing(false)
+    }
+
+    function handleDelete() {
+        if (window.confirm('Excluir esta publicação?')) onDelete?.(post.id)
+    }
+
+    function handleDeleteReply(id: string) {
+        if (window.confirm('Excluir esta resposta?')) onDeleteReply?.(id)
+    }
 
     function handleReplySubmit(event: React.FormEvent) {
         event.preventDefault()
@@ -132,9 +166,31 @@ export default function PostCard({
                         </p>
                     </header>
 
-                    <p className="whitespace-pre-line pt-[6px] font-sans text-[1.5rem] font-light leading-[1.65] text-mist">
-                        {post.content}
-                    </p>
+                    {editing ? (
+                        <form onSubmit={handleEditSubmit} className="pt-[6px]">
+                            <label>
+                                <span className="sr-only">Editar publicação</span>
+                                <textarea
+                                    value={editDraft}
+                                    onChange={(event) => setEditDraft(event.target.value)}
+                                    rows={3}
+                                    className={`w-full resize-none appearance-none border-0 border-b border-border-mid bg-transparent px-1 py-[9px] font-sans text-[1.5rem] font-light text-mist focus-visible:border-aurora focus-visible:outline-none ${focusRing}`}
+                                />
+                            </label>
+                            <div className="mt-3 flex gap-3">
+                                <button type="submit" disabled={editDraft.trim().length === 0} className={ghostActionClass}>
+                                    Salvar
+                                </button>
+                                <button type="button" onClick={() => setEditing(false)} className={ghostActionClass}>
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    ) : (
+                        <p className="whitespace-pre-line pt-[6px] font-sans text-[1.5rem] font-light leading-[1.65] text-mist">
+                            {post.content}
+                        </p>
+                    )}
 
                     {post.tags.length > 0 && (
                         <ul className="flex flex-wrap gap-2 pt-[10px]">
@@ -204,6 +260,25 @@ export default function PostCard({
                             hoverClass="hover:text-gold"
                             onClick={() => onSave(post.id)}
                         />
+                        {isAuthor && onEdit && (
+                            <ActionButton
+                                icon={faPen}
+                                label="Editar"
+                                active={editing}
+                                activeClass="text-aurora-soft"
+                                hoverClass="hover:text-aurora-soft"
+                                onClick={startEditing}
+                            />
+                        )}
+                        {isAuthor && onDelete && (
+                            <ActionButton
+                                icon={faTrash}
+                                label="Excluir"
+                                activeClass="text-ember"
+                                hoverClass="hover:text-ember"
+                                onClick={handleDelete}
+                            />
+                        )}
                     </div>
 
                     {showReplies && (
@@ -226,6 +301,16 @@ export default function PostCard({
                                             </p>
                                             <p className="font-sans text-[1.3rem] font-light text-mist-dim">{reply.content}</p>
                                         </div>
+                                        {userId === reply.author.id && onDeleteReply && (
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDeleteReply(reply.id)}
+                                                className={`shrink-0 self-start text-[1.2rem] text-mist-soft hover:cursor-pointer hover:text-ember ${softTransition} ${focusRing}`}
+                                            >
+                                                <FontAwesomeIcon icon={faTrash} />
+                                                <span className="sr-only">Excluir resposta</span>
+                                            </button>
+                                        )}
                                     </li>
                                 ))}
                                 {post.replies.length === 0 && (

@@ -26,10 +26,14 @@ const tabs = [
 
 type TabId = (typeof tabs)[number]['id']
 
+function tituloDe(content: string) {
+    return content.split('\n')[0].slice(0, 80)
+}
+
 export default function Feed() {
     const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
     const { earn } = useWallet()
-    const { posts: postsDaApi, loading, error, recarregar, publicar, comentar, curtir } = useFeed()
+    const { posts: postsDaApi, loading, error, recarregar, publicar, comentar, curtir, editar, excluir, excluirResposta } = useFeed()
 
     /* O feed vem da API, mas curtida, repost e resposta são otimistas: a cópia
        local absorve a interação na hora e é substituída no próximo recarregar. */
@@ -141,13 +145,9 @@ export default function Feed() {
     async function handlePublish(content: string) {
         if (requireLogin()) return
 
-        /* O contrato pede título separado do corpo; a UI tem um campo só, então
-           a primeira linha vira título. */
-        const titulo = content.split('\n')[0].slice(0, 80)
-
         const resultado = await publicar({
             idUsuario: userId as string,
-            titulo,
+            titulo: tituloDe(content),
             conteudo: content,
             tipoPostagem: 'TEXTO',
         })
@@ -161,6 +161,30 @@ export default function Feed() {
         setActiveTag(null)
         setQuery('')
         reward('publicacao')
+    }
+
+    async function handleEdit(id: string, content: string) {
+        const resultado = await editar(id, { titulo: tituloDe(content), conteudo: content })
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao editar' })
+        }
+    }
+
+    async function handleDelete(id: string) {
+        const resultado = await excluir(id)
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao excluir' })
+        }
+    }
+
+    async function handleDeleteReply(id: string) {
+        const resultado = await excluirResposta(id)
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao excluir a resposta' })
+        }
     }
 
     function handleTagClick(tag: string) {
@@ -267,6 +291,9 @@ export default function Feed() {
                                 onSave={handleSave}
                                 onReply={handleReply}
                                 onTagClick={handleTagClick}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                                onDeleteReply={handleDeleteReply}
                             />
                         ))}
 
