@@ -5,10 +5,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ApiError } from '../api/http'
 import { criarPostagem, listarPostagens } from '../api/postagensApi'
-import { listarComentarios } from '../api/comentariosApi'
+import { criarComentario, listarComentarios } from '../api/comentariosApi'
 import { listarUsuarios } from '../api/usuariosApi'
 import { mapaDeAutores, toFeedPost } from '../mappers/feedMapper'
-import type { NovaPostagem } from '../types/api'
+import type { NovaPostagem, NovoComentario } from '../types/api'
 import type { FeedPost } from '../types/feed'
 
 export function useFeed() {
@@ -60,5 +60,21 @@ export function useFeed() {
         [carregar],
     )
 
-    return { posts, loading, error, recarregar: carregar, publicar }
+    /** Comenta e recarrega o feed. O comentario passa a existir no servidor;
+        os pontos da resposta seguem locais (o contrato nao tem regra). */
+    const comentar = useCallback(
+        async (idPostagem: string, body: NovoComentario) => {
+            try {
+                await criarComentario(idPostagem, body)
+                await carregar()
+                return { ok: true }
+            } catch (erro) {
+                const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao comentar'
+                return { ok: false, reason }
+            }
+        },
+        [carregar],
+    )
+
+    return { posts, loading, error, recarregar: carregar, publicar, comentar }
 }

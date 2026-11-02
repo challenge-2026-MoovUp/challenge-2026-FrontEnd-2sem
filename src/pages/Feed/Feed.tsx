@@ -29,7 +29,7 @@ type TabId = (typeof tabs)[number]['id']
 export default function Feed() {
     const { onOpenModal, userId, userName } = useOutletContext<FeedContext>()
     const { earn } = useWallet()
-    const { posts: postsDaApi, loading, error, recarregar, publicar } = useFeed()
+    const { posts: postsDaApi, loading, error, recarregar, publicar, comentar } = useFeed()
 
     /* O feed vem da API, mas curtida, repost e resposta são otimistas: a cópia
        local absorve a interação na hora e é substituída no próximo recarregar. */
@@ -115,22 +115,16 @@ export default function Feed() {
         setToast({ id: Date.now(), text: isSaved ? 'Removido dos salvos' : 'Salvo para depois' })
     }
 
-    function handleReply(id: string, content: string) {
+    async function handleReply(id: string, content: string) {
         if (requireLogin()) return
-        const author = {
-            id: 'eu',
-            name: userName as string,
-            handle: `@${(userName as string).toLowerCase().replace(/\s+/g, '')}`,
-            initials: (userName as string).slice(0, 2),
-            avatarClass: 'bg-dusk-mid text-aurora-soft',
+
+        const resultado = await comentar(id, { idUsuario: userId as string, conteudo: content })
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao comentar' })
+            return
         }
-        setPosts((previous) =>
-            previous.map((post) =>
-                post.id === id
-                    ? { ...post, replies: [...post.replies, { id: `${id}-r-${Date.now()}`, author, time: 'agora', content }] }
-                    : post,
-            ),
-        )
+
         reward('resposta')
     }
 
