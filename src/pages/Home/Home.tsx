@@ -16,7 +16,7 @@ const heroCtaClass = "!my-[50px] !w-fit !text-[1.6rem] !font-extralight hover:!-
 const heroCtaOutlineClass = `${heroCtaClass} hover:!border-mist-30 hover:!bg-border`
 
 const features = [
-    { icon: '✦', topic: 'Ganhe pontos', about: 'Cada post, curtida e comentário gera pontos. Quanto mais voce interage, mais pontos acumula.', large: true },
+    { icon: '✦', topic: 'Ganhe pontos', about: 'Cada publicação e viagem registrada gera pontos. Quanto mais voce usa, mais pontos acumula.', large: true },
     { icon: '✦', topic: 'Desconto na energia', about: 'Converta seus pontos em desconto real na conta de energia elétrica. Simples e direto.', large: false },
     { icon: '✦', topic: 'Cashback e vouchers', about: 'Resgate pontos em parceiros selecionados, vouchers exclusivos e cashback direto na conta.', large: false },
     { icon: '✦', topic: 'Transportes sustentáveis', about: 'Troque seus pontos acumulados em passagens de trem e metrô.', large: false },
@@ -26,7 +26,7 @@ const features = [
 
 const steps = [
     { num: '1', numClass: 'bg-teal-muted-22 text-white', topic: 'Crie sua conta', subtitle: 'Cadastre-se gratuitamente em menos de 2 minutos com o seu email e numero de telefone.' },
-    { num: '2', numClass: 'bg-aurora-glow text-aurora-soft', topic: 'Interaja na plataforma', subtitle: 'Poste conteúdos, curta e comente. Cada ação gera pontos automaticamente.' },
+    { num: '2', numClass: 'bg-aurora-glow text-aurora-soft', topic: 'Interaja na plataforma', subtitle: 'Publique conteúdos e registre viagens. Cada ação gera pontos automaticamente.' },
     { num: '3', numClass: 'bg-sage-18 text-sage', topic: 'Acumule seus pontos', subtitle: 'Acompanhe seu saldo crescer em tempo real na sua carteira digital dentro do app.' },
     { num: '4', numClass: 'bg-gold-18 text-gold', topic: 'Resgate benefícios', subtitle: 'Troque seus pontos por descontos em energia, cashback ou vouchers de parceiros.' },
 ]
@@ -52,7 +52,7 @@ export default function Home() {
                         <h1 className="mb-12 w-full text-[2.6rem] font-extralight text-mist sm:text-[3.4rem] md:text-[4.5rem] lg:text-[7rem] xl:text-[8rem]">
                             Interaja, ganhe <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">pontos</span> e resgate <span className="bg-gradiente-aurora bg-clip-text font-thin italic text-transparent">benefícios</span> reais
                         </h1>
-                        <p className="font-sans text-[1.3rem] font-thin text-mist-dim md:text-[1.6rem] lg:text-[2rem]">A plataforma que transforma cada curtida, post e comentário em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
+                        <p className="font-sans text-[1.3rem] font-thin text-mist-dim md:text-[1.6rem] lg:text-[2rem]">A plataforma que transforma publicações e viagens em pontos que viram descontos na sua conta de energia, cashback e muito mais.</p>
                         <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
                             {userEmail ? null : (
                                 <Button variant="cta-primary" className={heroCtaClass} onClick={onOpenModal}>Criar Conta Grátis</Button>

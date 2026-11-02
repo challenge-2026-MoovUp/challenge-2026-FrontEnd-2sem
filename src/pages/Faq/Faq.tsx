@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Accordion from '../../components/common/Accordion';
 import type { AccordionItemData } from '../../components/common/Accordion';
 import FaqSidebar from '../../components/common/FaqSidebar';
-import { maxChallengeBonus, metroOption, minRedeemPoints, pointsPerAction, pointsValidityMonths, weeklyPassOption } from '../../data/points';
+import { metroOption, minRedeemPoints, pointsPerAction, pointsValidityMonths } from '../../data/points';
 
 interface FaqCategory {
   id: string;
@@ -74,16 +74,11 @@ const categories: FaqCategory[] = [
         id: 'calculo-pontos',
         title: 'Como os pontos são calculados?',
         preview:
-          `Cada curtida vale ${pointsPerAction.curtida} pontos, respostas ${pointsPerAction.resposta} e publicações ${pointsPerAction.publicacao}...`,
+          `Cada publicação de texto vale ${pointsPerAction.publicacao} pontos e cada viagem registrada ${pointsPerAction.viagem}...`,
         content: (
           <>
-            Os pontos são calculados com base nas interações realizadas dentro da plataforma:
-            cada curtida vale {pointsPerAction.curtida} pontos, respostas {pointsPerAction.resposta},
-            e publicações originais {pointsPerAction.publicacao}.
-            Desafios semanais rendem até {maxChallengeBonus} pontos de bônus.
-            Algumas ações promocionais podem
-            oferecer multiplicadores temporários, aumentando a quantidade de pontos recebidos. O
-            usuário pode acompanhar todas as movimentações diretamente pelo painel da conta.
+            Cada publicação de texto vale {pointsPerAction.publicacao} pontos e cada viagem registrada
+            vale {pointsPerAction.viagem}. O usuário pode acompanhar o saldo e as movimentações na Carteira.
           </>
         ),
       },
@@ -110,8 +105,7 @@ const categories: FaqCategory[] = [
         content: (
           <>
             O resgate começa a partir de {minRedeemPoints} pontos, o preço de uma passagem de
-            metrô ou de trem ({metroOption.points} pontos). O passe semanal ilimitado sai por{' '}
-            {weeklyPassOption.points.toLocaleString('pt-BR')}. A tabela
+            metrô ou de trem ({metroOption.points} pontos). A tabela
             completa de modais e valores está na página Sobre, na aba "Tipos de passagem".
           </>
         ),

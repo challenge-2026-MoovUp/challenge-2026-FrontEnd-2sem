@@ -22,7 +22,7 @@ export default function Sobre() {
                         <h1 className="w-full max-w-[780px] bg-gradiente-mist bg-clip-text text-[2.8rem] font-light leading-[0.95] text-transparent md:text-[4.5rem] lg:text-[clamp(5rem,8vw,9rem)]">Pontos que viram <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">passagens</span></h1>
                     </div>
                     <div className="grid grid-cols-1 items-center gap-6 pb-6 md:grid-cols-2 md:gap-8 md:pb-[30px] lg:grid-cols-[minmax(320px,2fr)_repeat(3,minmax(120px,1fr))]">
-                        <p className="w-full max-w-[520px] font-sans text-[1.3rem] leading-[1.7] text-dust md:col-span-2 md:text-[1.5rem] lg:col-span-1">Transformamos cada curtida, post e comentário em pontos que se convertem diretamente em passagens de metrô, trem e ônibus. Mobilidade urbana acessível a partir das suas interações digitais.</p>
+                        <p className="w-full max-w-[520px] font-sans text-[1.3rem] leading-[1.7] text-dust md:col-span-2 md:text-[1.5rem] lg:col-span-1">Transformamos publicações e viagens em pontos que se convertem diretamente em passagens de metrô e trem. Mobilidade urbana acessível a partir das suas interações digitais.</p>
                         <div className="flex flex-col items-center text-center">
                             <h2 className="bg-gradiente-mist bg-clip-text text-[3rem] font-extralight text-transparent md:text-[4rem]">400+</h2>
                             <p className="font-sans text-dust">PTS P/ EMBARCAR</p>

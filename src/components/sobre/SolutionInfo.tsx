@@ -1,4 +1,4 @@
-import { creditDeadlineHours, maxChallengeBonus, minRedeemPoints, pointsPerAction, pointsValidityMonths, welcomeBonus } from '../../data/points'
+import { creditDeadlineHours, minRedeemPoints, pointsPerAction, pointsValidityMonths } from '../../data/points'
 
 interface solutionInfoProps {
     isActive: boolean
@@ -25,7 +25,7 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Crie sua conta em 2 minutos</h3>
-                        <h3 className={journeySubtitleClass}>Cadastro gratuito com nome, e-mail e número de telefone. Nenhum cartão de crédito necessário. Ao finalizar, você já recebe {welcomeBonus} pontos de boas-vindas para começar.</h3>
+                        <h3 className={journeySubtitleClass}>Cadastro gratuito com nome, e-mail e número de telefone. Nenhum cartão de crédito necessário.</h3>
                         <h3 className={`${sectionTagClass} text-[1rem]`}>grátis para sempre</h3>
                     </div>
                 </article>
@@ -36,8 +36,8 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Interaja e acumule pontos</h3>
-                        <h3 className={journeySubtitleClass}>Cada curtida gera {pointsPerAction.curtida} pts, respostas valem {pointsPerAction.resposta} pts, posts originais {pointsPerAction.publicacao} pts e desafios semanais podem render até {maxChallengeBonus} pts de bônus. Tudo contabilizado automaticamente.</h3>
-                        <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.curtida} a +{maxChallengeBonus} pts por ação</h3>
+                        <h3 className={journeySubtitleClass}>Cada publicação de texto vale {pointsPerAction.publicacao} pts e cada viagem registrada vale {pointsPerAction.viagem} pts. Tudo contabilizado automaticamente.</h3>
+                        <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.viagem} a +{pointsPerAction.publicacao} pts por ação</h3>
                     </div>
                 </article>
                 <article>

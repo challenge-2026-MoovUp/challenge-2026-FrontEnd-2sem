@@ -1,4 +1,4 @@
-import { creditDeadlineHours, maxChallengeBonus, minRedeemPoints, pointsPerAction, pointsValidityMonths } from '../../data/points'
+import { creditDeadlineHours, minRedeemPoints, pointsPerAction, pointsValidityMonths } from '../../data/points'
 import { Link } from "react-router-dom"
 
 interface SolutionOverviewProps {
@@ -27,8 +27,8 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Interaja na plataforma</h3>
-                        <h3 className={journeySubtitleClass}>Cada curtida, post e comentário gera pontos automaticamente. Desafios semanais oferecem bônus e multiplicadores que aceleram muito o acúmulo.</h3>
-                        <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.curtida} a +{maxChallengeBonus} pts por ação</h3>
+                        <h3 className={journeySubtitleClass}>Cada publicação e cada viagem registrada geram pontos automaticamente.</h3>
+                        <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.viagem} a +{pointsPerAction.publicacao} pts por ação</h3>
                     </div>
                 </article>
                 <article>
@@ -60,7 +60,7 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Embarque em até {creditDeadlineHours} horas</h3>
-                        <p className={journeySubtitleClass}>O crédito aparece na conta de transporte em até {creditDeadlineHours} horas úteis. Compatível com metrô, CPTM, ônibus municipais e linhas intermunicipais parceiras.</p>
+                        <p className={journeySubtitleClass}>O crédito aparece na conta de transporte em até {creditDeadlineHours} horas úteis. Compatível com metrô e CPTM.</p>
                         <p className={`${sectionTagClass} text-[1rem]`}>zero taxas de conversão</p>
                     </div>
                 </article>
@@ -112,13 +112,6 @@ export default function SolutionOverview({ isActive }: SolutionOverviewProps) {
                             <div>
                                 <h3 className="text-[1.7rem] font-light leading-[1.1] text-mist">CPTM</h3>
                                 <p className="mt-1 font-sans text-[1.2rem] font-light text-dust">Linhas 7–13</p>
-                            </div>
-                        </div>
-                        <div className="col-span-2 flex min-h-[68px] items-center gap-[14px] rounded-[14px] border border-border bg-dusk px-[18px] py-[14px] transition-[border-color,transform,background-color,box-shadow] duration-[650ms] ease-in-out hover:-translate-y-[3px] hover:border-aurora-soft hover:bg-dusk-mid hover:shadow-[0_18px_42px_var(--color-aurora-18)]">
-                            <span className="text-[2rem] leading-none">🚌</span>
-                            <div>
-                                <h3 className="text-[1.7rem] font-light leading-[1.1] text-mist">Ônibus</h3>
-                                <p className="mt-1 font-sans text-[1.2rem] font-light text-dust">SPTrans + municipais</p>
                             </div>
                         </div>
                     </div>

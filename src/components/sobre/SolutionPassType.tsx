@@ -14,7 +14,7 @@ export default function SolutionPassType( {isActive}: solutionPassProps ) {
             <div className="flex w-full flex-col gap-5 md:w-1/2 md:gap-[30px]">
                 <p className={`${sectionTagClass} text-[1.3rem]`}>tipos de passagem</p>
                 <h2 className="max-w-[400px] bg-gradiente-mist bg-clip-text text-[2.4rem] font-light text-transparent md:text-[3.2rem] lg:text-[4rem]">Escolha o modal <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">ideal para você</span></h2>
-                <p className="font-sans text-[1.3rem] font-thin tracking-[0.1em] text-dust">Da corrida rápida de ônibus ao passe semanal ilimitado — todos os tipos de resgate disponíveis, sem taxa de conversão.</p>
+                <p className="font-sans text-[1.3rem] font-thin tracking-[0.1em] text-dust">Passagens de metrô e trem, sem taxa de conversão.</p>
             </div>
             <div className="my-[30px] flex flex-col gap-4">
 
