@@ -10,7 +10,7 @@ const iconClass = "inline-flex min-h-[36px] min-w-[36px] items-center justify-ce
 
 export default function SolutionPassType( {isActive}: solutionPassProps ) {
     return(
-        <div className={isActive ? "block" : "hidden"} id="container-2">
+        <div className={isActive ? "block" : "hidden"} id="container-2" role="tabpanel">
             <div className="flex w-full flex-col gap-5 tablet:w-1/2 tablet:gap-[30px]">
                 <p className={`${sectionTagClass} text-[1.3rem]`}>tipos de passagem</p>
                 <h2 className="max-w-[400px] bg-gradiente-mist bg-clip-text text-[2.4rem] font-light text-transparent tablet:text-[3.2rem] desktop:text-[4rem]">Escolha o modal <span className="bg-gradiente-aurora bg-clip-text italic text-transparent">ideal para você</span></h2>

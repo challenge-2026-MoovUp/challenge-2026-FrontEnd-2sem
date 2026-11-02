@@ -41,7 +41,7 @@ export default function Sobre() {
 
             <section className="px-6 pb-16 pt-6 tablet:px-[2.4rem] tablet:pb-24 tablet:pt-8 desktop:pb-32">
                 <div className="relative mx-auto w-full max-w-[1120px] border-b-2 border-border pb-5">
-                    <nav className="flex w-fit flex-wrap gap-4 tablet:gap-8">
+                    <div className="flex w-fit flex-wrap gap-4 tablet:gap-8" role="tablist">
                         {solutionTabs.map((tab) => {
                             const isActive = activeTab === tab.id
                             return (
@@ -52,6 +52,7 @@ export default function Sobre() {
                                             ? "text-aurora-soft after:absolute after:-bottom-[22px] after:left-0 after:h-[2px] after:w-full after:origin-left after:animate-[navBorderGrow_.25s_ease_forwards] after:bg-aurora-soft after:content-['']"
                                             : 'text-mist hover:text-dust'
                                     }`}
+                                    role="tab"
                                     aria-controls={tab.id}
                                     aria-selected={isActive}
                                     onClick={() => {
@@ -63,7 +64,7 @@ export default function Sobre() {
                                 </button>
                             )
                         })}
-                    </nav>
+                    </div>
                 </div>
             </section>
 
