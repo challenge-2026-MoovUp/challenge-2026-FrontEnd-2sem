@@ -1,7 +1,3 @@
-/* Estado do feed vindo da API: carrega postagens + autores e devolve FeedPost[].
-   Ligado em Feed.tsx, que trata loading/error e mantém uma cópia local dos
-   posts para as interações otimistas. */
-
 import { useCallback, useEffect, useState } from 'react'
 import { ApiError } from '../api/http'
 import { criarPostagem, curtirPostagem, listarPostagens } from '../api/postagensApi'
@@ -21,14 +17,10 @@ export function useFeed() {
         setError(null)
 
         try {
-            /* Duas chamadas em paralelo: as postagens e os usuários, que são
-               necessários para resolver o autor (ver feedMapper). */
             const [postagens, usuarios] = await Promise.all([listarPostagens(), listarUsuarios()])
             const autores = mapaDeAutores(usuarios)
 
-            /* Comentários são um endpoint por postagem. Em um feed grande isso
-               vira N+1 chamadas — se pesar, carregue os comentários só ao abrir
-               o post, ou peça ao back para embutir na resposta. */
+            // Comentários são um endpoint por postagem: N+1 chamadas no feed.
             const comentarios = await Promise.all(
                 postagens.map((postagem) => listarComentarios(postagem.id)),
             )
@@ -45,7 +37,6 @@ export function useFeed() {
         void carregar()
     }, [carregar])
 
-    /** Publica e recarrega o feed. O saldo de pontos muda no servidor. */
     const publicar = useCallback(
         async (body: NovaPostagem) => {
             try {
@@ -60,8 +51,6 @@ export function useFeed() {
         [carregar],
     )
 
-    /** Comenta e recarrega o feed. O comentario passa a existir no servidor;
-        os pontos da resposta seguem locais (o contrato nao tem regra). */
     const comentar = useCallback(
         async (idPostagem: string, body: NovoComentario) => {
             try {
@@ -76,9 +65,6 @@ export function useFeed() {
         [carregar],
     )
 
-    /** Curte no servidor e aplica o total que ele devolve. Sem recarregar o
-        feed: a resposta já traz o novo valor de curtidas. O 422 de "já curtiu"
-        não é erro de verdade — o estado do servidor é o que a UI quer. */
     const curtir = useCallback(async (idPostagem: string, idUsuario: string) => {
         try {
             const { curtidas } = await curtirPostagem(idPostagem, { idUsuario })
@@ -87,6 +73,7 @@ export function useFeed() {
             )
             return { ok: true }
         } catch (erro) {
+            // 422 = já curtiu. O servidor está certo, a UI só acompanha.
             if (erro instanceof ApiError && erro.status === 422) return { ok: true, jaCurtiu: true }
             const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao curtir'
             return { ok: false, reason }
