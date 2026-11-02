@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { suggestedProfiles, trendTopics } from '../../data/feed'
+import { trendTopics } from '../../data/feed'
+import { useRanking } from '../../hooks/useRanking'
 import Avatar from './Avatar'
 import { eyebrowClass, focusRing, ghostActionClass, lineFieldClass, softTransition } from '../common/uiStyles'
 
@@ -22,6 +23,8 @@ export default function FeedSidebar({
     following,
     onToggleFollow,
 }: FeedSidebarProps) {
+    const { perfis, loading, error } = useRanking()
+
     return (
         <div className="flex flex-col gap-10 font-sans">
             <search>
@@ -74,9 +77,14 @@ export default function FeedSidebar({
             </section>
 
             <section>
-                <h2 className={eyebrowClass}>Quem seguir</h2>
+                <h2 className={eyebrowClass}>Ranking</h2>
+                {loading && <p className="pt-3 text-[1.2rem] font-light text-mist-soft">Carregando ranking...</p>}
+                {error && <p className="pt-3 text-[1.2rem] font-light text-ember">{error}</p>}
+                {!loading && !error && perfis.length === 0 && (
+                    <p className="pt-3 text-[1.2rem] font-light text-mist-soft">Ninguém no ranking ainda.</p>
+                )}
                 <ul className="pt-3">
-                    {suggestedProfiles.map((profile) => {
+                    {perfis.map((profile) => {
                         const isFollowing = following.includes(profile.id)
 
                         return (

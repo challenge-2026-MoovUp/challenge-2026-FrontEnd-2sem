@@ -1,7 +1,7 @@
 /* DTO da API → tipos de tela. Nenhum componente importa types/api.ts. */
 
-import type { ComentarioDTO, PostagemDTO, UsuarioDTO } from '../types/api'
-import type { FeedAuthor, FeedPost, FeedReply } from '../types/feed'
+import type { ComentarioDTO, PostagemDTO, RankingDTO, UsuarioDTO } from '../types/api'
+import type { FeedAuthor, FeedPost, FeedReply, SuggestedProfile } from '../types/feed'
 import type { PerfilUsuario } from '../types/perfil'
 
 const avatarClasses = [
@@ -46,6 +46,17 @@ function toFeedAuthor(usuario: UsuarioDTO): FeedAuthor {
         handle: handleDe(usuario.nome),
         initials: iniciais(usuario.nome),
         avatarClass: avatarClassDe(usuario.id),
+    }
+}
+
+export function toPerfilRanking(dto: RankingDTO): SuggestedProfile {
+    return {
+        id: dto.id,
+        name: dto.nome,
+        handle: handleDe(dto.nome),
+        initials: iniciais(dto.nome),
+        avatarClass: avatarClassDe(dto.id),
+        bio: `${dto.posicao}º · ${dto.saldoPontos.toLocaleString('pt-BR')} pontos`,
     }
 }
 
