@@ -4,6 +4,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Avatar from '../../components/feed/Avatar'
 import { focusRing, ghostActionClass, softTransition } from '../../components/common/uiStyles'
 import { usePostagem } from '../../hooks/usePostagem'
+import { rotaPerfil } from '../../routes/rotaPerfil'
 
 export default function PostagemDetalhe() {
     const { id } = useParams()
@@ -38,7 +39,7 @@ export default function PostagemDetalhe() {
                         <Avatar initials={post.author.initials} className={post.author.avatarClass} />
                         <div className="min-w-0">
                             <Link
-                                to={`/usuario/${post.author.id}`}
+                                to={rotaPerfil(post.author.handle)}
                                 className={`block truncate text-[1.7rem] font-medium text-mist hover:underline ${softTransition} ${focusRing}`}
                             >
                                 {post.author.name}
@@ -70,7 +71,7 @@ export default function PostagemDetalhe() {
                                 <div className="min-w-0 flex-1">
                                     <p className="text-[1.2rem] font-light text-mist-soft">
                                         <Link
-                                            to={`/usuario/${reply.author.id}`}
+                                            to={rotaPerfil(reply.author.handle)}
                                             className={`text-[1.5rem] font-normal text-mist hover:underline ${softTransition} ${focusRing}`}
                                         >
                                             {reply.author.name}

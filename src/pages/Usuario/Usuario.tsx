@@ -9,6 +9,8 @@ import { focusRing, ghostActionClass, labelClass, lineFieldClass, softTransition
 import { useCurtidas } from '../../hooks/useCurtidas'
 import { useUsuario } from '../../hooks/useUsuario'
 import type { UsuarioDTO } from '../../types/api'
+import { handleDe } from '../../mappers/feedMapper'
+import { rotaPerfil } from '../../routes/rotaPerfil'
 
 interface UsuarioContext {
     onOpenModal: () => void
@@ -31,7 +33,7 @@ function PerfilDado({ icon, valor, label }: { icon: IconDefinition; valor: strin
 }
 
 export default function Usuario() {
-    const { id } = useParams()
+    const { handle } = useParams()
     const navigate = useNavigate()
     const { onOpenModal, userId, userName, atualizarSessao, sair } = useOutletContext<UsuarioContext>()
     const {
@@ -49,7 +51,7 @@ export default function Usuario() {
         editarPostagem,
         excluirPostagem,
         excluirResposta,
-    } = useUsuario(id)
+    } = useUsuario(handle)
     const { curtidas, marcarCurtida, desmarcarCurtida } = useCurtidas(userId)
     const [saved, setSaved] = useState<Set<string>>(new Set())
     const [erroAcao, setErroAcao] = useState<string | null>(null)
@@ -57,7 +59,7 @@ export default function Usuario() {
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
 
-    const contaPropria = Boolean(userId) && userId === id
+    const contaPropria = Boolean(userId) && userId === perfil?.id
 
     function toggleSaved(idPostagem: string) {
         setSaved((anterior) => {
@@ -117,6 +119,7 @@ export default function Usuario() {
 
         atualizarSessao(resultado.usuario)
         setEditandoConta(false)
+        navigate(rotaPerfil(handleDe(resultado.usuario.nome)), { replace: true })
     }
 
     async function handleExcluirConta() {

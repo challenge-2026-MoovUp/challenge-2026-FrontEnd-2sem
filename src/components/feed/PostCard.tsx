@@ -18,6 +18,7 @@ import {
 import type { FeedPost } from '../../types/feed'
 import Avatar from './Avatar'
 import { focusRing, ghostActionClass, softTransition } from '../common/uiStyles'
+import { rotaPerfil } from '../../routes/rotaPerfil'
 
 interface PostCardProps {
     post: FeedPost
@@ -132,7 +133,7 @@ export default function PostCard({
     return (
         <article className="border-b border-border py-7">
             <div className="flex gap-3">
-                <Link to={`/usuario/${post.author.id}`} aria-hidden="true" tabIndex={-1} className="shrink-0">
+                <Link to={rotaPerfil(post.author.handle)} aria-hidden="true" tabIndex={-1} className="shrink-0">
                     <Avatar initials={post.author.initials} className={post.author.avatarClass} />
                 </Link>
 
@@ -140,7 +141,7 @@ export default function PostCard({
                     <header className="flex flex-wrap items-center gap-x-2 gap-y-0">
                         <h3 className="text-[1.7rem] font-medium text-mist">
                             <Link
-                                to={`/usuario/${post.author.id}`}
+                                to={rotaPerfil(post.author.handle)}
                                 className={`hover:underline ${softTransition} ${focusRing}`}
                             >
                                 {post.author.name}
@@ -277,7 +278,7 @@ export default function PostCard({
                                         <div className="min-w-0 flex-1">
                                             <p className="flex flex-wrap items-center gap-x-2 text-[1.5rem] font-normal text-mist">
                                                 <Link
-                                                    to={`/usuario/${reply.author.id}`}
+                                                    to={rotaPerfil(reply.author.handle)}
                                                     className={`hover:underline ${softTransition} ${focusRing}`}
                                                 >
                                                     {reply.author.name}

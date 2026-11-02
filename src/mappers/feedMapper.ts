@@ -25,7 +25,7 @@ function iniciais(nome: string) {
     return (primeira + ultima).toUpperCase()
 }
 
-function handleDe(nome: string) {
+export function handleDe(nome: string) {
     return `@${nome.trim().toLowerCase().replace(/\s+/g, '_')}`
 }
 

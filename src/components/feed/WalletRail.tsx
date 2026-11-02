@@ -5,14 +5,15 @@ import Avatar from './Avatar'
 import { eyebrowClass, focusRing, ghostActionClass, softTransition } from '../common/uiStyles'
 import { pointsToBRL } from '../../data/points'
 import { useWallet } from '../../hooks/useWallet'
+import { handleDe } from '../../mappers/feedMapper'
+import { rotaPerfil } from '../../routes/rotaPerfil'
 
 interface WalletRailProps {
-    userId: string | null
     userName: string | null
     onOpenModal: () => void
 }
 
-export default function WalletRail({ userId, userName, onOpenModal }: WalletRailProps) {
+export default function WalletRail({ userName, onOpenModal }: WalletRailProps) {
     const { points } = useWallet()
 
     const identidade = (
@@ -32,8 +33,8 @@ export default function WalletRail({ userId, userName, onOpenModal }: WalletRail
     return (
         <div className="flex flex-col gap-10 font-sans">
             {/* Logado, o cartao leva ao proprio perfil; deslogado, abre o login. */}
-            {userId ? (
-                <Link to={`/usuario/${userId}`} className={`group/conta flex items-center gap-3 ${focusRing}`}>
+            {userName ? (
+                <Link to={rotaPerfil(handleDe(userName))} className={`group/conta flex items-center gap-3 ${focusRing}`}>
                     {identidade}
                 </Link>
             ) : (

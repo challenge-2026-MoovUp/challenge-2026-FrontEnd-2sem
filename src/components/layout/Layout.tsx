@@ -30,7 +30,7 @@ function Layout(){
 
     return(
         <>
-            <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userId={userId} userName={userName} />
+            <Header onOpenModal={() => setIsModalOpen(true)} userEmail={userEmail} userName={userName} />
             <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onLogin={handleLogin} onCadastrar={handleCadastro}/>
             <main>
                 <WalletProvider userId={userId} >

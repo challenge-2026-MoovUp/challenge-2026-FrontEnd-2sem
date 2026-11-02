@@ -171,7 +171,7 @@ export default function Feed() {
             <section className="mx-auto w-full max-w-[1400px] px-5 py-14 font-sans sm:px-8 md:px-10 md:py-20">
                 <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)_minmax(0,280px)] lg:gap-16 xl:gap-20">
                     <aside className="lg:sticky lg:top-[100px]">
-                        <WalletRail userId={userId} userName={userName} onOpenModal={onOpenModal} />
+                        <WalletRail userName={userName} onOpenModal={onOpenModal} />
                     </aside>
 
                     <div>
