@@ -13,6 +13,10 @@ export class ApiError extends Error {
     }
 }
 
+export function mensagemDe(erro: unknown, padrao: string) {
+    return erro instanceof ApiError ? erro.mensagem : padrao
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
     let res: Response
 

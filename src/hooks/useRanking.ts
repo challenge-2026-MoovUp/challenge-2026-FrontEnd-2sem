@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ApiError } from '../api/http'
+import { mensagemDe } from '../api/http'
 import { listarRanking } from '../api/usuariosApi'
 import { toPerfilRanking } from '../mappers/feedMapper'
 import type { SuggestedProfile } from '../types/feed'
@@ -15,7 +15,7 @@ export function useRanking() {
                 const ranking = await listarRanking()
                 setPerfis(ranking.map(toPerfilRanking))
             } catch (erro) {
-                setError(erro instanceof ApiError ? erro.mensagem : 'Falha ao carregar o ranking')
+                setError(mensagemDe(erro, 'Falha ao carregar o ranking'))
             } finally {
                 setLoading(false)
             }

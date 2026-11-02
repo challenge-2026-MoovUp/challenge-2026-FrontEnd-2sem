@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
-import { ApiError } from '../api/http'
+import { mensagemDe } from '../api/http'
 import { listarComentarios } from '../api/comentariosApi'
 import { buscarPostagem } from '../api/postagensApi'
-import { listarUsuarios } from '../api/usuariosApi'
-import { mapaDeAutores, toFeedPost } from '../mappers/feedMapper'
+import { toFeedPost } from '../mappers/feedMapper'
 import type { FeedPost } from '../types/feed'
 
 export function usePostagem(id: string | undefined) {
@@ -18,15 +17,11 @@ export function usePostagem(id: string | undefined) {
         setError(null)
 
         try {
-            const [postagem, comentarios, usuarios] = await Promise.all([
-                buscarPostagem(id),
-                listarComentarios(id),
-                listarUsuarios(),
-            ])
-            setPost(toFeedPost(postagem, mapaDeAutores(usuarios), comentarios))
+            const [postagem, comentarios] = await Promise.all([buscarPostagem(id), listarComentarios(id)])
+            setPost(toFeedPost(postagem, comentarios))
         } catch (erro) {
             setPost(null)
-            setError(erro instanceof ApiError ? erro.mensagem : 'Falha ao carregar a publicação')
+            setError(mensagemDe(erro, 'Falha ao carregar a publicação'))
         } finally {
             setLoading(false)
         }
