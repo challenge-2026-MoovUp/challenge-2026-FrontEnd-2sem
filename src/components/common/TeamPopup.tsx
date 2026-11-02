@@ -16,12 +16,15 @@ const popupBioTextClass = "font-sans"
 
 export default function TeamPopup({ creator, onClose }: TeamPopupProps) {
     useEffect(() => {
+        if (!creator) return
+
         function handleKeyDown(event: KeyboardEvent) {
             if (event.key === 'Escape') onClose()
         }
 
-        document.removeEventListener('keydown', handleKeyDown)
-    }, [onClose])
+        document.addEventListener('keydown', handleKeyDown)
+        return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [creator, onClose])
 
     if (!creator) return null
 
