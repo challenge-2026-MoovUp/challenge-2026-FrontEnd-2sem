@@ -125,7 +125,10 @@ export default function PostCard({
                             />
                         )}
                         <p className="font-sans text-[1.3rem] font-light text-mist-soft">
-                            {post.author.handle} · {post.time}
+                            {post.author.handle} ·{' '}
+                            <Link to={`/feed/${post.id}`} className={`hover:underline ${softTransition} ${focusRing}`}>
+                                {post.time}
+                            </Link>
                         </p>
                     </header>
 
