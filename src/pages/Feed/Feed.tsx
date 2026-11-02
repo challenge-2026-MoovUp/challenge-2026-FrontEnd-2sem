@@ -8,6 +8,7 @@ import { focusRing, ghostActionClass, softTransition } from '../../components/co
 import { pointsPerAction } from '../../data/points'
 import { useCurtidas } from '../../hooks/useCurtidas'
 import { useFeed } from '../../hooks/useFeed'
+import { useSeguindo } from '../../hooks/useSeguindo'
 import { tituloDe } from '../../mappers/feedMapper'
 import { useWallet } from '../../hooks/useWallet'
 
@@ -33,7 +34,7 @@ export default function Feed() {
 
     const { curtidas, marcarCurtida, desmarcarCurtida } = useCurtidas(userId)
     const [saved, setSaved] = useState<Record<string, boolean>>({})
-    const [following, setFollowing] = useState<string[]>(['moovup'])
+    const { seguindo, alternarSeguir } = useSeguindo(userId)
     const [tab, setTab] = useState<TabId>('para-voce')
     const [query, setQuery] = useState('')
     const [activeTag, setActiveTag] = useState<string | null>(null)
@@ -49,7 +50,7 @@ export default function Feed() {
         const search = query.trim().toLowerCase()
 
         return posts.filter((post) => {
-            if (tab === 'seguindo' && !following.includes(post.author.id) && post.author.id !== 'eu') return false
+            if (tab === 'seguindo' && !seguindo.includes(post.author.id)) return false
             if (tab === 'salvos' && !saved[post.id]) return false
             if (activeTag && !post.tags.includes(activeTag)) return false
             if (!search) return true
@@ -61,7 +62,7 @@ export default function Feed() {
                 post.tags.some((tag) => tag.toLowerCase().includes(search))
             )
         })
-    }, [posts, tab, following, saved, activeTag, query])
+    }, [posts, tab, seguindo, saved, activeTag, query])
 
     function requireLogin() {
         if (userId) return false
@@ -149,9 +150,14 @@ export default function Feed() {
         setActiveTag((previous) => (previous === tag ? null : tag))
     }
 
-    function handleToggleFollow(id: string) {
+    async function handleToggleFollow(id: string) {
         if (requireLogin()) return
-        setFollowing((previous) => (previous.includes(id) ? previous.filter((item) => item !== id) : [...previous, id]))
+
+        const resultado = await alternarSeguir(userId as string, id)
+
+        if (!resultado.ok) {
+            setToast({ id: Date.now(), text: resultado.reason ?? 'Falha ao atualizar quem você segue' })
+        }
     }
 
     function clearFilters() {
@@ -268,8 +274,8 @@ export default function Feed() {
                             onQueryChange={setQuery}
                             activeTag={activeTag}
                             onTagClick={handleTagClick}
-                            following={following}
-                            onToggleFollow={handleToggleFollow}
+                            following={seguindo}
+                            onToggleFollow={(id) => void handleToggleFollow(id)}
                         />
                     </aside>
                 </div>
