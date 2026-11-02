@@ -16,8 +16,8 @@ import { useUsuario } from '../hooks/useUsuario.ts'
 
 function UsuarioRoute() {
     const { id } = useParams()
-    const { perfil, posts, loading, error, recarregar } = useUsuario(id)
-    return <Usuario perfil={perfil} posts={posts} loading={loading} error={error} onRecarregar={recarregar} />
+    const { perfil, posts, loading, error, recarregar, curtir } = useUsuario(id)
+    return <Usuario perfil={perfil} posts={posts} loading={loading} error={error} onRecarregar={recarregar} onCurtir={curtir} />
 }
 
 export default function AppRoutes() {

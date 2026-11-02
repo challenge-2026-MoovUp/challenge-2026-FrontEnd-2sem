@@ -115,9 +115,7 @@ export function toFeedPost(
         time: tempoRelativo(dto.dataPostagem),
         content: dto.conteudo,
         likes: dto.curtidas,
-        // tags e reposts não existem na API: ficam vazios.
         tags: [],
-        reposts: 0,
         replies: comentarios.map((comentario) => toFeedReply(comentario, autores)),
     }
 }

@@ -66,15 +66,20 @@ export function useFeed() {
     )
 
     const curtir = useCallback(async (idPostagem: string, idUsuario: string) => {
+        const alterarCurtidas = (calcular: (likes: number) => number) =>
+            setPosts((anteriores) =>
+                anteriores.map((post) => (post.id === idPostagem ? { ...post, likes: calcular(post.likes) } : post)),
+            )
+
+        alterarCurtidas((likes) => likes + 1)
+
         try {
             const { curtidas } = await curtirPostagem(idPostagem, { idUsuario })
-            setPosts((anteriores) =>
-                anteriores.map((post) => (post.id === idPostagem ? { ...post, likes: curtidas } : post)),
-            )
+            alterarCurtidas(() => curtidas)
             return { ok: true }
         } catch (erro) {
-            // 422 = já curtiu. O servidor está certo, a UI só acompanha.
-            if (erro instanceof ApiError && erro.status === 422) return { ok: true, jaCurtiu: true }
+            alterarCurtidas((likes) => likes - 1)
+            if (erro instanceof ApiError && erro.status === 422) return { ok: true }
             const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao curtir'
             return { ok: false, reason }
         }

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faComment, faRetweet, faFeather, faTrain, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faFeather, faTrain, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Avatar from './Avatar'
 import { eyebrowClass, focusRing, ghostActionClass, softTransition } from '../common/uiStyles'
 import { pointsPerAction, pointsToBRL } from '../../data/points'
@@ -13,9 +13,6 @@ interface WalletRailProps {
 }
 
 const rows = [
-    { key: 'curtida', icon: faHeart, label: 'Curtidas' },
-    { key: 'resposta', icon: faComment, label: 'Respostas' },
-    { key: 'repost', icon: faRetweet, label: 'Reposts' },
     { key: 'publicacao', icon: faFeather, label: 'Publicações' },
     { key: 'viagem', icon: faTrain, label: 'Viagens' },
 ] as const

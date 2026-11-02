@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ApiError } from '../api/http'
 import { listarComentarios } from '../api/comentariosApi'
-import { listarPostagens } from '../api/postagensApi'
+import { curtirPostagem, listarPostagens } from '../api/postagensApi'
 import { buscarUsuario, listarUsuarios } from '../api/usuariosApi'
 import { mapaDeAutores, toFeedPost, toPerfilUsuario } from '../mappers/feedMapper'
 import type { FeedPost } from '../types/feed'
@@ -55,5 +55,25 @@ export function useUsuario(id: string | undefined) {
         void carregar()
     }, [carregar])
 
-    return { perfil, posts, loading, error, naoEncontrado, recarregar: carregar }
+    const curtir = useCallback(async (idPostagem: string, idUsuario: string) => {
+        const alterarCurtidas = (calcular: (likes: number) => number) =>
+            setPosts((anteriores) =>
+                anteriores.map((post) => (post.id === idPostagem ? { ...post, likes: calcular(post.likes) } : post)),
+            )
+
+        alterarCurtidas((likes) => likes + 1)
+
+        try {
+            const { curtidas } = await curtirPostagem(idPostagem, { idUsuario })
+            alterarCurtidas(() => curtidas)
+            return { ok: true }
+        } catch (erro) {
+            alterarCurtidas((likes) => likes - 1)
+            if (erro instanceof ApiError && erro.status === 422) return { ok: true }
+            const reason = erro instanceof ApiError ? erro.mensagem : 'Falha ao curtir'
+            return { ok: false, reason }
+        }
+    }, [])
+
+    return { perfil, posts, loading, error, naoEncontrado, recarregar: carregar, curtir }
 }

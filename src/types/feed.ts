@@ -22,7 +22,6 @@ export interface FeedPost {
     content: string
     tags: string[]
     likes: number
-    reposts: number
     replies: FeedReply[]
     /** Dado numérico em destaque dentro do post (resgate, desafio, parceria). */
     stat?: {

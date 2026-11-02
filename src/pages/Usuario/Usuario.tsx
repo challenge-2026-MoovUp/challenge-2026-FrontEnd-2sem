@@ -12,10 +12,12 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Avatar from '../../components/feed/Avatar'
 import PostCard from '../../components/feed/PostCard'
 import { focusRing, ghostActionClass, softTransition } from '../../components/common/uiStyles'
+import { useCurtidas } from '../../hooks/useCurtidas'
 import type { FeedPost } from '../../types/feed'
 import type { PerfilUsuario } from '../../types/perfil'
 
 interface UsuarioContext {
+    onOpenModal: () => void
     userId: string | null
     userName: string | null
 }
@@ -26,6 +28,7 @@ interface UsuarioProps {
     loading: boolean
     error: string | null
     onRecarregar: () => void
+    onCurtir: (idPostagem: string, idUsuario: string) => Promise<{ ok: boolean; reason?: string }>
 }
 
 /** Dado do perfil em uma linha: ícone discreto, valor em destaque, rótulo abaixo. */
@@ -41,21 +44,36 @@ function PerfilDado({ icon, valor, label }: { icon: IconDefinition; valor: strin
     )
 }
 
-export default function Usuario({ perfil, posts, loading, error, onRecarregar }: UsuarioProps) {
-    const { userId, userName } = useOutletContext<UsuarioContext>()
-
-    /* Interações só de tela, como no Feed: a API não tem curtida por usuário. */
-    const [liked, setLiked] = useState<Set<string>>(new Set())
-    const [reposted, setReposted] = useState<Set<string>>(new Set())
+export default function Usuario({ perfil, posts, loading, error, onRecarregar, onCurtir }: UsuarioProps) {
+    const { onOpenModal, userId, userName } = useOutletContext<UsuarioContext>()
+    const { curtidas, marcarCurtida, desmarcarCurtida } = useCurtidas(userId)
     const [saved, setSaved] = useState<Set<string>>(new Set())
+    const [erroCurtida, setErroCurtida] = useState<string | null>(null)
 
-    function toggle(setter: React.Dispatch<React.SetStateAction<Set<string>>>, id: string) {
-        setter((anterior) => {
+    function toggleSaved(id: string) {
+        setSaved((anterior) => {
             const proximo = new Set(anterior)
             if (proximo.has(id)) proximo.delete(id)
             else proximo.add(id)
             return proximo
         })
+    }
+
+    async function handleLike(id: string) {
+        if (!userId) {
+            onOpenModal()
+            return
+        }
+        if (curtidas.includes(id)) return
+
+        setErroCurtida(null)
+        marcarCurtida(id)
+        const resultado = await onCurtir(id, userId)
+
+        if (!resultado.ok) {
+            desmarcarCurtida(id)
+            setErroCurtida(resultado.reason ?? 'Falha ao curtir')
+        }
     }
 
     return (
@@ -120,19 +138,19 @@ export default function Usuario({ perfil, posts, loading, error, onRecarregar }:
                         <span className="text-aurora-soft">{posts.length}</span>
                     </h2>
 
+                    {erroCurtida && <p className="pt-5 text-[1.4rem] font-light text-ember">{erroCurtida}</p>}
+
                     {posts.map((post) => (
                         <PostCard
                             key={post.id}
                             post={post}
                             userId={userId}
                             userName={userName}
-                            liked={liked.has(post.id)}
-                            reposted={reposted.has(post.id)}
+                            liked={curtidas.includes(post.id)}
                             saved={saved.has(post.id)}
                             activeTag={null}
-                            onLike={(id) => toggle(setLiked, id)}
-                            onRepost={(id) => toggle(setReposted, id)}
-                            onSave={(id) => toggle(setSaved, id)}
+                            onLike={(id) => void handleLike(id)}
+                            onSave={toggleSaved}
                             onReply={() => undefined}
                             onTagClick={() => undefined}
                         />

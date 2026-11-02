@@ -36,7 +36,7 @@ export default function SolutionInfo({ isActive } : solutionInfoProps) {
                     </div>
                     <div className="mb-10 ml-[18px] flex flex-col gap-[10px] border-l border-border pl-10">
                         <h3 className={journeyTitleClass}>Interaja e acumule pontos</h3>
-                        <h3 className={journeySubtitleClass}>Cada curtida gera {pointsPerAction.curtida} pts, respostas valem {pointsPerAction.resposta} pts, reposts {pointsPerAction.repost} pts, posts originais {pointsPerAction.publicacao} pts e desafios semanais podem render até {maxChallengeBonus} pts de bônus. Tudo contabilizado automaticamente.</h3>
+                        <h3 className={journeySubtitleClass}>Cada curtida gera {pointsPerAction.curtida} pts, respostas valem {pointsPerAction.resposta} pts, posts originais {pointsPerAction.publicacao} pts e desafios semanais podem render até {maxChallengeBonus} pts de bônus. Tudo contabilizado automaticamente.</h3>
                         <h3 className={`${sectionTagClass} text-[1rem]`}>+{pointsPerAction.curtida} a +{maxChallengeBonus} pts por ação</h3>
                     </div>
                 </article>

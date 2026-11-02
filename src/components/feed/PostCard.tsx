@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
     faComment,
-    faRetweet,
     faHeart,
     faBookmark,
     faCircleCheck,
@@ -25,11 +24,9 @@ interface PostCardProps {
     userId: string | null
     userName: string | null
     liked: boolean
-    reposted: boolean
     saved: boolean
     activeTag: string | null
     onLike: (id: string) => void
-    onRepost: (id: string) => void
     onSave: (id: string) => void
     onReply: (id: string, content: string) => void
     onTagClick: (tag: string) => void
@@ -86,11 +83,9 @@ export default function PostCard({
     userId,
     userName,
     liked,
-    reposted,
     saved,
     activeTag,
     onLike,
-    onRepost,
     onSave,
     onReply,
     onTagClick,
@@ -235,15 +230,6 @@ export default function PostCard({
                             onClick={() => setShowReplies((previous) => !previous)}
                         />
                         <ActionButton
-                            icon={faRetweet}
-                            label="Repostar"
-                            count={post.reposts}
-                            active={reposted}
-                            activeClass="text-sage"
-                            hoverClass="hover:text-sage"
-                            onClick={() => onRepost(post.id)}
-                        />
-                        <ActionButton
                             icon={faHeart}
                             label="Curtir"
                             count={post.likes}
@@ -315,7 +301,7 @@ export default function PostCard({
                                 ))}
                                 {post.replies.length === 0 && (
                                     <li className="font-sans text-[1.3rem] font-light italic text-mist-soft">
-                                        Nenhuma resposta ainda. A primeira já vale pontos.
+                                        Nenhuma resposta ainda.
                                     </li>
                                 )}
                             </ul>
