@@ -37,7 +37,6 @@ export default function Feed() {
     const { seguindo, alternarSeguir } = useSeguindo(userId)
     const [tab, setTab] = useState<TabId>('para-voce')
     const [query, setQuery] = useState('')
-    const [activeTag, setActiveTag] = useState<string | null>(null)
     const [toast, setToast] = useState<{ id: number; text: string } | null>(null)
 
     useEffect(() => {
@@ -52,17 +51,15 @@ export default function Feed() {
         return posts.filter((post) => {
             if (tab === 'seguindo' && !seguindo.includes(post.author.id)) return false
             if (tab === 'salvos' && !saved[post.id]) return false
-            if (activeTag && !post.tags.includes(activeTag)) return false
             if (!search) return true
 
             return (
                 post.content.toLowerCase().includes(search) ||
                 post.author.name.toLowerCase().includes(search) ||
-                post.author.handle.toLowerCase().includes(search) ||
-                post.tags.some((tag) => tag.toLowerCase().includes(search))
+                post.author.handle.toLowerCase().includes(search)
             )
         })
-    }, [posts, tab, seguindo, saved, activeTag, query])
+    }, [posts, tab, seguindo, saved, query])
 
     function requireLogin() {
         if (userId) return false
@@ -116,7 +113,6 @@ export default function Feed() {
         }
 
         setTab('para-voce')
-        setActiveTag(null)
         setQuery('')
         void recarregarCarteira()
         setToast({ id: Date.now(), text: `+${pointsPerAction.publicacao} pontos · publicação` })
@@ -146,10 +142,6 @@ export default function Feed() {
         }
     }
 
-    function handleTagClick(tag: string) {
-        setActiveTag((previous) => (previous === tag ? null : tag))
-    }
-
     async function handleToggleFollow(id: string) {
         if (requireLogin()) return
 
@@ -161,7 +153,6 @@ export default function Feed() {
     }
 
     function clearFilters() {
-        setActiveTag(null)
         setQuery('')
         setTab('para-voce')
     }
@@ -210,11 +201,10 @@ export default function Feed() {
                             onOpenModal={onOpenModal}
                         />
 
-                        {(activeTag || query) && (
+                        {query && (
                             <p className="flex flex-wrap items-center gap-4 border-b border-border py-5 text-[1.3rem] font-light text-mist-soft">
                                 {visiblePosts.length} resultado{visiblePosts.length === 1 ? '' : 's'}
-                                {activeTag && <span className="text-aurora-soft">{activeTag}</span>}
-                                {query && <span className="text-aurora-soft">“{query}”</span>}
+                                <span className="text-aurora-soft">“{query}”</span>
                                 <button
                                     type="button"
                                     onClick={clearFilters}
@@ -248,11 +238,9 @@ export default function Feed() {
                                 userName={userName}
                                 liked={curtidas.includes(post.id)}
                                 saved={Boolean(saved[post.id])}
-                                activeTag={activeTag}
                                 onLike={(id) => void handleLike(id)}
                                 onSave={handleSave}
                                 onReply={handleReply}
-                                onTagClick={handleTagClick}
                                 onEdit={handleEdit}
                                 onDelete={handleDelete}
                                 onDeleteReply={handleDeleteReply}
@@ -272,8 +260,6 @@ export default function Feed() {
                         <FeedSidebar
                             query={query}
                             onQueryChange={setQuery}
-                            activeTag={activeTag}
-                            onTagClick={handleTagClick}
                             following={seguindo}
                             onToggleFollow={(id) => void handleToggleFollow(id)}
                         />
