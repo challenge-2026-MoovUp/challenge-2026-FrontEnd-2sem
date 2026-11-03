@@ -148,7 +148,7 @@ moovup/
 
 - **Repositório:** https://github.com/challenge-2026-MoovUp/challenge-2026-FrontEnd-2sem
 - **Deploy (Vercel):** https://moovup2026.vercel.app
-- **API (Java/DDD) publicada:** `[URL_API_PUBLICADA]`
+- **API (Java/DDD) publicada:** https://challenge-2026-java-sprint-4.onrender.com
 - **Vídeo de apresentação (YouTube):** https://youtu.be/F6HE8IUwCH4
 
 ### Executando localmente
