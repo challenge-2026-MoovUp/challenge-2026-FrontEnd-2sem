@@ -149,7 +149,7 @@ moovup/
 - **Repositório:** https://github.com/challenge-2026-MoovUp/challenge-2026-FrontEnd-2sem
 - **Deploy (Vercel):** https://moovup2026.vercel.app
 - **API (Java/DDD) publicada:** https://challenge-2026-java-sprint-4.onrender.com
-- **Vídeo de apresentação (YouTube):** https://youtu.be/F6HE8IUwCH4
+- **Vídeo de apresentação (YouTube):** https://youtu.be/xaUuo3R7o6o
 
 ### Executando localmente
 
@@ -205,9 +205,9 @@ npm run lint      # roda o linter (Oxlint)
 
 Demonstração em vídeo do projeto MoovUp, com navegação por todas as páginas:
 
-[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/F6HE8IUwCH4)
+[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/xaUuo3R7o6o)
 
-> **Link direto:** https://youtu.be/F6HE8IUwCH4
+> **Link direto:** https://youtu.be/xaUuo3R7o6o
 
 ---
 
