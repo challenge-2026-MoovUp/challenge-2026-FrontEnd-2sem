@@ -6,11 +6,6 @@ import {
     faComment,
     faHeart,
     faBookmark,
-    faCircleCheck,
-    faBolt,
-    faTrain,
-    faCoins,
-    faTrophy,
     faPaperPlane,
     faPen,
     faTrash,
@@ -26,21 +21,12 @@ interface PostCardProps {
     userName: string | null
     liked: boolean
     saved: boolean
-    activeTag: string | null
     onLike: (id: string) => void
     onSave: (id: string) => void
     onReply: (id: string, content: string) => void
-    onTagClick: (tag: string) => void
     onEdit?: (id: string, content: string) => void
     onDelete?: (id: string) => void
     onDeleteReply?: (id: string) => void
-}
-
-const statIcons: Record<NonNullable<FeedPost['stat']>['icon'], IconDefinition> = {
-    bolt: faBolt,
-    train: faTrain,
-    coins: faCoins,
-    trophy: faTrophy,
 }
 
 /** Botão da barra de ações: cor de hover própria por ação, no estilo das redes sociais. */
@@ -85,11 +71,9 @@ export default function PostCard({
     userName,
     liked,
     saved,
-    activeTag,
     onLike,
     onSave,
     onReply,
-    onTagClick,
     onEdit,
     onDelete,
     onDeleteReply,
@@ -147,13 +131,6 @@ export default function PostCard({
                                 {post.author.name}
                             </Link>
                         </h3>
-                        {post.author.verified && (
-                            <FontAwesomeIcon
-                                icon={faCircleCheck}
-                                className="text-[1.3rem] text-aurora-soft"
-                                title="Perfil verificado"
-                            />
-                        )}
                         <p className="font-sans text-[1.3rem] font-light text-mist-soft">
                             {post.author.handle} ·{' '}
                             <Link to={`/feed/${post.id}`} className={`hover:underline ${softTransition} ${focusRing}`}>
@@ -187,38 +164,6 @@ export default function PostCard({
                         <p className="whitespace-pre-line pt-[6px] font-sans text-[1.5rem] font-light leading-[1.65] text-mist">
                             {post.content}
                         </p>
-                    )}
-
-                    {post.tags.length > 0 && (
-                        <ul className="flex flex-wrap gap-2 pt-[10px]">
-                            {post.tags.map((tag) => (
-                                <li key={tag}>
-                                    <button
-                                        type="button"
-                                        onClick={() => onTagClick(tag)}
-                                        aria-pressed={activeTag === tag}
-                                        className={`rounded-full border px-3 py-[3px] font-sans text-[1.2rem] font-light hover:cursor-pointer ${softTransition} ${focusRing} ${activeTag === tag
-                                                ? 'border-aurora-42 text-aurora-soft'
-                                                : 'border-border text-mist-dim hover:border-aurora-30 hover:text-aurora-soft'
-                                            }`}
-                                    >
-                                        {tag}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-
-                    {post.stat && (
-                        <div className="mt-[14px] flex items-center gap-4 rounded-[12px] border border-border px-4 py-3">
-                            <span className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-aurora-glow text-[1.4rem] text-aurora-soft">
-                                <FontAwesomeIcon icon={statIcons[post.stat.icon]} />
-                            </span>
-                            <p className="font-sans text-[1.3rem] font-light text-mist-dim">
-                                <span className="block text-[1.9rem] font-medium text-mist">{post.stat.value}</span>
-                                {post.stat.label}
-                            </p>
-                        </div>
                     )}
 
                     <div className="mt-[10px] flex items-center justify-between">

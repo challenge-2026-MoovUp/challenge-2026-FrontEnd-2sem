@@ -70,6 +70,7 @@ moovup/
 │
 ├── index.html                        # Ponto de entrada da aplicação
 ├── public/                           # Arquivos estáticos servidos diretamente
+├── vercel.json                       # Rewrite de SPA para o deploy na Vercel
 │
 └── src/
     ├── main.tsx                      # Bootstrap da aplicação (React + Router + global.css)
@@ -77,23 +78,37 @@ moovup/
     ├── global.css                    # Import do TailwindCSS + tokens de tema (@theme) + reset base
     │
     ├── routes/
-    │   └── AppRoutes.tsx              # Definição de todas as rotas da SPA
+    │   ├── AppRoutes.tsx              # Definição de todas as rotas da SPA (estáticas e dinâmicas)
+    │   └── rotaPerfil.ts              # Helper de rota do perfil por apelido
     │
     ├── pages/                         # Uma pasta por página (padrão pages/<Nome>/<Nome>.tsx)
     │   ├── Home/Home.tsx
     │   ├── QuemSomos/QuemSomos.tsx
     │   ├── Sobre/Sobre.tsx
     │   ├── Solucao/Solucao.tsx
+    │   ├── Video/Video.tsx            # Vídeo de um recurso da solução (rota dinâmica /solucao/video/:videoId)
     │   ├── Faq/Faq.tsx
-    │   └── Contato/Contato.tsx
+    │   ├── Contato/Contato.tsx
+    │   ├── Feed/Feed.tsx              # Timeline de postagens (API)
+    │   ├── PostagemDetalhe/PostagemDetalhe.tsx  # Detalhe de uma postagem (rota dinâmica /feed/:id)
+    │   ├── Carteira/Carteira.tsx      # Viagens, resgates e QR Code (API)
+    │   ├── Usuario/Usuario.tsx        # Perfil público por apelido (rota dinâmica /usuario/:handle)
+    │   ├── Admin/Admin.tsx            # Painel de administração de tickets (API)
+    │   └── NotFound/NotFound.tsx      # Página 404
     │
     ├── components/
     │   ├── layout/                    # Header, Footer, Layout, Modal de login, ScrollToTop
     │   ├── common/                    # Button, Accordion, TeamPopup, Foot (CTA), FaqSidebar
-    │   └── sobre/                     # Componentes específicos da página Sobre (Overview, PassType, Info)
+    │   ├── sobre/                     # Componentes específicos da página Sobre (Overview, PassType, Info)
+    │   ├── feed/                      # Composer, PostCard, FeedSidebar, WalletRail, Avatar
+    │   └── carteira/                  # QrTicket, RedeemPanel, TransportCard, TripCheckIn, WalletTimeline
     │
-    ├── data/                          # Dados estáticos (equipe, abas da solução)
-    ├── types/                         # Interfaces e tipos compartilhados (equipe, solução, formulários de contato e login)
+    ├── api/                           # Camada de serviço: uma função por endpoint do contrato, com fetch nativo
+    ├── hooks/                         # Estado de tela (loading/erro/data): useAuth, useFeed, useWallet, useRanking...
+    ├── mappers/                       # Tradução DTO da API ↔ tipos de tela (feedMapper, walletMapper)
+    ├── context/                       # WalletProvider (estado global da carteira)
+    ├── data/                          # Dados estáticos do front (equipe, abas da solução, regra de pontos)
+    ├── types/                         # Interfaces e tipos compartilhados, incluindo os DTOs da API (types/api.ts)
     └── assets/                        # Imagens, ícones e fotos da equipe
 ```
 
@@ -121,9 +136,22 @@ moovup/
 ### Contato
 ![Contato](./docs/screenshots/contato.png)
 
+### Feed
+![Feed](./docs/screenshots/feed.png)
+
+### Carteira
+![Carteira](./docs/screenshots/carteira.png)
+
 ---
 
-## 🖥️ Como Executar Localmente
+## 🖥️ Como Usar
+
+- **Repositório:** https://github.com/challenge-2026-MoovUp/challenge-2026-FrontEnd-2sem
+- **Deploy (Vercel):** https://moovup2026.vercel.app
+- **API (Java/DDD) publicada:** https://challenge-2026-java-sprint-4.onrender.com
+- **Vídeo de apresentação (YouTube):** https://youtu.be/xaUuo3R7o6o
+
+### Executando localmente
 
 ```bash
 # 1. Clone o repositório
@@ -135,7 +163,10 @@ cd challenge-2026-FrontEnd-2sem
 # 3. Instale as dependências
 npm install
 
-# 4. Rode o servidor de desenvolvimento
+# 4. Configure a URL da API (copie o .env.example para .env e preencha VITE_API_URL)
+cp .env.example .env
+
+# 5. Rode o servidor de desenvolvimento
 npm run dev
 ```
 
@@ -174,9 +205,9 @@ npm run lint      # roda o linter (Oxlint)
 
 Demonstração em vídeo do projeto MoovUp, com navegação por todas as páginas:
 
-[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/F6HE8IUwCH4)
+[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/xaUuo3R7o6o)
 
-> **Link direto:** https://youtu.be/F6HE8IUwCH4
+> **Link direto:** https://youtu.be/xaUuo3R7o6o
 
 ---
 

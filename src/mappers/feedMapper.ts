@@ -113,7 +113,6 @@ export function toFeedPost(dto: PostagemDTO, comentarios: ComentarioDTO[] = []):
         time: tempoRelativo(dto.dataPostagem),
         content: dto.conteudo,
         likes: dto.curtidas,
-        tags: [],
         replies: comentarios.map(toFeedReply),
     }
 }

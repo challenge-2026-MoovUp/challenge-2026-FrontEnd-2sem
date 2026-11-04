@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { trendTopics } from '../../data/feed'
 import { useRanking } from '../../hooks/useRanking'
 import Avatar from './Avatar'
 import { eyebrowClass, focusRing, ghostActionClass, lineFieldClass, softTransition } from '../common/uiStyles'
@@ -10,8 +9,6 @@ import { rotaPerfil } from '../../routes/rotaPerfil'
 interface FeedSidebarProps {
     query: string
     onQueryChange: (value: string) => void
-    activeTag: string | null
-    onTagClick: (tag: string) => void
     following: string[]
     onToggleFollow: (id: string) => void
 }
@@ -19,8 +16,6 @@ interface FeedSidebarProps {
 export default function FeedSidebar({
     query,
     onQueryChange,
-    activeTag,
-    onTagClick,
     following,
     onToggleFollow,
 }: FeedSidebarProps) {
@@ -53,29 +48,6 @@ export default function FeedSidebar({
                     )}
                 </label>
             </search>
-
-            <section>
-                <h2 className={eyebrowClass}>Em alta na MoovUp</h2>
-                <ul className="pt-3">
-                    {trendTopics.map((topic) => (
-                        <li key={topic.tag} className="border-b border-border last:border-0">
-                            <button
-                                type="button"
-                                onClick={() => onTagClick(topic.tag)}
-                                aria-pressed={activeTag === topic.tag}
-                                className={`w-full py-3 text-left hover:cursor-pointer ${softTransition} ${focusRing}`}
-                            >
-                                <span
-                                    className={`block text-[1.35rem] ${activeTag === topic.tag ? 'font-normal text-aurora-soft' : 'font-light text-mist'}`}
-                                >
-                                    {topic.tag}
-                                </span>
-                                <span className="block text-[1.1rem] font-light text-mist-soft">{topic.posts}</span>
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </section>
 
             <section>
                 <h2 className={eyebrowClass}>Ranking</h2>

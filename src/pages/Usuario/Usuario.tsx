@@ -286,11 +286,9 @@ export default function Usuario() {
                             userName={userName}
                             liked={curtidas.includes(post.id)}
                             saved={saved.has(post.id)}
-                            activeTag={null}
                             onLike={(idPostagem) => void handleLike(idPostagem)}
                             onSave={toggleSaved}
                             onReply={handleReply}
-                            onTagClick={() => undefined}
                             onEdit={(idPostagem, conteudo) => void executarAcao(() => editarPostagem(idPostagem, conteudo))}
                             onDelete={(idPostagem) => void executarAcao(() => excluirPostagem(idPostagem))}
                             onDeleteReply={(idComentario) => void executarAcao(() => excluirResposta(idComentario))}

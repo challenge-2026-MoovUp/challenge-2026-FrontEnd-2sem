@@ -5,7 +5,6 @@ export interface FeedAuthor {
     initials: string
     /** Classe de cor/gradiente do avatar (tokens do tema). */
     avatarClass: string
-    verified?: boolean
 }
 
 export interface FeedReply {
@@ -20,20 +19,8 @@ export interface FeedPost {
     author: FeedAuthor
     time: string
     content: string
-    tags: string[]
     likes: number
     replies: FeedReply[]
-    /** Dado numérico em destaque dentro do post (resgate, desafio, parceria). */
-    stat?: {
-        icon: 'bolt' | 'train' | 'coins' | 'trophy'
-        value: string
-        label: string
-    }
-}
-
-export interface TrendTopic {
-    tag: string
-    posts: string
 }
 
 export type SuggestedProfile = FeedAuthor & { bio: string }
